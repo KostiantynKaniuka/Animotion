@@ -13,7 +13,12 @@ class MainViewController: UIViewController {
     @IBOutlet weak var dreamButton: UIButton!
     @IBOutlet weak var inspireButton: UIButton!
     @IBOutlet weak var focusButton: UIButton!
+    @IBOutlet weak var directionImageView: UIImageView!
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    
+    override func viewDidLayoutSubviews() {
+        dreamButton.layer.cornerRadius = 50
+    }
     
     
     override func viewDidLoad() {
@@ -33,8 +38,9 @@ class MainViewController: UIViewController {
             (button: dreamButton, delay: 0.5),
             (button: relaxButton, delay: 1.0),
             (button: focusButton, delay: 1.5),
-            (button: inspireButton, delay: 2.0)
+            (button: inspireButton, delay: 2.0),
         ]
+        directionImageView.alpha = 0.0
         
         for animation in buttonAnimations {
             animation.button?.alpha = 0.0 // Set initial alpha to 0
@@ -48,5 +54,9 @@ class MainViewController: UIViewController {
                     self.impactFeedbackGenerator.impactOccurred()
                 }
             })
-        }    }
+        }
+        UIView.animate(withDuration: 1, delay: 2.5, animations: {
+            self.directionImageView.alpha = 1
+        })
+    }
 }

@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="Animotion" customModuleProvider="target">
             <connections>
+                <outlet property="directionImageView" destination="cHv-wf-nMT" id="og2-pH-xsi"/>
                 <outlet property="dreamButton" destination="C4w-k8-6x6" id="sKS-OO-lcA"/>
                 <outlet property="focusButton" destination="14M-3I-y4w" id="CPa-hx-nlC"/>
                 <outlet property="inspireButton" destination="ZsS-6N-HAW" id="ON2-DG-F6p"/>
@@ -27,54 +28,90 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="kBu-l3-gNe">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="14M-3I-y4w">
-                    <rect key="frame" x="165" y="694" width="75" height="75"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="14M-3I-y4w">
+                    <rect key="frame" x="159" y="510" width="75" height="75"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="75" id="e3h-id-P9F"/>
+                        <constraint firstAttribute="width" constant="75" id="osO-Fk-3b5"/>
+                    </constraints>
                     <color key="tintColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
                     <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" imagePlacement="top" title="Focus" imagePadding="0.0">
+                    <buttonConfiguration key="configuration" style="tinted" imagePlacement="top" title="Focus" imagePadding="0.0">
                         <imageReference key="image" image="hourglass.bottomhalf.filled" catalog="system" symbolScale="large"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30"/>
-                        <color key="baseForegroundColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="baseForegroundColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </buttonConfiguration>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C4w-k8-6x6">
-                    <rect key="frame" x="38" y="754" width="75" height="75"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C4w-k8-6x6">
+                    <rect key="frame" x="159" y="267" width="75" height="75"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="75" id="Jln-vp-Mcv"/>
+                        <constraint firstAttribute="height" constant="75" id="gAn-h5-BZj"/>
+                    </constraints>
                     <color key="tintColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
                     <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" imagePlacement="top" title="Dream" imagePadding="0.0">
+                    <buttonConfiguration key="configuration" style="tinted" imagePlacement="top" title="Dream" imagePadding="0.0">
                         <imageReference key="image" image="cloud.fill" catalog="system" symbolScale="large"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30"/>
                         <fontDescription key="titleFontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
                         <color key="baseForegroundColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </buttonConfiguration>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZsS-6N-HAW">
-                    <rect key="frame" x="194" y="777" width="75" height="75.00000000000432"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZsS-6N-HAW">
+                    <rect key="frame" x="37.666666666666657" y="388.66666666666669" width="75" height="75"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="75" id="bpE-XU-zml"/>
+                        <constraint firstAttribute="width" constant="75" id="hrh-f7-koK"/>
+                    </constraints>
                     <color key="tintColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
                     <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" imagePlacement="top" title="Inspire" imagePadding="0.0">
+                    <buttonConfiguration key="configuration" style="tinted" imagePlacement="top" title="Inspire" imagePadding="0.0">
                         <imageReference key="image" image="tropicalstorm" catalog="system" symbolScale="large"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30"/>
                         <color key="baseForegroundColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </buttonConfiguration>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtS-UI-u8E">
-                    <rect key="frame" x="50" y="664" width="75" height="75"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtS-UI-u8E">
+                    <rect key="frame" x="280.66666666666669" y="388.66666666666669" width="75" height="75"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="75" id="4VS-Yt-sD2"/>
+                        <constraint firstAttribute="width" constant="75" id="rUI-MP-kBe"/>
+                    </constraints>
                     <color key="tintColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
                     <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" imagePlacement="top" title="Relax" imagePadding="0.0">
+                    <buttonConfiguration key="configuration" style="tinted" imagePlacement="top" title="Relax" imagePadding="0.0">
                         <imageReference key="image" image="water.waves" catalog="system" symbolScale="large"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30"/>
+                        <color key="baseForegroundColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </buttonConfiguration>
+                </button>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Cross" translatesAutoresizingMaskIntoConstraints="NO" id="cHv-wf-nMT">
+                    <rect key="frame" x="122.66666666666669" y="352" width="148" height="148"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="148" id="OMW-VY-ONE"/>
+                        <constraint firstAttribute="height" constant="148" id="t6A-6p-L0M"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JU4-Sh-nhA">
+                    <rect key="frame" x="159" y="388.66666666666669" width="75" height="75"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="75" id="3RE-4n-8dI"/>
+                        <constraint firstAttribute="width" constant="75" id="PkE-nd-X1l"/>
+                    </constraints>
+                    <color key="tintColor" red="0.61960784313725492" green="0.8901960784313725" blue="0.70588235294117641" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" imagePlacement="top" imagePadding="0.0">
+                        <imageReference key="image" image="person.circle.fill" catalog="system" symbolScale="large"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30"/>
                         <color key="baseForegroundColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
                     </buttonConfiguration>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3s-vb-Iet">
-                    <rect key="frame" x="90.333333333333329" y="149" width="212.66666666666669" height="25.333333333333343"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3s-vb-Iet">
+                    <rect key="frame" x="90.333333333333329" y="181.66666666666666" width="212.66666666666669" height="25.333333333333343"/>
                     <attributedString key="attributedText">
                         <fragment content="Choose mood direction">
                             <attributes>
@@ -86,33 +123,27 @@
                     </attributedString>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JU4-Sh-nhA">
-                    <rect key="frame" x="85" y="534" width="75" height="75"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="tintColor" red="0.61960784313725492" green="0.8901960784313725" blue="0.70588235294117641" alpha="1" colorSpace="calibratedRGB"/>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" imagePlacement="top" imagePadding="0.0">
-                        <imageReference key="image" image="person.circle.fill" catalog="system" symbolScale="large"/>
-                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30"/>
-                        <color key="baseForegroundColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
-                    </buttonConfiguration>
-                </button>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Cross" translatesAutoresizingMaskIntoConstraints="NO" id="cHv-wf-nMT">
-                    <rect key="frame" x="122.66666666666669" y="352" width="148" height="148"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="148" id="OMW-VY-ONE"/>
-                        <constraint firstAttribute="height" constant="148" id="t6A-6p-L0M"/>
-                    </constraints>
-                </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="C4w-k8-6x6" firstAttribute="top" secondItem="h3s-vb-Iet" secondAttribute="bottom" constant="60" id="30X-3U-Jyh"/>
                 <constraint firstItem="kBu-l3-gNe" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="CrA-YX-3Xd"/>
+                <constraint firstItem="ZsS-6N-HAW" firstAttribute="centerY" secondItem="kBu-l3-gNe" secondAttribute="centerY" id="GoW-Ka-ife"/>
                 <constraint firstItem="kBu-l3-gNe" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="HJ0-wU-j4w"/>
+                <constraint firstItem="14M-3I-y4w" firstAttribute="centerX" secondItem="kBu-l3-gNe" secondAttribute="centerX" id="Nhk-9M-dxX"/>
                 <constraint firstItem="kBu-l3-gNe" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="RdQ-9o-9Q8"/>
+                <constraint firstItem="JU4-Sh-nhA" firstAttribute="centerX" secondItem="kBu-l3-gNe" secondAttribute="centerX" id="S7p-WH-poY"/>
+                <constraint firstItem="cHv-wf-nMT" firstAttribute="top" secondItem="C4w-k8-6x6" secondAttribute="bottom" constant="10" id="SZ8-TZ-4J3"/>
                 <constraint firstAttribute="bottom" secondItem="kBu-l3-gNe" secondAttribute="bottom" id="SuN-Hz-Ovi"/>
+                <constraint firstItem="14M-3I-y4w" firstAttribute="top" secondItem="cHv-wf-nMT" secondAttribute="bottom" constant="10" id="Svn-5c-MQO"/>
+                <constraint firstItem="vtS-UI-u8E" firstAttribute="centerY" secondItem="kBu-l3-gNe" secondAttribute="centerY" id="UGw-Na-LAR"/>
+                <constraint firstItem="cHv-wf-nMT" firstAttribute="leading" secondItem="ZsS-6N-HAW" secondAttribute="trailing" constant="10" id="ZUh-XD-uuZ"/>
+                <constraint firstItem="vtS-UI-u8E" firstAttribute="leading" secondItem="cHv-wf-nMT" secondAttribute="trailing" constant="10" id="bYt-67-hoU"/>
+                <constraint firstItem="h3s-vb-Iet" firstAttribute="centerX" secondItem="kBu-l3-gNe" secondAttribute="centerX" id="eyK-ue-fKW"/>
                 <constraint firstItem="cHv-wf-nMT" firstAttribute="centerY" secondItem="kBu-l3-gNe" secondAttribute="centerY" id="geF-oX-cjI"/>
+                <constraint firstItem="JU4-Sh-nhA" firstAttribute="centerY" secondItem="kBu-l3-gNe" secondAttribute="centerY" id="meH-m7-Pb2"/>
+                <constraint firstItem="C4w-k8-6x6" firstAttribute="centerX" secondItem="kBu-l3-gNe" secondAttribute="centerX" id="sio-T4-14S"/>
                 <constraint firstItem="cHv-wf-nMT" firstAttribute="centerX" secondItem="kBu-l3-gNe" secondAttribute="centerX" id="w34-TO-Bwe"/>
             </constraints>
             <point key="canvasLocation" x="101.5267175572519" y="-4.2253521126760569"/>
