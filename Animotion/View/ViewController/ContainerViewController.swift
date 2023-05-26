@@ -10,7 +10,7 @@ import UIKit
 class ContainerViewController: UIViewController {
     private let menuVC = MenuViewController()
     private let mainScreen = MainViewController()
-    private var menuState: MenuState = .close
+    private var menuState: MenuState = .open
     var navVC: UINavigationController?
     
 
@@ -40,15 +40,24 @@ addChild()
 extension ContainerViewController: MainViewControllerDelegate {
     func didTapMoodButton() {
         switch menuState {
-        case .open:
+        case .close:
+            // open it
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
-                self.mainScreen.view.frame.origin.x =  self.mainScreen.view.frame.size.width + 100
-            } completion: { done in
+                self.mainScreen.view.frame.origin.x =  self.mainScreen.view.frame.size.width - 100
+            } completion: {[weak self] done in
                 if done {
-                    
+                    self?.menuState = .open
                 }
             }
-        case .close:
+        case .open:
+            //close it
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
+                self.mainScreen.view.frame.origin.x =  0
+            } completion: {[weak self] done in
+                if done {
+                    self?.menuState = .close
+                }
+            }
             break
         }
     }

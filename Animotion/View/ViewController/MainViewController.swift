@@ -38,6 +38,10 @@ class MainViewController: UIViewController {
         delegate?.didTapMoodButton()
     }
     
+    @IBAction func inspireButtonTapped(_ sender: UIButton) {
+        delegate?.didTapMoodButton()
+    }
+    
     
     
    

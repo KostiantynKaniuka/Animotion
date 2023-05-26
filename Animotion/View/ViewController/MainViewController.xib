@@ -76,6 +76,9 @@
                         <color key="baseForegroundColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </buttonConfiguration>
+                    <connections>
+                        <action selector="inspireButtonTapped:" destination="-1" eventType="touchUpInside" id="X1B-Ky-vDj"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtS-UI-u8E">
                     <rect key="frame" x="280.66666666666669" y="388.66666666666669" width="75" height="75"/>
