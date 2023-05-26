@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol MainViewControllerDelegate: AnyObject {
+    func didTapMoodButton()
+}
+
 class MainViewController: UIViewController {
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var relaxButton: UIButton!
@@ -15,12 +19,10 @@ class MainViewController: UIViewController {
     @IBOutlet weak var focusButton: UIButton!
     @IBOutlet weak var directionImageView: UIImageView!
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    weak var delegate: MainViewControllerDelegate?
     
-    override func viewDidLayoutSubviews() {
-        dreamButton.layer.cornerRadius = 50
-    }
-    
-    
+  
+  //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
      
@@ -31,6 +33,13 @@ class MainViewController: UIViewController {
         animateButtonAppearance()
     }
 
+    
+    @IBAction func dreamButtonTapped(_ sender: UIButton) {
+        delegate?.didTapMoodButton()
+    }
+    
+    
+    
    
     private func animateButtonAppearance() {
         let buttonAnimations = [
