@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E75B6E7C2A200587001BCB6D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B6E7A2A200587001BCB6D /* MainViewController.swift */; };
+		E75B6E7D2A200587001BCB6D /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E75B6E7B2A200587001BCB6D /* MainViewController.xib */; };
 		E76AE0B22A1FFF1A00102F15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76AE0B12A1FFF1A00102F15 /* AppDelegate.swift */; };
 		E76AE0B42A1FFF1A00102F15 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76AE0B32A1FFF1A00102F15 /* SceneDelegate.swift */; };
 		E76AE0B62A1FFF1A00102F15 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76AE0B52A1FFF1A00102F15 /* ViewController.swift */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E75B6E7A2A200587001BCB6D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		E75B6E7B2A200587001BCB6D /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		E76AE0AE2A1FFF1A00102F15 /* Animotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Animotion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E76AE0B12A1FFF1A00102F15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E76AE0B32A1FFF1A00102F15 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +67,8 @@
 				E76AE0BA2A1FFF1B00102F15 /* Assets.xcassets */,
 				E76AE0BC2A1FFF1B00102F15 /* LaunchScreen.storyboard */,
 				E76AE0BF2A1FFF1B00102F15 /* Info.plist */,
+				E75B6E7A2A200587001BCB6D /* MainViewController.swift */,
+				E75B6E7B2A200587001BCB6D /* MainViewController.xib */,
 			);
 			path = Animotion;
 			sourceTree = "<group>";
@@ -128,6 +134,7 @@
 				E76AE0BE2A1FFF1B00102F15 /* LaunchScreen.storyboard in Resources */,
 				E76AE0BB2A1FFF1B00102F15 /* Assets.xcassets in Resources */,
 				E76AE0B92A1FFF1A00102F15 /* Main.storyboard in Resources */,
+				E75B6E7D2A200587001BCB6D /* MainViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +148,7 @@
 				E76AE0B62A1FFF1A00102F15 /* ViewController.swift in Sources */,
 				E76AE0B22A1FFF1A00102F15 /* AppDelegate.swift in Sources */,
 				E76AE0B42A1FFF1A00102F15 /* SceneDelegate.swift in Sources */,
+				E75B6E7C2A200587001BCB6D /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
