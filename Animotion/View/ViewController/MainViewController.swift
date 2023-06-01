@@ -6,45 +6,45 @@
 //
 
 import UIKit
-
-protocol MainViewControllerDelegate: AnyObject {
-    func didTapMoodButton()
-}
+import SideMenu
 
 class MainViewController: UIViewController {
+    @IBOutlet weak var choosePathLabel: UILabel!
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var relaxButton: UIButton!
     @IBOutlet weak var dreamButton: UIButton!
     @IBOutlet weak var inspireButton: UIButton!
     @IBOutlet weak var focusButton: UIButton!
     @IBOutlet weak var directionImageView: UIImageView!
+    private let menu = SideMenuNavigationController(rootViewController: MenuViewController())
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
-    weak var delegate: MainViewControllerDelegate?
     
-  
+   
   //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+
      
         // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        menu.leftSide = true
         animateButtonAppearance()
     }
 
+    override func viewWillLayoutSubviews() {
+   
+    }
     
     @IBAction func dreamButtonTapped(_ sender: UIButton) {
-        delegate?.didTapMoodButton()
+        present(menu, animated: true, completion: nil)
     }
     
     @IBAction func inspireButtonTapped(_ sender: UIButton) {
-        delegate?.didTapMoodButton()
+       
     }
     
-    
-    
-   
     private func animateButtonAppearance() {
         let buttonAnimations = [
             (button: profileButton, delay: 0.0),
@@ -61,15 +61,15 @@ class MainViewController: UIViewController {
             UIView.animate(withDuration: 1, delay: animation.delay, animations: {
                 animation.button?.alpha = 1.0 // Set final alpha to 1
             }, completion: { _ in
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [self] in
                    
-                    self.impactFeedbackGenerator.prepare()
-                    self.impactFeedbackGenerator.impactOccurred()
+                  impactFeedbackGenerator.prepare()
+                  impactFeedbackGenerator.impactOccurred()
                 }
             })
         }
-        UIView.animate(withDuration: 1, delay: 2.5, animations: {
-            self.directionImageView.alpha = 1
+        UIView.animate(withDuration: 1, delay: 2.5, animations: { [weak self] in
+            self?.directionImageView.alpha = 1
         })
     }
 }

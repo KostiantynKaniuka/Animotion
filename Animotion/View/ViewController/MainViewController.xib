@@ -2,15 +2,22 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Forum-Regular.ttf">
+            <string>Forum</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="Animotion" customModuleProvider="target">
             <connections>
+                <outlet property="choosePathLabel" destination="h3s-vb-Iet" id="Gmb-Tv-hOl"/>
                 <outlet property="directionImageView" destination="cHv-wf-nMT" id="og2-pH-xsi"/>
                 <outlet property="dreamButton" destination="C4w-k8-6x6" id="sKS-OO-lcA"/>
                 <outlet property="focusButton" destination="14M-3I-y4w" id="CPa-hx-nlC"/>
@@ -116,17 +123,10 @@
                         <color key="baseForegroundColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
                     </buttonConfiguration>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3s-vb-Iet">
-                    <rect key="frame" x="90.333333333333329" y="181.66666666666666" width="212.66666666666669" height="25.333333333333343"/>
-                    <attributedString key="attributedText">
-                        <fragment content="Choose mood direction">
-                            <attributes>
-                                <color key="NSColor" red="0.57919406890000003" green="0.1280144453" blue="0.57268613580000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <font key="NSFont" metaFont="system" size="21"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                            </attributes>
-                        </fragment>
-                    </attributedString>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose mood direction" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3s-vb-Iet">
+                    <rect key="frame" x="96" y="183.66666666666666" width="201" height="23.333333333333343"/>
+                    <fontDescription key="fontDescription" name="Forum" family="Forum" pointSize="21"/>
+                    <color key="textColor" red="0.57919406890000003" green="0.1280144453" blue="0.57268613580000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>

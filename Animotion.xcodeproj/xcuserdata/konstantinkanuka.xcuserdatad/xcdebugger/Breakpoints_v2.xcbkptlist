@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "D60736D1-8756-4562-84A9-838321E4B8BE"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "585E65CB-9D73-428E-94ED-C8E650787334"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Animotion/View/ViewController/ContainerViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "11"
+            endingLineNumber = "11"
+            landmarkName = "ContainerViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "585E65CB-9D73-428E-94ED-C8E650787334 - d1009a1b2aef17fb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Animotion.ContainerViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; Animotion.ContainerViewController"
+                  moduleName = "Animotion"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/konstantinkanuka/Desktop/Animotion/Animotion/View/ViewController/ContainerViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "585E65CB-9D73-428E-94ED-C8E650787334 - a88abd85003f2120"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Animotion.ContainerViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;Animotion.ContainerViewController&gt;"
+                  moduleName = "Animotion"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/konstantinkanuka/Desktop/Animotion/Animotion/View/ViewController/ContainerViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "76">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
