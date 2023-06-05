@@ -16,25 +16,27 @@ class MainViewController: UIViewController {
     @IBOutlet weak var inspireButton: UIButton!
     @IBOutlet weak var focusButton: UIButton!
     @IBOutlet weak var directionImageView: UIImageView!
+    private let carouselView = CarouselCollectionView()
     private let menu = SideMenuNavigationController(rootViewController: MenuViewController())
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    private lazy var pageView = carouselView.dots
     
    
   //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-     
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        carouselView.setUpMargins()
+        carouselView.scrollToNextCell()
         menu.leftSide = true
         animateButtonAppearance()
     }
 
     override func viewWillLayoutSubviews() {
-   
+     setUpUI()
+    
     }
     
     @IBAction func dreamButtonTapped(_ sender: UIButton) {
@@ -45,6 +47,25 @@ class MainViewController: UIViewController {
        
     }
     
+    private func setUpUI() {
+        carouselView.translatesAutoresizingMaskIntoConstraints = false
+        pageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(carouselView)
+        view.addSubview(pageView)
+        NSLayoutConstraint.activate([
+            carouselView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+            carouselView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            carouselView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            carouselView.heightAnchor.constraint(equalToConstant: 250),
+            
+            pageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            pageView.topAnchor.constraint(equalTo: carouselView.bottomAnchor)
+        ])
+        
+    }
+    
+
     private func animateButtonAppearance() {
         let buttonAnimations = [
             (button: profileButton, delay: 0.0),
@@ -73,3 +94,4 @@ class MainViewController: UIViewController {
         })
     }
 }
+

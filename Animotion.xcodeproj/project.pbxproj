@@ -8,8 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		614068560C6C5B24682F3734 /* Pods_Animotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCB3CC4FA32298CBD6D7F7A6 /* Pods_Animotion.framework */; };
+		E73A00012A2DFCBE00AA421F /* CarouselCollectionVievModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73A00002A2DFCBE00AA421F /* CarouselCollectionVievModel.swift */; };
+		E73A00052A2E26CF00AA421F /* DotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73A00042A2E26CF00AA421F /* DotsView.swift */; };
 		E75B6E7C2A200587001BCB6D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B6E7A2A200587001BCB6D /* MainViewController.swift */; };
 		E75B6E7D2A200587001BCB6D /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E75B6E7B2A200587001BCB6D /* MainViewController.xib */; };
+		E7693B3A2A293382003C5D3F /* CarouselCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7693B392A293382003C5D3F /* CarouselCollectionView.swift */; };
+		E7693B3D2A293B29003C5D3F /* CarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7693B3C2A293B29003C5D3F /* CarouselCollectionViewCell.swift */; };
 		E76AE0B22A1FFF1A00102F15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76AE0B12A1FFF1A00102F15 /* AppDelegate.swift */; };
 		E76AE0B42A1FFF1A00102F15 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76AE0B32A1FFF1A00102F15 /* SceneDelegate.swift */; };
 		E76AE0BB2A1FFF1B00102F15 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E76AE0BA2A1FFF1B00102F15 /* Assets.xcassets */; };
@@ -24,8 +28,12 @@
 /* Begin PBXFileReference section */
 		27100A960F7EE5529B77A8C3 /* Pods-Animotion.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Animotion.release.xcconfig"; path = "Target Support Files/Pods-Animotion/Pods-Animotion.release.xcconfig"; sourceTree = "<group>"; };
 		524192AE8343C00B5BD5AD20 /* Pods-Animotion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Animotion.debug.xcconfig"; path = "Target Support Files/Pods-Animotion/Pods-Animotion.debug.xcconfig"; sourceTree = "<group>"; };
+		E73A00002A2DFCBE00AA421F /* CarouselCollectionVievModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionVievModel.swift; sourceTree = "<group>"; };
+		E73A00042A2E26CF00AA421F /* DotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotsView.swift; sourceTree = "<group>"; };
 		E75B6E7A2A200587001BCB6D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E75B6E7B2A200587001BCB6D /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		E7693B392A293382003C5D3F /* CarouselCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionView.swift; sourceTree = "<group>"; };
+		E7693B3C2A293B29003C5D3F /* CarouselCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionViewCell.swift; sourceTree = "<group>"; };
 		E76AE0AE2A1FFF1A00102F15 /* Animotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Animotion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E76AE0B12A1FFF1A00102F15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E76AE0B32A1FFF1A00102F15 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -67,6 +75,15 @@
 				27100A960F7EE5529B77A8C3 /* Pods-Animotion.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E7693B3B2A293B06003C5D3F /* СaroucelView */ = {
+			isa = PBXGroup;
+			children = (
+				E7693B392A293382003C5D3F /* CarouselCollectionView.swift */,
+				E7693B3C2A293B29003C5D3F /* CarouselCollectionViewCell.swift */,
+			);
+			path = "СaroucelView";
 			sourceTree = "<group>";
 		};
 		E76AE0A52A1FFF1A00102F15 = {
@@ -115,6 +132,7 @@
 			children = (
 				E7F168352A28C933004B4E49 /* Extencion  */,
 				E7EFA0E42A20FBFE00544275 /* ViewController */,
+				E73A00042A2E26CF00AA421F /* DotsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -125,6 +143,7 @@
 				E75B6E7A2A200587001BCB6D /* MainViewController.swift */,
 				E75B6E7B2A200587001BCB6D /* MainViewController.xib */,
 				E7F168382A28CA1E004B4E49 /* MenuSideBar */,
+				E7693B3B2A293B06003C5D3F /* СaroucelView */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -132,6 +151,7 @@
 		E7EFA0E92A2101AE00544275 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				E73A00002A2DFCBE00AA421F /* CarouselCollectionVievModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -271,9 +291,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7693B3D2A293B29003C5D3F /* CarouselCollectionViewCell.swift in Sources */,
 				E7EFA0E62A20FC3700544275 /* MenuViewController.swift in Sources */,
+				E73A00012A2DFCBE00AA421F /* CarouselCollectionVievModel.swift in Sources */,
 				E7F168372A28C941004B4E49 /* UIColor.swift in Sources */,
+				E7693B3A2A293382003C5D3F /* CarouselCollectionView.swift in Sources */,
 				E76AE0B22A1FFF1A00102F15 /* AppDelegate.swift in Sources */,
+				E73A00052A2E26CF00AA421F /* DotsView.swift in Sources */,
 				E76AE0B42A1FFF1A00102F15 /* SceneDelegate.swift in Sources */,
 				E75B6E7C2A200587001BCB6D /* MainViewController.swift in Sources */,
 				E7F1683D2A28CA58004B4E49 /* SideMenuCellTableViewCell.swift in Sources */,

@@ -20,6 +20,8 @@ class MenuViewController: UIViewController {
         menuTableView.register(UINib(nibName: "SideMenuCellTableViewCell", bundle: nil), forCellReuseIdentifier: SideMenuCellTableViewCell.sideMenuReuseId)
     }
     
+    
+    
     override func viewWillLayoutSubviews() {
       
         view.backgroundColor = .gray
