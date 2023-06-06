@@ -8,5 +8,5 @@
 import UIKit
 
 extension UIColor {
-    static let relaxedGreen = UIColor(red: 158/255, green: 227/255, blue: 171/255, alpha: 1)
+    static let relaxedGreen = UIColor(red: 158/255, green: 227/255, blue: 171/255, alpha: 0.7)
 }

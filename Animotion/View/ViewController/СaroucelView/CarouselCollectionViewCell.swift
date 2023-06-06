@@ -6,13 +6,23 @@
 //
 
 import UIKit
+import Kingfisher
+
+
 
 class CarouselCollectionViewCell: UICollectionViewCell {
     static let carouselCellId = "CarouselCell"
     
     let cellImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "zen")
+        let url = URL(string: "zen")
+        imageView.kf.setImage(with: url, options: [.cacheOriginalImage])
+        imageView.layer.cornerRadius = 15.0
+        imageView.layer.borderWidth = 2
+        imageView.layer.borderColor =  UIColor.white.cgColor
+        imageView.clipsToBounds = true
+        
+        
         return imageView
     }()
     
@@ -28,6 +38,7 @@ class CarouselCollectionViewCell: UICollectionViewCell {
     
     private func setUpUi() {
         backgroundColor = .clear
+        cellImage.alpha = 0.4
         cellImage.translatesAutoresizingMaskIntoConstraints = false
         addSubview(cellImage)
         NSLayoutConstraint.activate([
@@ -40,17 +51,19 @@ class CarouselCollectionViewCell: UICollectionViewCell {
     
     func transformToLarge() { // Make center cell larger
         self.layer.borderColor = UIColor.clear.cgColor
-        UIView.animate(withDuration: 0.2) {
-            self.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-            self.layer.borderWidth = 1.3
+        UIView.animate(withDuration: 0.2) { [weak self] in
+            self?.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            self?.layer.borderWidth = 1.3
+            self?.cellImage.alpha = 1.0
             
         }
     }
     
     func transformToStandart() { // return cell to origin state
-        UIView.animate(withDuration: 0.2) {
-            self.layer.borderWidth = 0
-            self.transform = CGAffineTransform.identity
+        UIView.animate(withDuration: 0.2) { [weak self] in
+            self?.layer.borderWidth = 0
+            self?.transform = CGAffineTransform.identity
+            self?.cellImage.alpha = 0.4
         }
     }
 }

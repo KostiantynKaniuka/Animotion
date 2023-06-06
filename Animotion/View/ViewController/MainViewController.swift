@@ -36,6 +36,7 @@ class MainViewController: UIViewController {
 
     override func viewWillLayoutSubviews() {
      setUpUI()
+        carouselView.updateUi()
     
     }
     
@@ -44,7 +45,21 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func inspireButtonTapped(_ sender: UIButton) {
-       
+//        FireAPIManager.shared.addingDataToDb { error in
+//            if error == nil {
+//                print("data sended ✅")
+//
+//            } else {
+//                print("failure to sent data", error)
+//            }
+//        }
+        
+//        FireAPIManager.shared.getCarouselDataFromdb { result in
+//            print(result)
+//        }
+        carouselView.reloadData()
+        carouselView.updateUi()
+      
     }
     
     private func setUpUI() {

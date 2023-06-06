@@ -8,6 +8,11 @@ target 'Animotion' do
   # Pods for Animotion
 
 pod 'SideMenu', '~> 6.0'
+pod 'Kingfisher', '~> 7.0'
+pod 'FirebaseAnalytics'
+pod 'FirebaseAuth'
+pod 'FirebaseFirestore'
+pod 'FirebaseDatabase'
 
 inhibit_all_warnings!
 end

@@ -6,17 +6,19 @@
 //
 
 import UIKit
+import Kingfisher
 
 class CarouselCollectionView: UICollectionView {
     private var centerCell: CarouselCollectionViewCell?
     private let layout = UICollectionViewFlowLayout()
-     var dots = DotsView()
+    private var collectionViewData: [CarouselData] = []
+    var dots = DotsView()
     let viewModel = CarouselCollectionVievModel()
     
     init() {
         super.init(frame: .zero, collectionViewLayout: layout)
-       
         setUpUI()
+      
     }
     
     required init?(coder: NSCoder) {
@@ -24,12 +26,15 @@ class CarouselCollectionView: UICollectionView {
     }
     
     func scrollToNextCell(){
-        let cellSize = CGSizeMake(viewModel.cellWidght, viewModel.cellHeight)
+        let cellSize = CGSizeMake(viewModel.cellWidgth, viewModel.cellHeight)
           let contentOffset = contentOffset
           scrollRectToVisible(CGRectMake(contentOffset.x + cellSize.width, contentOffset.y, cellSize.width, cellSize.height), animated: true);
-
       }
-    
+
+     func updateUi() {
+         collectionViewData = viewModel.fetchCarouselData()
+         print("🌞", collectionViewData)
+    }
 
     private func setUpUI() {
         layout.scrollDirection = .horizontal
@@ -59,11 +64,11 @@ extension CarouselCollectionView: UICollectionViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard scrollView is UICollectionView else {return}
         dots.currentPage = Int(
-            (self.contentOffset.x / viewModel.cellWidght)
+            (self.contentOffset.x / viewModel.cellWidgth)
                .rounded(.toNearestOrAwayFromZero)
            )// seting dots on page contol
         let centerPoint = CGPoint(x: self.frame.size.width / 2 + scrollView.contentOffset.x , y: self.frame.size.height / 2 + scrollView.contentOffset.y) // checking center of collection view
-        print(centerPoint)
+       
      
         
         if let selecredIndexPath = self.indexPathForItem(at: centerPoint) {
@@ -94,12 +99,13 @@ extension CarouselCollectionView: UICollectionViewDelegateFlowLayout {
 extension CarouselCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         dots.numberOfPages = viewModel.numbersOfItems
-        return viewModel.numbersOfItems
+        return collectionViewData.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CarouselCollectionViewCell.carouselCellId, for: indexPath) as? CarouselCollectionViewCell else { return UICollectionViewCell() }
-
+        let url = URL(string: collectionViewData[indexPath.row].imageUrl)
+        cell.cellImage.kf.setImage(with: url)
         return  cell
     }
 }
