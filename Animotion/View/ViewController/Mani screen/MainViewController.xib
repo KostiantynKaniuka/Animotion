@@ -9,11 +9,6 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Forum-Regular.ttf">
-            <string>Forum</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="Animotion" customModuleProvider="target">
             <connections>
@@ -32,11 +27,12 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gra" translatesAutoresizingMaskIntoConstraints="NO" id="kBu-l3-gNe">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back 1" translatesAutoresizingMaskIntoConstraints="NO" id="kBu-l3-gNe">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="14M-3I-y4w">
                     <rect key="frame" x="159" y="420" width="75" height="75"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="75" id="e3h-id-P9F"/>
                         <constraint firstAttribute="width" constant="75" id="osO-Fk-3b5"/>
@@ -47,11 +43,12 @@
                         <imageReference key="image" image="hourglass.bottomhalf.filled" catalog="system" symbolScale="large"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30"/>
                         <color key="baseForegroundColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="baseBackgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </buttonConfiguration>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C4w-k8-6x6">
                     <rect key="frame" x="159" y="177" width="75" height="75"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="75" id="Jln-vp-Mcv"/>
                         <constraint firstAttribute="height" constant="75" id="gAn-h5-BZj"/>
@@ -63,7 +60,7 @@
                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30"/>
                         <fontDescription key="titleFontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
                         <color key="baseForegroundColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="baseBackgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </buttonConfiguration>
                     <connections>
                         <action selector="dreamButtonTapped:" destination="-1" eventType="touchUpInside" id="IH1-TG-4Ku"/>
@@ -71,6 +68,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZsS-6N-HAW">
                     <rect key="frame" x="37.666666666666657" y="298.66666666666669" width="75" height="75"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="75" id="bpE-XU-zml"/>
                         <constraint firstAttribute="width" constant="75" id="hrh-f7-koK"/>
@@ -81,7 +79,7 @@
                         <imageReference key="image" image="tropicalstorm" catalog="system" symbolScale="large"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30"/>
                         <color key="baseForegroundColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="baseBackgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </buttonConfiguration>
                     <connections>
                         <action selector="inspireButtonTapped:" destination="-1" eventType="touchUpInside" id="X1B-Ky-vDj"/>
@@ -89,6 +87,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtS-UI-u8E">
                     <rect key="frame" x="280.66666666666669" y="298.66666666666669" width="75" height="75"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="75" id="4VS-Yt-sD2"/>
                         <constraint firstAttribute="width" constant="75" id="rUI-MP-kBe"/>
@@ -99,7 +98,7 @@
                         <imageReference key="image" image="water.waves" catalog="system" symbolScale="large"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30"/>
                         <color key="baseForegroundColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="baseBackgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </buttonConfiguration>
                 </button>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Cross" translatesAutoresizingMaskIntoConstraints="NO" id="cHv-wf-nMT">
@@ -115,19 +114,19 @@
                         <constraint firstAttribute="height" constant="75" id="3RE-4n-8dI"/>
                         <constraint firstAttribute="width" constant="75" id="PkE-nd-X1l"/>
                     </constraints>
-                    <color key="tintColor" red="0.61960784313725492" green="0.8901960784313725" blue="0.70588235294117641" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" imagePlacement="top" imagePadding="0.0">
                         <imageReference key="image" image="person.circle.fill" catalog="system" symbolScale="large"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30"/>
-                        <color key="baseForegroundColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </buttonConfiguration>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose mood direction" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3s-vb-Iet">
-                    <rect key="frame" x="77.000000000000014" y="89.333333333333329" width="239.33333333333337" height="27.666666666666671"/>
+                    <rect key="frame" x="74.000000000000014" y="87" width="245.33333333333337" height="30"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="tintColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <fontDescription key="fontDescription" name="Forum" family="Forum" pointSize="25"/>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="25"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="highlightedColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </label>
@@ -159,8 +158,8 @@
     </objects>
     <resources>
         <image name="Cross" width="550" height="556"/>
+        <image name="back 1" width="6000" height="4000"/>
         <image name="cloud.fill" catalog="system" width="128" height="87"/>
-        <image name="gra" width="1000" height="1000"/>
         <image name="hourglass.bottomhalf.filled" catalog="system" width="103" height="128"/>
         <image name="person.circle.fill" catalog="system" width="128" height="123"/>
         <image name="tropicalstorm" catalog="system" width="88" height="128"/>

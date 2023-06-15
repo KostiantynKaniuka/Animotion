@@ -8,75 +8,72 @@
 import UIKit
 import Kingfisher
 
-class CarouselCollectionView: UICollectionView {
+class CarouselCollectionView: UICollectionViewController {
+    private let viewModel = CarouselCollectionVievModel()
     private var centerCell: CarouselCollectionViewCell?
-    private let layout = UICollectionViewFlowLayout()
+    private var layout = UICollectionViewFlowLayout()
     private var collectionViewData: [CarouselData] = []
     var dots = DotsView()
-    let viewModel = CarouselCollectionVievModel()
     
-    init() {
-        super.init(frame: .zero, collectionViewLayout: layout)
-        setUpUI()
-      
+    
+    init(layout: UICollectionViewFlowLayout) {
+        self.layout = layout
+        super.init(collectionViewLayout: layout)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        viewModel.delegate = self
+        viewModel.loadCarouselData()
+        setUpUI()
+    }
+   
     func scrollToNextCell(){
         let cellSize = CGSizeMake(viewModel.cellWidgth, viewModel.cellHeight)
-          let contentOffset = contentOffset
-          scrollRectToVisible(CGRectMake(contentOffset.x + cellSize.width, contentOffset.y, cellSize.width, cellSize.height), animated: true);
+        let contentOffset = collectionView.contentOffset
+        collectionView.scrollRectToVisible(CGRectMake(contentOffset.x + cellSize.width, contentOffset.y, cellSize.width, cellSize.height), animated: true);
       }
-
-     func updateUi() {
-         collectionViewData = viewModel.fetchCarouselData()
-         print("🌞", collectionViewData)
-    }
-
+    
     private func setUpUI() {
+        collectionView.collectionViewLayout = layout
         layout.scrollDirection = .horizontal
-        delegate = self
-        dataSource = self
-        backgroundColor = .clear
-        register(CarouselCollectionViewCell.self, forCellWithReuseIdentifier: CarouselCollectionViewCell.carouselCellId)
+        collectionView.backgroundColor = .clear
+        collectionView.register(CarouselCollectionViewCell.self, forCellWithReuseIdentifier: CarouselCollectionViewCell.carouselCellId)
         layout.minimumLineSpacing = viewModel.cellsDistance// space between cells
-        contentInset.right = viewModel.edgedistance // space fron edge from superview to collection view
-        contentInset.left = viewModel.edgedistance
-        showsHorizontalScrollIndicator = false
-        showsVerticalScrollIndicator = false
+        collectionView.contentInset.right = viewModel.edgedistance // space fron edge from superview to collection view
+        collectionView.contentInset.left = viewModel.edgedistance
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
     }
     
     func setUpMargins() {
-        let layoutMargins: CGFloat = self.layoutMargins.left + self.layoutMargins.right
-        let sideInsert = (self.frame.width / 2) - layoutMargins
-        self.contentInset = UIEdgeInsets(top: 0, left: sideInsert, bottom: 0, right: sideInsert)
+        let layoutMargins: CGFloat = collectionView.layoutMargins.left + collectionView.layoutMargins.right
+        let sideInsert = (collectionView.frame.width / 2) - layoutMargins
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: sideInsert, bottom: 0, right: sideInsert)
     }
 }
 
 
-extension CarouselCollectionView: UICollectionViewDelegate {
-    
 
+//MARK: - Scrollview
+extension CarouselCollectionView {
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard scrollView is UICollectionView else {return}
         dots.currentPage = Int(
-            (self.contentOffset.x / viewModel.cellWidgth)
+            (collectionView.contentOffset.x / viewModel.cellWidgth)
                .rounded(.toNearestOrAwayFromZero)
            )// seting dots on page contol
-        let centerPoint = CGPoint(x: self.frame.size.width / 2 + scrollView.contentOffset.x , y: self.frame.size.height / 2 + scrollView.contentOffset.y) // checking center of collection view
-       
-     
-        
-        if let selecredIndexPath = self.indexPathForItem(at: centerPoint) {
-            self.centerCell = (self.cellForItem(at: selecredIndexPath) as? CarouselCollectionViewCell)
+        let centerPoint = CGPoint(x: collectionView.frame.size.width / 2 + scrollView.contentOffset.x , y: collectionView.frame.size.height / 2 + scrollView.contentOffset.y) // checking center of collection view
+        if let selecredIndexPath = collectionView.indexPathForItem(at: centerPoint) {
+            self.centerCell = (collectionView.cellForItem(at: selecredIndexPath) as? CarouselCollectionViewCell)
             centerCell?.transformToLarge()
            
         }
-        
         if let cell = self.centerCell {
             let offsetX = centerPoint.x - cell.center.x
             
@@ -88,6 +85,7 @@ extension CarouselCollectionView: UICollectionViewDelegate {
     }
 }
 
+//MARK: - CollectionView Layout
 extension CarouselCollectionView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -96,21 +94,31 @@ extension CarouselCollectionView: UICollectionViewDelegateFlowLayout {
     
 }
 
-extension CarouselCollectionView: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        dots.numberOfPages = viewModel.numbersOfItems
+
+extension CarouselCollectionView {
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let url = collectionViewData[indexPath.row].linkToBlog
+        viewModel.openUrl(myUrl: url)
+    }
+}
+//MARK: - Data source
+extension CarouselCollectionView {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        dots.numberOfPages = collectionViewData.count
         return collectionViewData.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CarouselCollectionViewCell.carouselCellId, for: indexPath) as? CarouselCollectionViewCell else { return UICollectionViewCell() }
         let url = URL(string: collectionViewData[indexPath.row].imageUrl)
-        cell.cellImage.kf.setImage(with: url)
+        cell.cellTitle.text = collectionViewData[indexPath.row].descriptionText
+       cell.cellImage.kf.setImage(with: url)
         return  cell
     }
 }
 
-
+//MARK: - Flow Layouyt
 extension UICollectionViewFlowLayout {
 
     override open func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
@@ -125,6 +133,13 @@ extension UICollectionViewFlowLayout {
                 }
             })
             return CGPoint(x: proposedContentOffset.x + offsetAdjustment, y: proposedContentOffset.y)
+    }
+}
 
+extension CarouselCollectionView: CarouselCollectionViewDelegate {
+    
+    func carouselDataLoaded(data: [CarouselData]) {
+        collectionViewData = data
+        collectionView.reloadData()
     }
 }

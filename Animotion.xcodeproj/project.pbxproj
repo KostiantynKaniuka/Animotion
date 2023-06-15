@@ -124,6 +124,8 @@
 		E76AE0B02A1FFF1A00102F15 /* Animotion */ = {
 			isa = PBXGroup;
 			children = (
+				E76AE0B12A1FFF1A00102F15 /* AppDelegate.swift */,
+				E7D87B8B2A3B0EEE00BECCBE /* Helpers */,
 				E7F482022A2FB595008B3888 /* source */,
 				E7F481FF2A2FB54E008B3888 /* Model */,
 				E73A00062A2E4A4000AA421F /* Network */,
@@ -132,6 +134,23 @@
 				E7EFA0E32A20FBEA00544275 /* View */,
 			);
 			path = Animotion;
+			sourceTree = "<group>";
+		};
+		E7D87B8B2A3B0EEE00BECCBE /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E7F168352A28C933004B4E49 /* Extencion  */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		E7D87B8C2A3B12AD00BECCBE /* Mani screen */ = {
+			isa = PBXGroup;
+			children = (
+				E75B6E7A2A200587001BCB6D /* MainViewController.swift */,
+				E75B6E7B2A200587001BCB6D /* MainViewController.xib */,
+			);
+			path = "Mani screen";
 			sourceTree = "<group>";
 		};
 		E7E4385C2A28EB27002F63F6 /* Font */ = {
@@ -145,7 +164,6 @@
 		E7EFA0E32A20FBEA00544275 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E7F168352A28C933004B4E49 /* Extencion  */,
 				E7EFA0E42A20FBFE00544275 /* ViewController */,
 				E73A00042A2E26CF00AA421F /* DotsView.swift */,
 			);
@@ -155,8 +173,7 @@
 		E7EFA0E42A20FBFE00544275 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				E75B6E7A2A200587001BCB6D /* MainViewController.swift */,
-				E75B6E7B2A200587001BCB6D /* MainViewController.xib */,
+				E7D87B8C2A3B12AD00BECCBE /* Mani screen */,
 				E7F168382A28CA1E004B4E49 /* MenuSideBar */,
 				E7693B3B2A293B06003C5D3F /* СaroucelView */,
 			);
@@ -200,7 +217,6 @@
 		E7F482022A2FB595008B3888 /* source */ = {
 			isa = PBXGroup;
 			children = (
-				E76AE0B12A1FFF1A00102F15 /* AppDelegate.swift */,
 				E76AE0B32A1FFF1A00102F15 /* SceneDelegate.swift */,
 				E76AE0BA2A1FFF1B00102F15 /* Assets.xcassets */,
 				E7AEC3F02A2FA52300EC21DE /* GoogleService-Info.plist */,

@@ -38,6 +38,7 @@ class FireAPIManager {
                                 
                                 let carouselItem = CarouselData(imageUrl: imageUrl, descriptionText: descriptionText, linkToBlog: linkToBlog)
                                 carouselData.append(carouselItem)
+                                print("➡️", carouselData.count)
                             }
                         }
                     }
@@ -46,12 +47,13 @@ class FireAPIManager {
         })
     }
     
-    func addingDataToDb(completion: @escaping (Error?) -> Void) {
+    func addingDataToDb(name: String, completion: @escaping (Error?) -> Void) {
         let db = configureFB()
-        ref = db.child("CarouselData").child("healthline")
+        ref = db.child("CarouselData").child(name)
         ref.setValue([ "imageUrl": "",
                        "descriptionText": "",
                        "linkToBlog": ""]) {(error, _) in
+            print("✅ data added" )
             completion(error)
         }
     }

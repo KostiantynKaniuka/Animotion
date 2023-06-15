@@ -16,13 +16,17 @@ class MainViewController: UIViewController {
     @IBOutlet weak var inspireButton: UIButton!
     @IBOutlet weak var focusButton: UIButton!
     @IBOutlet weak var directionImageView: UIImageView!
-    private let carouselView = CarouselCollectionView()
+    private let carouselView = CarouselCollectionView(layout: UICollectionViewFlowLayout())
     private let menu = SideMenuNavigationController(rootViewController: MenuViewController())
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     private lazy var pageView = carouselView.dots
     
    
   //MARK: - Lifecycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+      
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -35,8 +39,9 @@ class MainViewController: UIViewController {
     }
 
     override func viewWillLayoutSubviews() {
+    
      setUpUI()
-        carouselView.updateUi()
+   
     
     }
     
@@ -45,43 +50,31 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func inspireButtonTapped(_ sender: UIButton) {
-//        FireAPIManager.shared.addingDataToDb { error in
-//            if error == nil {
-//                print("data sended ✅")
-//
-//            } else {
-//                print("failure to sent data", error)
-//            }
-//        }
-        
-//        FireAPIManager.shared.getCarouselDataFromdb { result in
-//            print(result)
-//        }
-        carouselView.reloadData()
-        carouselView.updateUi()
       
     }
     
     private func setUpUI() {
-        carouselView.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(red: 178/255, green: 236/255, blue: 197/255, alpha: 1)
+        carouselView.view.translatesAutoresizingMaskIntoConstraints = false
         pageView.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(carouselView)
+        view.addSubview(carouselView.view)
         view.addSubview(pageView)
         NSLayoutConstraint.activate([
-            carouselView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
-            carouselView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            carouselView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            carouselView.heightAnchor.constraint(equalToConstant: 250),
+            carouselView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+            carouselView.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            carouselView.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            carouselView.view.heightAnchor.constraint(equalToConstant: 300),
             
             pageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            pageView.topAnchor.constraint(equalTo: carouselView.bottomAnchor)
+            pageView.topAnchor.constraint(equalTo: carouselView.view.bottomAnchor)
         ])
         
     }
     
 
     private func animateButtonAppearance() {
+  
         let buttonAnimations = [
             (button: profileButton, delay: 0.0),
             (button: dreamButton, delay: 0.5),

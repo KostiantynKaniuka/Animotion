@@ -8,20 +8,25 @@
 import UIKit
 import Kingfisher
 
-
-
-class CarouselCollectionViewCell: UICollectionViewCell {
+final class CarouselCollectionViewCell: UICollectionViewCell {
     static let carouselCellId = "CarouselCell"
+    let cellTitle: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12, weight: .bold)
+        label.numberOfLines = 0
+        label.textColor = .white
+        
+        return label
+    }()
     
     let cellImage: UIImageView = {
         let imageView = UIImageView()
-        let url = URL(string: "zen")
-        imageView.kf.setImage(with: url, options: [.cacheOriginalImage])
         imageView.layer.cornerRadius = 15.0
-        imageView.layer.borderWidth = 2
+        imageView.layer.borderWidth = 1
         imageView.layer.borderColor =  UIColor.white.cgColor
+       // imageView.layer.borderColor?.alpha = 0.5
         imageView.clipsToBounds = true
-        
+        imageView.contentMode = .scaleAspectFill
         
         return imageView
     }()
@@ -40,13 +45,22 @@ class CarouselCollectionViewCell: UICollectionViewCell {
         backgroundColor = .clear
         cellImage.alpha = 0.4
         cellImage.translatesAutoresizingMaskIntoConstraints = false
+        cellTitle.translatesAutoresizingMaskIntoConstraints = false
         addSubview(cellImage)
+        addSubview(cellTitle)
+     
         NSLayoutConstraint.activate([
+            cellTitle.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            cellTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            cellTitle.trailingAnchor.constraint(equalTo: trailingAnchor),
             cellImage.leadingAnchor.constraint(equalTo: leadingAnchor),
             cellImage.trailingAnchor.constraint(equalTo: trailingAnchor),
-            cellImage.topAnchor.constraint(equalTo: topAnchor),
+            cellImage.topAnchor.constraint(equalTo: topAnchor, constant: 50),
             cellImage.bottomAnchor.constraint(equalTo: bottomAnchor)
+            
+            
         ])
+        cellTitle.isHidden = true
     }
     
     func transformToLarge() { // Make center cell larger
@@ -55,7 +69,7 @@ class CarouselCollectionViewCell: UICollectionViewCell {
             self?.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
             self?.layer.borderWidth = 1.3
             self?.cellImage.alpha = 1.0
-            
+            self?.cellTitle.isHidden = false
         }
     }
     
@@ -64,6 +78,7 @@ class CarouselCollectionViewCell: UICollectionViewCell {
             self?.layer.borderWidth = 0
             self?.transform = CGAffineTransform.identity
             self?.cellImage.alpha = 0.4
+            self?.cellTitle.isHidden = true
         }
     }
 }
