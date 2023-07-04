@@ -29,20 +29,18 @@ class MainViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        animateButtonAppearance()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         carouselView.setUpMargins()
         carouselView.scrollToNextCell()
         menu.leftSide = true
-        animateButtonAppearance()
+        menu.presentationStyle = .menuDissolveIn
     }
 
     override func viewWillLayoutSubviews() {
-    
      setUpUI()
-   
-    
     }
     
     @IBAction func dreamButtonTapped(_ sender: UIButton) {
@@ -50,7 +48,7 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func inspireButtonTapped(_ sender: UIButton) {
-      
+      show(VideoPlayer(), sender: self)
     }
     
     private func setUpUI() {

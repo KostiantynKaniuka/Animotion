@@ -57,4 +57,32 @@ class FireAPIManager {
             completion(error)
         }
     }
+    
+    func getSideMenuData(completion: @escaping ([SideMenu]) -> Void) {
+        let db = configureFB()
+        db.child("sidemenu").getData(completion: { error, snapshot in
+            guard error == nil else {
+               print(error!.localizedDescription)
+               return;
+             }
+            var sideMenuData: [SideMenu] = []
+                    
+            if let value = snapshot?.value as? [String: Any] {
+                        for (_, data) in value {
+                            if let dataDict = data as? [String: Any] {
+                                let image = dataDict["image"]  as? String ?? ""
+                                let location = dataDict["location"] as? String ?? ""
+                                let name = dataDict["name"] as? String ?? ""
+                                let section = dataDict["section"] as? Int ?? 0
+                                let vieolink = dataDict["vieoLink"] as? String ?? ""
+                                
+                                let sidemenuItem = SideMenu(image: image, location: location, name: name, section: section, videoLink: vieolink)
+                                sideMenuData.append(sidemenuItem)
+                                print("➡️", sideMenuData.count)
+                            }
+                        }
+                    }
+                    completion(sideMenuData)
+        })
+    }
 }

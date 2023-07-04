@@ -6,15 +6,19 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MenuViewController: UIViewController {
     private let menuTableView = UITableView()
-
-    var mockdata = ["one", "two", "three", "four"]
+    private let topView = UIView()
+    private let videoPlayer = VideoPlayer()
+    private let viewModel = SideMenuViewModel()
+    private var tableViewData = [SideMenu]()
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.delegate = self
+        viewModel.getSideMenuData()
         menuTableView.delegate = self
         menuTableView.dataSource = self
         menuTableView.register(UINib(nibName: "SideMenuCellTableViewCell", bundle: nil), forCellReuseIdentifier: SideMenuCellTableViewCell.sideMenuReuseId)
@@ -23,9 +27,9 @@ class MenuViewController: UIViewController {
     
     
     override func viewWillLayoutSubviews() {
-      
-        view.backgroundColor = .gray
-        menuTableView.backgroundColor = .gray
+        view.backgroundColor = .menuBacgtoundColor
+        menuTableView.backgroundColor = .clear
+        
         menuTableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(menuTableView)
         NSLayoutConstraint.activate([
@@ -36,6 +40,10 @@ class MenuViewController: UIViewController {
         ])
      
     }
+    
+    private func setupUi() {
+        
+    }
 }
 
 extension MenuViewController: UITableViewDelegate {
@@ -44,20 +52,37 @@ extension MenuViewController: UITableViewDelegate {
 
 extension MenuViewController: UITableViewDataSource {
     
+ 
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
+    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 100
+        return tableViewData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SideMenuCellTableViewCell.sideMenuReuseId) as? SideMenuCellTableViewCell else { return UITableViewCell() }
-        cell.titleLabel.text = "Test "
+        let url = URL(string: tableViewData[indexPath.row].image)
+        cell.cellImage.kf.setImage(with: url)
+        cell.cellImage.backgroundColor = .black
+        cell.titleLabel.text = tableViewData[indexPath.row].name
+        
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.dismiss(animated: true)
+       
     }
 }
 
-
+extension MenuViewController: SideMenuDataDelegate {
+    func sideMenuDataLoaded(data: [SideMenu]) {
+        tableViewData = data
+        menuTableView.reloadData()
+    }
+}

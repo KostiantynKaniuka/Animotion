@@ -10,6 +10,8 @@ import UIKit
 class SideMenuCellTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var cellImage: UIImageView!
+    @IBOutlet weak var darkView: UIView!
+    
     static let sideMenuReuseId = "SideMenuCell"
     
     override func awakeFromNib() {
@@ -17,10 +19,22 @@ class SideMenuCellTableViewCell: UITableViewCell {
         // Initialization code
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        configureCellAppearance()
+    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
+    private func configureCellAppearance() {
+        cellImage.layer.cornerRadius = 15
+                cellImage.clipsToBounds = true
+        darkView.layer.cornerRadius = 15
+                darkView.clipsToBounds = true
+//        layer.borderWidth = 1.0
+//        layer.borderColor = UIColor.black.cgColor
+    }
 }

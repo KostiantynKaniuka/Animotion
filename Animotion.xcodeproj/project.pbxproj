@@ -11,7 +11,7 @@
 		E7242D2A2A2F71F10072B625 /* FireBaseAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7242D292A2F71F10072B625 /* FireBaseAPIManager.swift */; };
 		E73A00012A2DFCBE00AA421F /* CarouselCollectionVievModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73A00002A2DFCBE00AA421F /* CarouselCollectionVievModel.swift */; };
 		E73A00052A2E26CF00AA421F /* DotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73A00042A2E26CF00AA421F /* DotsView.swift */; };
-		E73A00082A2E4A5D00AA421F /* CarouselNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73A00072A2E4A5D00AA421F /* CarouselNetworkManager.swift */; };
+		E73F4F2C2A4AF8260035112A /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73F4F2B2A4AF8260035112A /* VideoPlayer.swift */; };
 		E75B6E7C2A200587001BCB6D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B6E7A2A200587001BCB6D /* MainViewController.swift */; };
 		E75B6E7D2A200587001BCB6D /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E75B6E7B2A200587001BCB6D /* MainViewController.xib */; };
 		E7693B3A2A293382003C5D3F /* CarouselCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7693B392A293382003C5D3F /* CarouselCollectionView.swift */; };
@@ -20,6 +20,8 @@
 		E76AE0B42A1FFF1A00102F15 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76AE0B32A1FFF1A00102F15 /* SceneDelegate.swift */; };
 		E76AE0BB2A1FFF1B00102F15 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E76AE0BA2A1FFF1B00102F15 /* Assets.xcassets */; };
 		E76AE0BE2A1FFF1B00102F15 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E76AE0BC2A1FFF1B00102F15 /* LaunchScreen.storyboard */; };
+		E782AA2F2A5429D2008893CD /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E782AA2E2A5429D2008893CD /* SideMenu.swift */; };
+		E782AA312A543E61008893CD /* SideMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E782AA302A543E61008893CD /* SideMenuViewModel.swift */; };
 		E7AEC3F12A2FA52300EC21DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7AEC3F02A2FA52300EC21DE /* GoogleService-Info.plist */; };
 		E7E4385E2A28EB3B002F63F6 /* Forum-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7E4385D2A28EB3B002F63F6 /* Forum-Regular.ttf */; };
 		E7EFA0E62A20FC3700544275 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EFA0E52A20FC3700544275 /* MenuViewController.swift */; };
@@ -35,7 +37,7 @@
 		E7242D292A2F71F10072B625 /* FireBaseAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseAPIManager.swift; sourceTree = "<group>"; };
 		E73A00002A2DFCBE00AA421F /* CarouselCollectionVievModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionVievModel.swift; sourceTree = "<group>"; };
 		E73A00042A2E26CF00AA421F /* DotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotsView.swift; sourceTree = "<group>"; };
-		E73A00072A2E4A5D00AA421F /* CarouselNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselNetworkManager.swift; sourceTree = "<group>"; };
+		E73F4F2B2A4AF8260035112A /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		E75B6E7A2A200587001BCB6D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E75B6E7B2A200587001BCB6D /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		E7693B392A293382003C5D3F /* CarouselCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionView.swift; sourceTree = "<group>"; };
@@ -46,6 +48,8 @@
 		E76AE0BA2A1FFF1B00102F15 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E76AE0BD2A1FFF1B00102F15 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E76AE0BF2A1FFF1B00102F15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E782AA2E2A5429D2008893CD /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
+		E782AA302A543E61008893CD /* SideMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewModel.swift; sourceTree = "<group>"; };
 		E7AEC3F02A2FA52300EC21DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E7E4385D2A28EB3B002F63F6 /* Forum-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Forum-Regular.ttf"; sourceTree = "<group>"; };
 		E7EFA0E52A20FC3700544275 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -88,10 +92,17 @@
 		E73A00062A2E4A4000AA421F /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				E73A00072A2E4A5D00AA421F /* CarouselNetworkManager.swift */,
 				E7242D292A2F71F10072B625 /* FireBaseAPIManager.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		E73F4F2A2A4AF8160035112A /* VideoPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				E73F4F2B2A4AF8260035112A /* VideoPlayer.swift */,
+			);
+			path = VideoPlayer;
 			sourceTree = "<group>";
 		};
 		E7693B3B2A293B06003C5D3F /* СaroucelView */ = {
@@ -173,6 +184,7 @@
 		E7EFA0E42A20FBFE00544275 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				E73F4F2A2A4AF8160035112A /* VideoPlayer */,
 				E7D87B8C2A3B12AD00BECCBE /* Mani screen */,
 				E7F168382A28CA1E004B4E49 /* MenuSideBar */,
 				E7693B3B2A293B06003C5D3F /* СaroucelView */,
@@ -184,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				E73A00002A2DFCBE00AA421F /* CarouselCollectionVievModel.swift */,
+				E782AA302A543E61008893CD /* SideMenuViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -210,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				E7F482002A2FB571008B3888 /* CarouselData.swift */,
+				E782AA2E2A5429D2008893CD /* SideMenu.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -344,6 +358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E73F4F2C2A4AF8260035112A /* VideoPlayer.swift in Sources */,
 				E7693B3D2A293B29003C5D3F /* CarouselCollectionViewCell.swift in Sources */,
 				E7242D2A2A2F71F10072B625 /* FireBaseAPIManager.swift in Sources */,
 				E7F482012A2FB571008B3888 /* CarouselData.swift in Sources */,
@@ -351,10 +366,11 @@
 				E73A00012A2DFCBE00AA421F /* CarouselCollectionVievModel.swift in Sources */,
 				E7F168372A28C941004B4E49 /* UIColor.swift in Sources */,
 				E7693B3A2A293382003C5D3F /* CarouselCollectionView.swift in Sources */,
-				E73A00082A2E4A5D00AA421F /* CarouselNetworkManager.swift in Sources */,
+				E782AA312A543E61008893CD /* SideMenuViewModel.swift in Sources */,
 				E76AE0B22A1FFF1A00102F15 /* AppDelegate.swift in Sources */,
 				E73A00052A2E26CF00AA421F /* DotsView.swift in Sources */,
 				E76AE0B42A1FFF1A00102F15 /* SceneDelegate.swift in Sources */,
+				E782AA2F2A5429D2008893CD /* SideMenu.swift in Sources */,
 				E75B6E7C2A200587001BCB6D /* MainViewController.swift in Sources */,
 				E7F1683D2A28CA58004B4E49 /* SideMenuCellTableViewCell.swift in Sources */,
 			);
