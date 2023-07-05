@@ -17,7 +17,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var focusButton: UIButton!
     @IBOutlet weak var directionImageView: UIImageView!
     private let carouselView = CarouselCollectionView(layout: UICollectionViewFlowLayout())
-    private let menu = SideMenuNavigationController(rootViewController: MenuViewController())
+    private let menu = SideMenuNavigationController(rootViewController: SideMenuViewController())
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     private lazy var pageView = carouselView.dots
     
@@ -36,7 +36,7 @@ class MainViewController: UIViewController {
         carouselView.setUpMargins()
         carouselView.scrollToNextCell()
         menu.leftSide = true
-        menu.presentationStyle = .menuDissolveIn
+        //menu.presentationStyle = .menuDissolveIn
     }
 
     override func viewWillLayoutSubviews() {

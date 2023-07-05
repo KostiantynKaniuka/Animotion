@@ -32,7 +32,7 @@
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="14M-3I-y4w">
                     <rect key="frame" x="159" y="420" width="75" height="75"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="75" id="e3h-id-P9F"/>
                         <constraint firstAttribute="width" constant="75" id="osO-Fk-3b5"/>
@@ -48,19 +48,18 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C4w-k8-6x6">
                     <rect key="frame" x="159" y="177" width="75" height="75"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="75" id="Jln-vp-Mcv"/>
                         <constraint firstAttribute="height" constant="75" id="gAn-h5-BZj"/>
                     </constraints>
                     <color key="tintColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
                     <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="tinted" imagePlacement="top" title="Dream" imagePadding="0.0">
+                    <buttonConfiguration key="configuration" style="gray" imagePlacement="top" title="Dream" imagePadding="0.0">
                         <imageReference key="image" image="cloud.fill" catalog="system" symbolScale="large"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30"/>
                         <fontDescription key="titleFontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
                         <color key="baseForegroundColor" red="0.61960784310000006" green="0.89019607840000003" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </buttonConfiguration>
                     <connections>
                         <action selector="dreamButtonTapped:" destination="-1" eventType="touchUpInside" id="IH1-TG-4Ku"/>
@@ -68,7 +67,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZsS-6N-HAW">
                     <rect key="frame" x="37.666666666666657" y="298.66666666666669" width="75" height="75"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="75" id="bpE-XU-zml"/>
                         <constraint firstAttribute="width" constant="75" id="hrh-f7-koK"/>
@@ -87,7 +86,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtS-UI-u8E">
                     <rect key="frame" x="280.66666666666669" y="298.66666666666669" width="75" height="75"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="75" id="4VS-Yt-sD2"/>
                         <constraint firstAttribute="width" constant="75" id="rUI-MP-kBe"/>

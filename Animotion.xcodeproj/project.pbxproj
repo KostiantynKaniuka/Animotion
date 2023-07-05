@@ -24,7 +24,7 @@
 		E782AA312A543E61008893CD /* SideMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E782AA302A543E61008893CD /* SideMenuViewModel.swift */; };
 		E7AEC3F12A2FA52300EC21DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7AEC3F02A2FA52300EC21DE /* GoogleService-Info.plist */; };
 		E7E4385E2A28EB3B002F63F6 /* Forum-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7E4385D2A28EB3B002F63F6 /* Forum-Regular.ttf */; };
-		E7EFA0E62A20FC3700544275 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EFA0E52A20FC3700544275 /* MenuViewController.swift */; };
+		E7EFA0E62A20FC3700544275 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EFA0E52A20FC3700544275 /* SideMenuViewController.swift */; };
 		E7F168372A28C941004B4E49 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F168362A28C941004B4E49 /* UIColor.swift */; };
 		E7F1683D2A28CA58004B4E49 /* SideMenuCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F1683B2A28CA58004B4E49 /* SideMenuCellTableViewCell.swift */; };
 		E7F1683E2A28CA58004B4E49 /* SideMenuCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7F1683C2A28CA58004B4E49 /* SideMenuCellTableViewCell.xib */; };
@@ -52,7 +52,7 @@
 		E782AA302A543E61008893CD /* SideMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewModel.swift; sourceTree = "<group>"; };
 		E7AEC3F02A2FA52300EC21DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E7E4385D2A28EB3B002F63F6 /* Forum-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Forum-Regular.ttf"; sourceTree = "<group>"; };
-		E7EFA0E52A20FC3700544275 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		E7EFA0E52A20FC3700544275 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		E7F168362A28C941004B4E49 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		E7F1683B2A28CA58004B4E49 /* SideMenuCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCellTableViewCell.swift; sourceTree = "<group>"; };
 		E7F1683C2A28CA58004B4E49 /* SideMenuCellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideMenuCellTableViewCell.xib; sourceTree = "<group>"; };
@@ -212,7 +212,7 @@
 		E7F168382A28CA1E004B4E49 /* MenuSideBar */ = {
 			isa = PBXGroup;
 			children = (
-				E7EFA0E52A20FC3700544275 /* MenuViewController.swift */,
+				E7EFA0E52A20FC3700544275 /* SideMenuViewController.swift */,
 				E7F1683B2A28CA58004B4E49 /* SideMenuCellTableViewCell.swift */,
 				E7F1683C2A28CA58004B4E49 /* SideMenuCellTableViewCell.xib */,
 			);
@@ -362,7 +362,7 @@
 				E7693B3D2A293B29003C5D3F /* CarouselCollectionViewCell.swift in Sources */,
 				E7242D2A2A2F71F10072B625 /* FireBaseAPIManager.swift in Sources */,
 				E7F482012A2FB571008B3888 /* CarouselData.swift in Sources */,
-				E7EFA0E62A20FC3700544275 /* MenuViewController.swift in Sources */,
+				E7EFA0E62A20FC3700544275 /* SideMenuViewController.swift in Sources */,
 				E73A00012A2DFCBE00AA421F /* CarouselCollectionVievModel.swift in Sources */,
 				E7F168372A28C941004B4E49 /* UIColor.swift in Sources */,
 				E7693B3A2A293382003C5D3F /* CarouselCollectionView.swift in Sources */,

@@ -23,6 +23,7 @@ class SideMenuCellTableViewCell: UITableViewCell {
         super.layoutSubviews()
         configureCellAppearance()
     }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
@@ -31,10 +32,8 @@ class SideMenuCellTableViewCell: UITableViewCell {
     
     private func configureCellAppearance() {
         cellImage.layer.cornerRadius = 15
-                cellImage.clipsToBounds = true
+        cellImage.clipsToBounds = true
         darkView.layer.cornerRadius = 15
-                darkView.clipsToBounds = true
-//        layer.borderWidth = 1.0
-//        layer.borderColor = UIColor.black.cgColor
+        darkView.clipsToBounds = true
     }
 }
