@@ -7,20 +7,32 @@
 
 import Foundation
 
-protocol SideMenuDataDelegate: AnyObject {
-    func sideMenuDataLoaded(data: [SideMenu])
+protocol UkraineMenuDataDelegate: AnyObject {
+    func ukraineSideMenuDataLoaded(data: [UkraineSection])
+}
+
+protocol SafeSpaceDataDelegate: AnyObject {
+    func safeSpaceDataLoaded(data: [SafeSpace])
 }
 
 final class SideMenuViewModel {
-    private let firebaseManager = FireAPIManager()
-    var sideMenuData: [SideMenu] = []
-    weak var delegate: SideMenuDataDelegate?
+    weak var ukraineDelegate: UkraineMenuDataDelegate?
+    weak var safeSpaceDelegate: SafeSpaceDataDelegate?
     
-    func getSideMenuData() {
-        firebaseManager.getSideMenuData { [weak self] result in
+    func getUkraineSideMenuData() {
+        FireAPIManager.shared.getUkraineMenuData { [weak self] result in
             DispatchQueue.main.async {
-                self?.delegate?.sideMenuDataLoaded(data: result)
+                self?.ukraineDelegate?.ukraineSideMenuDataLoaded(data: result)
             }
         }
     }
+    
+    func getSafeSpaceSideMenuData() {
+        FireAPIManager.shared.getSafeSpaceMenuData { [weak self] result in
+            DispatchQueue.main.async {
+                self?.safeSpaceDelegate?.safeSpaceDataLoaded(data: result)
+            }
+        }
+    }
+    
 }

@@ -15,15 +15,33 @@ class SideMenuViewController: UIViewController {
     private let topView = UIView()
     private let videoPlayer = VideoPlayer()
     private let viewModel = SideMenuViewModel()
-    private var tableViewData = [SideMenu]()
+    private var ukraineSection = [UkraineSection]()
+    private var safeSpaceSection = [SafeSpace]()
+    private var dataSource = [Section]()
+    
+    enum Section {
+        case ukraine(items: [UkraineSection])
+        case safeSpace(items: [SafeSpace])
+        
+        var title: String {
+            switch self {
+            case .ukraine:
+                return "Ukraine"
+            case .safeSpace:
+                return "Safe space"
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         menuTableView.tableHeaderView = nil
-        viewModel.delegate = self
-        viewModel.getSideMenuData()
         menuTableView.delegate = self
         menuTableView.dataSource = self
+        viewModel.ukraineDelegate = self
+        viewModel.safeSpaceDelegate = self
+        viewModel.getUkraineSideMenuData()
+        viewModel.getSafeSpaceSideMenuData()
         menuTableView.register(UINib(nibName: "SideMenuCellTableViewCell", bundle: nil), forCellReuseIdentifier: SideMenuCellTableViewCell.sideMenuReuseId)
     }
     
@@ -37,6 +55,8 @@ class SideMenuViewController: UIViewController {
     private func setupUi() {
         view.backgroundColor = .systemGray
         menuTableView.backgroundColor = .menuBacgtoundColor
+        menuTableView.separatorStyle = .none
+        menuTableView.showsVerticalScrollIndicator = false
         topView.backgroundColor = .menuBacgtoundColor
         profileLabel.textColor = .white
         profileLabel.text = "Hey! Where we going today?"
@@ -63,9 +83,7 @@ class SideMenuViewController: UIViewController {
         topView.addSubview(profileImage)
         topView.addSubview(profileLabel)
         view.addSubview(menuTableView)
-     
-       
-        
+
         profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
         profileImage.clipsToBounds = true
         
@@ -95,8 +113,6 @@ class SideMenuViewController: UIViewController {
             profileLabel.centerYAnchor.constraint(equalTo: profileImage.centerYAnchor),
             profileLabel.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 16),
             profileLabel.widthAnchor.constraint(equalToConstant: 150)
-            
-            
         ])
     }
 }
@@ -107,6 +123,14 @@ extension SideMenuViewController: UITableViewDelegate {
 
 extension SideMenuViewController: UITableViewDataSource {
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return dataSource.count
+    }
+    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         navigationController?.setNavigationBarHidden(true, animated: true) // hide nav bar when scrolling
     }
@@ -115,20 +139,43 @@ extension SideMenuViewController: UITableViewDataSource {
         return 150
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection
+                   section: Int) -> String? {
+        return dataSource[section].title
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableViewData.count
+        switch dataSource[section] {
+        case .ukraine(items: let items):
+            return items.count
+        case .safeSpace(items: let items):
+            return items.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SideMenuCellTableViewCell.sideMenuReuseId) as? SideMenuCellTableViewCell else { return UITableViewCell() }
-        let url = URL(string: tableViewData[indexPath.row].image)
-        cell.cellImage.kf.indicatorType = .activity
-        cell.cellImage.kf.setImage(with: url, options: [.cacheOriginalImage, .transition(.fade(1))])
-        cell.cellImage.backgroundColor = .black
-        cell.titleLabel.text = tableViewData[indexPath.row].name
-        
-        return cell
+        let section = dataSource[indexPath.section]
+        switch section {
+        case .ukraine(items: let items):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SideMenuCellTableViewCell.sideMenuReuseId) as? SideMenuCellTableViewCell else { return UITableViewCell()}
+            let url = URL(string: items[indexPath.row].image)
+            cell.cellImage.kf.indicatorType = .activity
+            cell.cellImage.kf.setImage(with: url, options: [.cacheOriginalImage, .transition(.fade(1))])
+            cell.cellImage.backgroundColor = .black
+            cell.titleLabel.text = items[indexPath.row].name
+            
+            return cell
+            
+        case .safeSpace(items: let items):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SideMenuCellTableViewCell.sideMenuReuseId) as? SideMenuCellTableViewCell else { return UITableViewCell()}
+            let url = URL(string: items[indexPath.row].image)
+            cell.cellImage.kf.indicatorType = .activity
+            cell.cellImage.kf.setImage(with: url, options: [.cacheOriginalImage, .transition(.fade(1))])
+            cell.cellImage.backgroundColor = .black
+            cell.titleLabel.text = items[indexPath.row].name
+            
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -137,9 +184,31 @@ extension SideMenuViewController: UITableViewDataSource {
     }
 }
 
-extension SideMenuViewController: SideMenuDataDelegate {
-    func sideMenuDataLoaded(data: [SideMenu]) {
-        tableViewData = data
+private extension SideMenuViewController {
+    
+    func createDataSource() -> [Section] {
+        let ukraineItems = Section.ukraine(items: ukraineSection)
+        let safeSpaceItems = Section.safeSpace(items: safeSpaceSection)
+        
+        return [ukraineItems, safeSpaceItems]
+    }
+}
+
+extension SideMenuViewController: UkraineMenuDataDelegate {
+    
+    func ukraineSideMenuDataLoaded(data: [UkraineSection]) {
+        ukraineSection = data
+        dataSource = createDataSource()
+        menuTableView.reloadData()
+        
+    }
+}
+
+extension SideMenuViewController: SafeSpaceDataDelegate {
+    
+    func safeSpaceDataLoaded(data: [SafeSpace]) {
+        safeSpaceSection = data
+        dataSource = createDataSource()
         menuTableView.reloadData()
     }
 }

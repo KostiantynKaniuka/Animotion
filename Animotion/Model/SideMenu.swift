@@ -7,10 +7,15 @@
 
 import Foundation
 
-struct SideMenu {
+struct UkraineSection {
     let image: String
-    let location: String?
+    let location: String
     let name: String
-    let section: Int //for table view
+    let videoLink: String
+}
+
+struct SafeSpace {
+    let image: String
+    let name: String
     let videoLink: String
 }

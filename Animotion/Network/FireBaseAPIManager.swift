@@ -58,14 +58,14 @@ class FireAPIManager {
         }
     }
     
-    func getSideMenuData(completion: @escaping ([SideMenu]) -> Void) {
+    func getUkraineMenuData(completion: @escaping ([UkraineSection]) -> Void) {
         let db = configureFB()
-        db.child("sidemenu").getData(completion: { error, snapshot in
+        db.child("Ukraine").getData(completion: { error, snapshot in
             guard error == nil else {
                print(error!.localizedDescription)
                return;
              }
-            var sideMenuData: [SideMenu] = []
+            var sideMenuData: [UkraineSection] = []
                     
             if let value = snapshot?.value as? [String: Any] {
                         for (_, data) in value {
@@ -73,10 +73,35 @@ class FireAPIManager {
                                 let image = dataDict["image"]  as? String ?? ""
                                 let location = dataDict["location"] as? String ?? ""
                                 let name = dataDict["name"] as? String ?? ""
-                                let section = dataDict["section"] as? Int ?? 0
                                 let vieolink = dataDict["vieoLink"] as? String ?? ""
                                 
-                                let sidemenuItem = SideMenu(image: image, location: location, name: name, section: section, videoLink: vieolink)
+                                let sidemenuItem = UkraineSection(image: image, location: location, name: name, videoLink: vieolink)
+                                sideMenuData.append(sidemenuItem)
+                                print("➡️", sideMenuData.count)
+                            }
+                        }
+                    }
+                    completion(sideMenuData)
+        })
+    }
+    
+    func getSafeSpaceMenuData(completion: @escaping ([SafeSpace]) -> Void) {
+        let db = configureFB()
+        db.child("sidemenu").getData(completion: { error, snapshot in
+            guard error == nil else {
+               print(error!.localizedDescription)
+               return;
+             }
+            var sideMenuData: [SafeSpace] = []
+                    
+            if let value = snapshot?.value as? [String: Any] {
+                        for (_, data) in value {
+                            if let dataDict = data as? [String: Any] {
+                                let image = dataDict["image"]  as? String ?? ""
+                                let name = dataDict["name"] as? String ?? ""
+                                let vieolink = dataDict["vieoLink"] as? String ?? ""
+        
+                                let sidemenuItem = SafeSpace(image: image, name: name, videoLink: vieolink)
                                 sideMenuData.append(sidemenuItem)
                                 print("➡️", sideMenuData.count)
                             }
