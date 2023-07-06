@@ -16,8 +16,10 @@ class MainViewController: UIViewController {
     @IBOutlet weak var inspireButton: UIButton!
     @IBOutlet weak var focusButton: UIButton!
     @IBOutlet weak var directionImageView: UIImageView!
+    private let sideMenu = SideMenuViewController()
+    private var videoPlayer = VideoPlayer()
     private let carouselView = CarouselCollectionView(layout: UICollectionViewFlowLayout())
-    private let menu = SideMenuNavigationController(rootViewController: SideMenuViewController())
+    lazy var menu = SideMenuNavigationController(rootViewController: sideMenu)
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     private lazy var pageView = carouselView.dots
     
@@ -30,13 +32,14 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         animateButtonAppearance()
+        sideMenu.linkDelegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
+     super.viewDidAppear(animated)
         carouselView.setUpMargins()
         carouselView.scrollToNextCell()
         menu.leftSide = true
-        //menu.presentationStyle = .menuDissolveIn
     }
 
     override func viewWillLayoutSubviews() {
@@ -101,3 +104,18 @@ class MainViewController: UIViewController {
     }
 }
 
+extension MainViewController: ShowPlayerDelegate {
+    func showPlayer() {
+      //  show(VideoPlayer(), sender: self)
+    }
+    
+}
+
+extension MainViewController: VideoLinkDelegate {
+    func sendTheLink(_ link: String) {
+        videoPlayer.link = link
+        show(videoPlayer, sender: self)
+    }
+    
+    
+}

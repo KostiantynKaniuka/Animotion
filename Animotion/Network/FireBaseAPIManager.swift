@@ -73,9 +73,8 @@ class FireAPIManager {
                                 let image = dataDict["image"]  as? String ?? ""
                                 let location = dataDict["location"] as? String ?? ""
                                 let name = dataDict["name"] as? String ?? ""
-                                let vieolink = dataDict["vieoLink"] as? String ?? ""
-                                
-                                let sidemenuItem = UkraineSection(image: image, location: location, name: name, videoLink: vieolink)
+                                let videolink = dataDict["videoLink"] as? String ?? ""
+                                let sidemenuItem = UkraineSection(image: image, location: location, name: name, videoLink: videolink)
                                 sideMenuData.append(sidemenuItem)
                                 print("➡️", sideMenuData.count)
                             }
@@ -99,9 +98,9 @@ class FireAPIManager {
                             if let dataDict = data as? [String: Any] {
                                 let image = dataDict["image"]  as? String ?? ""
                                 let name = dataDict["name"] as? String ?? ""
-                                let vieolink = dataDict["vieoLink"] as? String ?? ""
+                                let videolink = dataDict["videoLink"] as? String ?? ""
         
-                                let sidemenuItem = SafeSpace(image: image, name: name, videoLink: vieolink)
+                                let sidemenuItem = SafeSpace(image: image, name: name, videoLink: videolink)
                                 sideMenuData.append(sidemenuItem)
                                 print("➡️", sideMenuData.count)
                             }

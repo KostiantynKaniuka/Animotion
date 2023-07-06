@@ -8,16 +8,28 @@
 import UIKit
 import Kingfisher
 
+protocol VideoLinkDelegate: AnyObject {
+    func sendTheLink(_ link: String)
+}
+
+protocol ShowPlayerDelegate: AnyObject {
+    func showPlayer()
+}
+
+
 class SideMenuViewController: UIViewController {
     private let menuTableView = UITableView()
     private let profileImage = UIImageView()
     private let profileLabel = UILabel()
     private let topView = UIView()
-    private let videoPlayer = VideoPlayer()
     private let viewModel = SideMenuViewModel()
     private var ukraineSection = [UkraineSection]()
     private var safeSpaceSection = [SafeSpace]()
     private var dataSource = [Section]()
+    weak var linkDelegate: VideoLinkDelegate?
+    weak var playerDelegate: ShowPlayerDelegate?
+    //static let shared = SideMenuViewController()
+  
     
     enum Section {
         case ukraine(items: [UkraineSection])
@@ -54,10 +66,13 @@ class SideMenuViewController: UIViewController {
     
     private func setupUi() {
         view.backgroundColor = .systemGray
+        
         menuTableView.backgroundColor = .menuBacgtoundColor
         menuTableView.separatorStyle = .none
         menuTableView.showsVerticalScrollIndicator = false
+        
         topView.backgroundColor = .menuBacgtoundColor
+        
         profileLabel.textColor = .white
         profileLabel.text = "Hey! Where we going today?"
         profileLabel.textColor = .lightGray
@@ -70,6 +85,7 @@ class SideMenuViewController: UIViewController {
         profileImage.image = UIImage(named: "back 1")
         topView.translatesAutoresizingMaskIntoConstraints = false
         topView.frame.size = CGSize(width: 300, height: 100)
+        
         let borderLayer = CALayer()
             borderLayer.backgroundColor = UIColor.white.cgColor
         borderLayer.frame = CGRect(x: 0, y: 150, width: topView.bounds.width, height: 2)
@@ -119,6 +135,21 @@ class SideMenuViewController: UIViewController {
 
 extension SideMenuViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let section = dataSource[indexPath.section]
+        switch section {
+        case .ukraine(items: let items):
+            linkDelegate?.sendTheLink(items[indexPath.row].videoLink)
+            print(items[indexPath.row].videoLink)
+          // playerDelegate?.showPlayer()
+        
+            
+        case .safeSpace(items: let items):
+            linkDelegate?.sendTheLink(items[indexPath.row].videoLink)
+            self.dismiss(animated: true)
+            playerDelegate?.showPlayer()
+        }
+    }
 }
 
 extension SideMenuViewController: UITableViewDataSource {
@@ -178,10 +209,6 @@ extension SideMenuViewController: UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.dismiss(animated: true)
-       
-    }
 }
 
 private extension SideMenuViewController {

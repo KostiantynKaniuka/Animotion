@@ -113,7 +113,9 @@ extension CarouselCollectionView {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CarouselCollectionViewCell.carouselCellId, for: indexPath) as? CarouselCollectionViewCell else { return UICollectionViewCell() }
         let url = URL(string: collectionViewData[indexPath.row].imageUrl)
         cell.cellTitle.text = collectionViewData[indexPath.row].descriptionText
-       cell.cellImage.kf.setImage(with: url)
+        cell.cellImage.kf.indicatorType = .activity
+        cell.cellImage.kf.setImage(with: url, options: [.cacheOriginalImage, .transition(.fade(1))])
+        cell.cellImage.kf.setImage(with: url)
         return  cell
     }
 }

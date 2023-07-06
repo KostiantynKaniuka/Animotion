@@ -9,11 +9,22 @@ import UIKit
 import AVKit
 
 class VideoPlayer: AVPlayerViewController {
-    let videoURL = URL(string: "https://firebasestorage.googleapis.com/v0/b/animotion-b77b1.appspot.com/o/videos%2FMovies%2Fgogolumorya.mov?alt=media&token=37a6911d-b7f5-46c3-8553-4dadb9d19b73")
-    lazy var item = AVPlayerItem(url: videoURL!)
+   var link = ""
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
+       play()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+       // link = ""
+    }
+    
+    private func play() {
+        let url = URL(string: link)
+        let item = AVPlayerItem(url: url!)
         let player = AVPlayer(playerItem: item)
         self.player = player
         self.player?.play()
@@ -24,6 +35,16 @@ class VideoPlayer: AVPlayerViewController {
             // Handle the error
         }
     }
+    
+    private func stop() {
+          player?.pause()
+          player = nil
+          
+//          if let observer = playerObserver {
+//              NotificationCenter.default.removeObserver(observer)
+//              playerObserver = nil
+          
+      }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
