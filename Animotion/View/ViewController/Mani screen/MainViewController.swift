@@ -8,7 +8,7 @@
 import UIKit
 import SideMenu
 
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController {
     @IBOutlet weak var choosePathLabel: UILabel!
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var relaxButton: UIButton!
@@ -17,7 +17,6 @@ class MainViewController: UIViewController {
     @IBOutlet weak var focusButton: UIButton!
     @IBOutlet weak var directionImageView: UIImageView!
     private let sideMenu = SideMenuViewController()
-    private var videoPlayer = VideoPlayer()
     private let carouselView = CarouselCollectionView(layout: UICollectionViewFlowLayout())
     lazy var menu = SideMenuNavigationController(rootViewController: sideMenu)
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
@@ -25,18 +24,14 @@ class MainViewController: UIViewController {
     
    
   //MARK: - Lifecycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-      
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        animateButtonAppearance()
         sideMenu.linkDelegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
      super.viewDidAppear(animated)
+     
         carouselView.setUpMargins()
         carouselView.scrollToNextCell()
         menu.leftSide = true
@@ -51,7 +46,7 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func inspireButtonTapped(_ sender: UIButton) {
-      show(VideoPlayer(), sender: self)
+      
     }
     
     private func setUpUI() {
@@ -70,12 +65,9 @@ class MainViewController: UIViewController {
             pageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             pageView.topAnchor.constraint(equalTo: carouselView.view.bottomAnchor)
         ])
-        
     }
     
-
     private func animateButtonAppearance() {
-  
         let buttonAnimations = [
             (button: profileButton, delay: 0.0),
             (button: dreamButton, delay: 0.5),
@@ -104,18 +96,14 @@ class MainViewController: UIViewController {
     }
 }
 
-extension MainViewController: ShowPlayerDelegate {
-    func showPlayer() {
-      //  show(VideoPlayer(), sender: self)
-    }
-    
-}
 
 extension MainViewController: VideoLinkDelegate {
-    func sendTheLink(_ link: String) {
-        videoPlayer.link = link
-        show(videoPlayer, sender: self)
-    }
     
-    
+    func sendTheLink(_ link: String, title: String, location: String) {
+       let videoPlayer = VideoPlayer()
+            videoPlayer.videoTitle = title
+            videoPlayer.link = link
+            videoPlayer.videoSubtitle = location
+            show(videoPlayer, sender: self)
+        }
 }

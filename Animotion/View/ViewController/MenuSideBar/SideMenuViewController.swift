@@ -9,15 +9,10 @@ import UIKit
 import Kingfisher
 
 protocol VideoLinkDelegate: AnyObject {
-    func sendTheLink(_ link: String)
+    func sendTheLink(_ link: String, title: String, location: String)
 }
 
-protocol ShowPlayerDelegate: AnyObject {
-    func showPlayer()
-}
-
-
-class SideMenuViewController: UIViewController {
+final class SideMenuViewController: UIViewController {
     private let menuTableView = UITableView()
     private let profileImage = UIImageView()
     private let profileLabel = UILabel()
@@ -27,10 +22,7 @@ class SideMenuViewController: UIViewController {
     private var safeSpaceSection = [SafeSpace]()
     private var dataSource = [Section]()
     weak var linkDelegate: VideoLinkDelegate?
-    weak var playerDelegate: ShowPlayerDelegate?
-    //static let shared = SideMenuViewController()
-  
-    
+
     enum Section {
         case ukraine(items: [UkraineSection])
         case safeSpace(items: [SafeSpace])
@@ -45,6 +37,7 @@ class SideMenuViewController: UIViewController {
         }
     }
     
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         menuTableView.tableHeaderView = nil
@@ -57,101 +50,27 @@ class SideMenuViewController: UIViewController {
         menuTableView.register(UINib(nibName: "SideMenuCellTableViewCell", bundle: nil), forCellReuseIdentifier: SideMenuCellTableViewCell.sideMenuReuseId)
     }
     
-    
-    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
      setupUi()
     }
-    
-    private func setupUi() {
-        view.backgroundColor = .systemGray
-        
-        menuTableView.backgroundColor = .menuBacgtoundColor
-        menuTableView.separatorStyle = .none
-        menuTableView.showsVerticalScrollIndicator = false
-        
-        topView.backgroundColor = .menuBacgtoundColor
-        
-        profileLabel.textColor = .white
-        profileLabel.text = "Hey! Where we going today?"
-        profileLabel.textColor = .lightGray
-        profileLabel.numberOfLines = 0
-        profileLabel.font = UIFont(name: "San Francisco", size: 6)
-        
-        profileLabel.translatesAutoresizingMaskIntoConstraints = false
-        menuTableView.translatesAutoresizingMaskIntoConstraints = false
-        profileImage.translatesAutoresizingMaskIntoConstraints = false
-        profileImage.image = UIImage(named: "back 1")
-        topView.translatesAutoresizingMaskIntoConstraints = false
-        topView.frame.size = CGSize(width: 300, height: 100)
-        
-        let borderLayer = CALayer()
-            borderLayer.backgroundColor = UIColor.white.cgColor
-        borderLayer.frame = CGRect(x: 0, y: 150, width: topView.bounds.width, height: 2)
-            topView.layer.addSublayer(borderLayer)
-        profileImage.frame.size = CGSize(width: 50, height: 50)
-        
-        profileImage.layer.borderWidth = 1
-        profileImage.layer.borderColor = UIColor.white.cgColor
-        
-        view.addSubview(topView)
-        topView.addSubview(profileImage)
-        topView.addSubview(profileLabel)
-        view.addSubview(menuTableView)
-
-        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
-        profileImage.clipsToBounds = true
-        
-        
-        NSLayoutConstraint.activate([
-            profileImage.centerYAnchor.constraint(equalTo: topView.centerYAnchor),
-            profileImage.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 8),
-            profileImage.widthAnchor.constraint(equalToConstant: 50),
-                   profileImage.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        
-        NSLayoutConstraint.activate([
-            topView.topAnchor.constraint(equalTo: view.topAnchor),
-            topView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            topView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            topView.heightAnchor.constraint(equalToConstant: 150)
-        ])
-        
-        NSLayoutConstraint.activate([
-            menuTableView.topAnchor.constraint(equalTo: topView.bottomAnchor),
-            menuTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            menuTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            menuTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
-            profileLabel.centerYAnchor.constraint(equalTo: profileImage.centerYAnchor),
-            profileLabel.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 16),
-            profileLabel.widthAnchor.constraint(equalToConstant: 150)
-        ])
-    }
 }
 
+//MARK: - TableView Delegate
 extension SideMenuViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = dataSource[indexPath.section]
         switch section {
         case .ukraine(items: let items):
-            linkDelegate?.sendTheLink(items[indexPath.row].videoLink)
-            print(items[indexPath.row].videoLink)
-          // playerDelegate?.showPlayer()
-        
-            
+            linkDelegate?.sendTheLink(items[indexPath.row].videoLink, title: items[indexPath.row].name, location: items[indexPath.row].location)
         case .safeSpace(items: let items):
-            linkDelegate?.sendTheLink(items[indexPath.row].videoLink)
-            self.dismiss(animated: true)
-            playerDelegate?.showPlayer()
+            linkDelegate?.sendTheLink(items[indexPath.row].videoLink, title: items[indexPath.row].name, location: "")
         }
     }
 }
 
+//MARK: - DataSource
 extension SideMenuViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -237,5 +156,77 @@ extension SideMenuViewController: SafeSpaceDataDelegate {
         safeSpaceSection = data
         dataSource = createDataSource()
         menuTableView.reloadData()
+    }
+}
+
+//MARK: - UI
+extension SideMenuViewController {
+    
+    private func setupUi() {
+        view.backgroundColor = .systemGray
+        
+        menuTableView.backgroundColor = .menuBacgtoundColor
+        menuTableView.separatorStyle = .none
+        menuTableView.showsVerticalScrollIndicator = false
+        
+        topView.backgroundColor = .menuBacgtoundColor
+        
+        profileLabel.textColor = .white
+        profileLabel.text = "Hey! Where we going today?"
+        profileLabel.textColor = .lightGray
+        profileLabel.numberOfLines = 0
+        profileLabel.font = UIFont(name: "San Francisco", size: 6)
+        
+        profileLabel.translatesAutoresizingMaskIntoConstraints = false
+        menuTableView.translatesAutoresizingMaskIntoConstraints = false
+        profileImage.translatesAutoresizingMaskIntoConstraints = false
+        profileImage.image = UIImage(named: "back 1")
+        topView.translatesAutoresizingMaskIntoConstraints = false
+        topView.frame.size = CGSize(width: 300, height: 100)
+        
+        let borderLayer = CALayer()
+            borderLayer.backgroundColor = UIColor.white.cgColor
+        borderLayer.frame = CGRect(x: 0, y: 150, width: topView.bounds.width, height: 2)
+            topView.layer.addSublayer(borderLayer)
+        profileImage.frame.size = CGSize(width: 50, height: 50)
+        
+        profileImage.layer.borderWidth = 1
+        profileImage.layer.borderColor = UIColor.white.cgColor
+        
+        view.addSubview(topView)
+        topView.addSubview(profileImage)
+        topView.addSubview(profileLabel)
+        view.addSubview(menuTableView)
+
+        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
+        profileImage.clipsToBounds = true
+        
+        
+        NSLayoutConstraint.activate([
+            profileImage.centerYAnchor.constraint(equalTo: topView.centerYAnchor),
+            profileImage.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 8),
+            profileImage.widthAnchor.constraint(equalToConstant: 50),
+                   profileImage.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        NSLayoutConstraint.activate([
+            topView.topAnchor.constraint(equalTo: view.topAnchor),
+            topView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            topView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topView.heightAnchor.constraint(equalToConstant: 150)
+        ])
+        
+        NSLayoutConstraint.activate([
+            menuTableView.topAnchor.constraint(equalTo: topView.bottomAnchor),
+            menuTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            menuTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            menuTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            profileLabel.centerYAnchor.constraint(equalTo: profileImage.centerYAnchor),
+            profileLabel.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 16),
+            profileLabel.widthAnchor.constraint(equalToConstant: 150)
+        ])
     }
 }

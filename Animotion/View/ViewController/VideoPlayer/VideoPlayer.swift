@@ -8,48 +8,53 @@
 import UIKit
 import AVKit
 
-class VideoPlayer: AVPlayerViewController {
-   var link = ""
-
-
+final class VideoPlayer: AVPlayerViewController {
+    private var videoItem = AVMutableMetadataItem()
+    private var subtitleItem = AVMutableMetadataItem()
+    private var playeritem: AVPlayerItem?
+    var link: String = ""
+    var videoTitle: String?
+    var videoSubtitle: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-       play()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-       // link = ""
+        play()
     }
     
     private func play() {
         let url = URL(string: link)
-        let item = AVPlayerItem(url: url!)
-        let player = AVPlayer(playerItem: item)
+        videoItem.identifier = .commonIdentifierTitle
+        videoItem.value = videoTitle as (NSCopying & NSObjectProtocol)?
+        
+        var metadataItems: [AVMutableMetadataItem] = [videoItem]
+        
+        if videoSubtitle != "" {
+            subtitleItem.identifier = .iTunesMetadataTrackSubTitle
+            subtitleItem.value = videoSubtitle as (NSCopying & NSObjectProtocol)?
+            metadataItems.append(subtitleItem)
+        }
+        
+        let asset = AVURLAsset(url: url!)
+        playeritem = AVPlayerItem(asset: asset)
+        playeritem?.externalMetadata = metadataItems
+        
+        let player = AVPlayer(playerItem: playeritem)
+        player.preventsDisplaySleepDuringVideoPlayback = true
         self.player = player
-        self.player?.play()
+        player.play()
+        
         self.player?.volume = 1
+        
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, options: [.mixWithOthers])
         } catch {
-            // Handle the error
+            print(error.localizedDescription)
         }
+        
     }
     
-    private func stop() {
-          player?.pause()
-          player = nil
-          
-//          if let observer = playerObserver {
-//              NotificationCenter.default.removeObserver(observer)
-//              playerObserver = nil
-          
-      }
-
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
-        // Extend the player's view beyond the safe area
         if let contentView = self.view.subviews.first, let playerView = contentView.subviews.first {
             playerView.frame = CGRect(x: 0, y: 0, width: contentView.bounds.width, height: contentView.bounds.height)
         }
