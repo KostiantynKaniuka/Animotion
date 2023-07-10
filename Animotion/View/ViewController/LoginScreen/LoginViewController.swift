@@ -19,6 +19,10 @@ final class LoginViewController: UIViewController {
     private let logInButton = LoginButton()
     private let forgotPasswordBurron = ForgotPassButton()
     private let dontHaveAccoutButton = DontHaveAccountButton()
+    private var navigation: LoginNavigation = .failure
+    private var nextVC = UIViewController()
+    let navVc = UINavigationController()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,11 +36,29 @@ final class LoginViewController: UIViewController {
         setUpConstraints()
     }
     
-    @objc private func sigInButtonTapped() {
-        let mainViewController = MainViewController()
-//        navigationController.roo
-         
+    
+    func presentNextState() {
+        navVc.setViewControllers([nextVC], animated: true)
+        view.add(subviews: navVc.view)
+        addChild(navVc)
+        navVc.didMove(toParent: self)
+        
+        
     }
+    
+    @objc private func sigInButtonTapped() {
+        navigation = .logedin
+        switch navigation {
+            
+        case .logedin:
+            nextVC = MainViewController()
+        case .failure:
+            nextVC = self
+        }
+        presentNextState()
+        
+    }
+   
     
 
     private func setUpConstraints() {

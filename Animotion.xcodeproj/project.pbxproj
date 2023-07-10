@@ -28,6 +28,7 @@
 		E796AB632A5C05EE0052A1F1 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E796AB622A5C05EE0052A1F1 /* Layout.swift */; };
 		E7AEC3F12A2FA52300EC21DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7AEC3F02A2FA52300EC21DE /* GoogleService-Info.plist */; };
 		E7DAAFCA2A5C11270009D7B9 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFC92A5C11270009D7B9 /* LoginButton.swift */; };
+		E7DAAFCC2A5C39480009D7B9 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFCB2A5C39480009D7B9 /* Navigation.swift */; };
 		E7E4385E2A28EB3B002F63F6 /* Forum-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7E4385D2A28EB3B002F63F6 /* Forum-Regular.ttf */; };
 		E7EFA0E62A20FC3700544275 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EFA0E52A20FC3700544275 /* SideMenuViewController.swift */; };
 		E7F168372A28C941004B4E49 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F168362A28C941004B4E49 /* UIColor.swift */; };
@@ -61,6 +62,7 @@
 		E796AB622A5C05EE0052A1F1 /* Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
 		E7AEC3F02A2FA52300EC21DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E7DAAFC92A5C11270009D7B9 /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
+		E7DAAFCB2A5C39480009D7B9 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		E7E4385D2A28EB3B002F63F6 /* Forum-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Forum-Regular.ttf"; sourceTree = "<group>"; };
 		E7EFA0E52A20FC3700544275 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		E7F168362A28C941004B4E49 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 			children = (
 				E7F482002A2FB571008B3888 /* CarouselData.swift */,
 				E782AA2E2A5429D2008893CD /* SideMenu.swift */,
+				E7DAAFCB2A5C39480009D7B9 /* Navigation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				E7EFA0E62A20FC3700544275 /* SideMenuViewController.swift in Sources */,
 				E73A00012A2DFCBE00AA421F /* CarouselCollectionVievModel.swift in Sources */,
 				E7F168372A28C941004B4E49 /* UIColor.swift in Sources */,
+				E7DAAFCC2A5C39480009D7B9 /* Navigation.swift in Sources */,
 				E7693B3A2A293382003C5D3F /* CarouselCollectionView.swift in Sources */,
 				E782AA312A543E61008893CD /* SideMenuViewModel.swift in Sources */,
 				E76AE0B22A1FFF1A00102F15 /* AppDelegate.swift in Sources */,
