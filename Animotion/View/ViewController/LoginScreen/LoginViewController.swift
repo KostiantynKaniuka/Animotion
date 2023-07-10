@@ -12,7 +12,6 @@ protocol LoginViewControllerDelegate: AnyObject {
     func didLogin()
 }
 
-
 final class LoginViewController: UIViewController {
     private let backgroundImage = UIImageView()
     private let emailTextField = LoginTextfiel()
@@ -26,17 +25,13 @@ final class LoginViewController: UIViewController {
     private let dontHaveAccoutButton = DontHaveAccountButton()
     weak var loginDelegate: LoginViewControllerDelegate?
 
-  
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
         logInButton.addTarget(self, action: #selector(sigInButtonTapped), for: .touchUpInside)
         emailTextField.delegate = self
         passwordTextField.delegate = self
-        
-        
-        setupAperance()
+        setupAppearance()
         setUpConstraints()
     }
   
@@ -45,8 +40,6 @@ final class LoginViewController: UIViewController {
     @objc private func sigInButtonTapped() {
         loginDelegate?.didLogin()
     }
-    
-    
     
     private func setUpConstraints() {
         createAccountStack.alignment = .fill
@@ -106,7 +99,7 @@ final class LoginViewController: UIViewController {
         }
     }
     
-    func setupAperance() {
+    func setupAppearance() {
         backgroundImage.image = UIImage(named: "backtest")
         createAccountLabel.text = "Don't  have an account?"
         createAccountLabel.textColor = .darkGray

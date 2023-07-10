@@ -8,6 +8,10 @@
 import UIKit
 import SideMenu
 
+protocol PassUserViewController: AnyObject {
+    var userViewConltoller: UIViewController { get }
+} // implement to avoid using singlton / memory leak 
+
 final class MainViewController: UIViewController {
     @IBOutlet weak var choosePathLabel: UILabel!
     @IBOutlet weak var profileButton: UIButton!
@@ -16,6 +20,7 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var inspireButton: UIButton!
     @IBOutlet weak var focusButton: UIButton!
     @IBOutlet weak var directionImageView: UIImageView!
+    weak var userVCDelegate: PassUserViewController?
     private let sideMenu = SideMenuViewController()
     private let carouselView = CarouselCollectionView(layout: UICollectionViewFlowLayout())
     lazy var menu = SideMenuNavigationController(rootViewController: sideMenu)
@@ -47,6 +52,11 @@ final class MainViewController: UIViewController {
     
     @IBAction func inspireButtonTapped(_ sender: UIButton) {
       
+    }
+    
+    @IBAction func profileButtonTapped(_ sender: UIButton) {
+        guard let userVc = userVCDelegate?.userViewConltoller else { return }
+        navigationController?.show(userVc, sender: true)
     }
     
     private func setUpUI() {
@@ -104,8 +114,9 @@ extension MainViewController: VideoLinkDelegate {
             videoPlayer.videoTitle = title
         videoPlayer.link = "https://www.pexels.com/pl-pl/download/video/16757506/"
             videoPlayer.videoSubtitle = location
-        //sideMenu.dismiss(animated: true)
-            show(videoPlayer, sender: self)
-             
+        sideMenu.dismiss(animated: true)
+        videoPlayer.modalPresentationStyle = .fullScreen
+        navigationController?.present(videoPlayer, animated: true)
+        //show(videoPlayer, sender: self)
         }
 }
