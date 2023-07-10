@@ -8,6 +8,11 @@
 import UIKit
 import SnapKit
 
+protocol LoginViewControllerDelegate: AnyObject {
+    func didLogin()
+}
+
+
 final class LoginViewController: UIViewController {
     private let backgroundImage = UIImageView()
     private let emailTextField = LoginTextfiel()
@@ -19,10 +24,9 @@ final class LoginViewController: UIViewController {
     private let logInButton = LoginButton()
     private let forgotPasswordBurron = ForgotPassButton()
     private let dontHaveAccoutButton = DontHaveAccountButton()
-    private var navigation: LoginNavigation = .failure
-    private var nextVC = UIViewController()
-    let navVc = UINavigationController()
-    
+    weak var loginDelegate: LoginViewControllerDelegate?
+
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,32 +39,15 @@ final class LoginViewController: UIViewController {
         setupAperance()
         setUpConstraints()
     }
-    
-    
-    func presentNextState() {
-        navVc.setViewControllers([nextVC], animated: true)
-        view.add(subviews: navVc.view)
-        addChild(navVc)
-        navVc.didMove(toParent: self)
-        
-        
-    }
+  
+
     
     @objc private func sigInButtonTapped() {
-        navigation = .logedin
-        switch navigation {
-            
-        case .logedin:
-            nextVC = MainViewController()
-        case .failure:
-            nextVC = self
-        }
-        presentNextState()
-        
+        loginDelegate?.didLogin()
     }
-   
     
-
+    
+    
     private func setUpConstraints() {
         createAccountStack.alignment = .fill
         createAccountStack.axis = .horizontal
@@ -71,7 +58,7 @@ final class LoginViewController: UIViewController {
         loginButtonsStack.axis = .vertical
         loginButtonsStack.distribution = .fill
         
-    
+        
         textFieldStack.spacing = 20
         textFieldStack.alignment = .fill
         textFieldStack.axis = .vertical
@@ -138,11 +125,11 @@ final class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: UITextFieldDelegate {
-   
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-           textField.resignFirstResponder()
-           return true
-       }
+        textField.resignFirstResponder()
+        return true
+    }
     
     
 }
