@@ -183,13 +183,13 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		E7D87B8C2A3B12AD00BECCBE /* Mani screen */ = {
+		E7D87B8C2A3B12AD00BECCBE /* Main screen */ = {
 			isa = PBXGroup;
 			children = (
 				E75B6E7A2A200587001BCB6D /* MainViewController.swift */,
 				E75B6E7B2A200587001BCB6D /* MainViewController.xib */,
 			);
-			path = "Mani screen";
+			path = "Main screen";
 			sourceTree = "<group>";
 		};
 		E7E4385C2A28EB27002F63F6 /* Font */ = {
@@ -214,7 +214,7 @@
 			children = (
 				E796AB5A2A5C03E90052A1F1 /* LoginScreen */,
 				E73F4F2A2A4AF8160035112A /* VideoPlayer */,
-				E7D87B8C2A3B12AD00BECCBE /* Mani screen */,
+				E7D87B8C2A3B12AD00BECCBE /* Main screen */,
 				E7F168382A28CA1E004B4E49 /* MenuSideBar */,
 				E7693B3B2A293B06003C5D3F /* СaroucelView */,
 			);

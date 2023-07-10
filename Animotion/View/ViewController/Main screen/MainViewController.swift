@@ -102,8 +102,10 @@ extension MainViewController: VideoLinkDelegate {
     func sendTheLink(_ link: String, title: String, location: String) {
        let videoPlayer = VideoPlayer()
             videoPlayer.videoTitle = title
-            videoPlayer.link = link
+        videoPlayer.link = "https://www.pexels.com/pl-pl/download/video/16757506/"
             videoPlayer.videoSubtitle = location
+        //sideMenu.dismiss(animated: true)
             show(videoPlayer, sender: self)
+             
         }
 }

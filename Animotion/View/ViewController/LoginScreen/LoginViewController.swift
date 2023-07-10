@@ -23,12 +23,19 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
+        logInButton.addTarget(self, action: #selector(sigInButtonTapped), for: .touchUpInside)
         emailTextField.delegate = self
         passwordTextField.delegate = self
         
         
         setupAperance()
         setUpConstraints()
+    }
+    
+    @objc private func sigInButtonTapped() {
+        let mainViewController = MainViewController()
+//        navigationController.roo
+         
     }
     
 
@@ -101,6 +108,10 @@ final class LoginViewController: UIViewController {
         
         passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         passwordTextField.isSecureTextEntry = true
+    }
+    
+    deinit {
+        print("➡️ login gone")
     }
 }
 
