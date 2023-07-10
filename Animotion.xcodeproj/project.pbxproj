@@ -22,7 +22,12 @@
 		E76AE0BE2A1FFF1B00102F15 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E76AE0BC2A1FFF1B00102F15 /* LaunchScreen.storyboard */; };
 		E782AA2F2A5429D2008893CD /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E782AA2E2A5429D2008893CD /* SideMenu.swift */; };
 		E782AA312A543E61008893CD /* SideMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E782AA302A543E61008893CD /* SideMenuViewModel.swift */; };
+		E796AB592A5C031F0052A1F1 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E796AB582A5C031F0052A1F1 /* TextField.swift */; };
+		E796AB5E2A5C04380052A1F1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E796AB5D2A5C04380052A1F1 /* LoginViewController.swift */; };
+		E796AB602A5C04550052A1F1 /* LoginTextfiel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E796AB5F2A5C04550052A1F1 /* LoginTextfiel.swift */; };
+		E796AB632A5C05EE0052A1F1 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E796AB622A5C05EE0052A1F1 /* Layout.swift */; };
 		E7AEC3F12A2FA52300EC21DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7AEC3F02A2FA52300EC21DE /* GoogleService-Info.plist */; };
+		E7DAAFCA2A5C11270009D7B9 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFC92A5C11270009D7B9 /* LoginButton.swift */; };
 		E7E4385E2A28EB3B002F63F6 /* Forum-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7E4385D2A28EB3B002F63F6 /* Forum-Regular.ttf */; };
 		E7EFA0E62A20FC3700544275 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EFA0E52A20FC3700544275 /* SideMenuViewController.swift */; };
 		E7F168372A28C941004B4E49 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F168362A28C941004B4E49 /* UIColor.swift */; };
@@ -50,7 +55,12 @@
 		E76AE0BF2A1FFF1B00102F15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E782AA2E2A5429D2008893CD /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		E782AA302A543E61008893CD /* SideMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewModel.swift; sourceTree = "<group>"; };
+		E796AB582A5C031F0052A1F1 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		E796AB5D2A5C04380052A1F1 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		E796AB5F2A5C04550052A1F1 /* LoginTextfiel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextfiel.swift; sourceTree = "<group>"; };
+		E796AB622A5C05EE0052A1F1 /* Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
 		E7AEC3F02A2FA52300EC21DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E7DAAFC92A5C11270009D7B9 /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		E7E4385D2A28EB3B002F63F6 /* Forum-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Forum-Regular.ttf"; sourceTree = "<group>"; };
 		E7EFA0E52A20FC3700544275 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		E7F168362A28C941004B4E49 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -147,6 +157,24 @@
 			path = Animotion;
 			sourceTree = "<group>";
 		};
+		E796AB5A2A5C03E90052A1F1 /* LoginScreen */ = {
+			isa = PBXGroup;
+			children = (
+				E796AB5D2A5C04380052A1F1 /* LoginViewController.swift */,
+			);
+			path = LoginScreen;
+			sourceTree = "<group>";
+		};
+		E796AB612A5C05660052A1F1 /* UIElement */ = {
+			isa = PBXGroup;
+			children = (
+				E73A00042A2E26CF00AA421F /* DotsView.swift */,
+				E796AB5F2A5C04550052A1F1 /* LoginTextfiel.swift */,
+				E7DAAFC92A5C11270009D7B9 /* LoginButton.swift */,
+			);
+			path = UIElement;
+			sourceTree = "<group>";
+		};
 		E7D87B8B2A3B0EEE00BECCBE /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -176,7 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				E7EFA0E42A20FBFE00544275 /* ViewController */,
-				E73A00042A2E26CF00AA421F /* DotsView.swift */,
+				E796AB612A5C05660052A1F1 /* UIElement */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -184,6 +212,7 @@
 		E7EFA0E42A20FBFE00544275 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				E796AB5A2A5C03E90052A1F1 /* LoginScreen */,
 				E73F4F2A2A4AF8160035112A /* VideoPlayer */,
 				E7D87B8C2A3B12AD00BECCBE /* Mani screen */,
 				E7F168382A28CA1E004B4E49 /* MenuSideBar */,
@@ -205,6 +234,8 @@
 			isa = PBXGroup;
 			children = (
 				E7F168362A28C941004B4E49 /* UIColor.swift */,
+				E796AB582A5C031F0052A1F1 /* TextField.swift */,
+				E796AB622A5C05EE0052A1F1 /* Layout.swift */,
 			);
 			path = "Extencion ";
 			sourceTree = "<group>";
@@ -361,7 +392,9 @@
 				E73F4F2C2A4AF8260035112A /* VideoPlayer.swift in Sources */,
 				E7693B3D2A293B29003C5D3F /* CarouselCollectionViewCell.swift in Sources */,
 				E7242D2A2A2F71F10072B625 /* FireBaseAPIManager.swift in Sources */,
+				E796AB592A5C031F0052A1F1 /* TextField.swift in Sources */,
 				E7F482012A2FB571008B3888 /* CarouselData.swift in Sources */,
+				E7DAAFCA2A5C11270009D7B9 /* LoginButton.swift in Sources */,
 				E7EFA0E62A20FC3700544275 /* SideMenuViewController.swift in Sources */,
 				E73A00012A2DFCBE00AA421F /* CarouselCollectionVievModel.swift in Sources */,
 				E7F168372A28C941004B4E49 /* UIColor.swift in Sources */,
@@ -370,6 +403,9 @@
 				E76AE0B22A1FFF1A00102F15 /* AppDelegate.swift in Sources */,
 				E73A00052A2E26CF00AA421F /* DotsView.swift in Sources */,
 				E76AE0B42A1FFF1A00102F15 /* SceneDelegate.swift in Sources */,
+				E796AB632A5C05EE0052A1F1 /* Layout.swift in Sources */,
+				E796AB5E2A5C04380052A1F1 /* LoginViewController.swift in Sources */,
+				E796AB602A5C04550052A1F1 /* LoginTextfiel.swift in Sources */,
 				E782AA2F2A5429D2008893CD /* SideMenu.swift in Sources */,
 				E75B6E7C2A200587001BCB6D /* MainViewController.swift in Sources */,
 				E7F1683D2A28CA58004B4E49 /* SideMenuCellTableViewCell.swift in Sources */,
