@@ -22,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 }
 
+//MARK: - Login action
 extension SceneDelegate: LoginViewControllerDelegate {
     func didLogin() {
         let mainVc = MainViewController()
@@ -31,16 +32,19 @@ extension SceneDelegate: LoginViewControllerDelegate {
     }
 }
 
+//MARK: - Login action
 extension SceneDelegate: LogoutDelegate {
+    
     func didLogout() {
-        
         let newSessionVc = LoginViewController()
         newSessionVc.loginDelegate = self
      setRootViewController(newSessionVc)
     }
 }
 
+//MARK: - Logout action
 extension SceneDelegate {
+    
     func setRootViewController(_ vc: UIViewController, animated: Bool = true) {
         guard animated, let window = self.window else {
             self.window?.rootViewController = vc
@@ -54,7 +58,9 @@ extension SceneDelegate {
     }
 }
 
+//MARK: - creating user screen for navigation
 extension SceneDelegate: PassUserViewController {
+    
     var userViewConltoller: UIViewController {
         get {
             let vc = UserScreenViewController()

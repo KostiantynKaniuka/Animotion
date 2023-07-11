@@ -117,6 +117,5 @@ extension MainViewController: VideoLinkDelegate {
         sideMenu.dismiss(animated: true)
         videoPlayer.modalPresentationStyle = .fullScreen
         navigationController?.present(videoPlayer, animated: true)
-        //show(videoPlayer, sender: self)
         }
 }

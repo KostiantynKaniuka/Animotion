@@ -34,9 +34,7 @@ final class LoginViewController: UIViewController {
         setupAppearance()
         setUpConstraints()
     }
-  
-
-    
+      
     @objc private func sigInButtonTapped() {
         loginDelegate?.didLogin()
     }
@@ -123,6 +121,4 @@ extension LoginViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-    
-    
 }

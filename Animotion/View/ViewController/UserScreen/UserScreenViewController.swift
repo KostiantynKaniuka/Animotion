@@ -24,7 +24,6 @@ final class UserScreenViewController: UIViewController {
     private let deleteAccountButton = DeleteAccountButton()
     private let buttonsStack = UIStackView()
     weak var logoutDelegate: LogoutDelegate?
-    static let shared = UserScreenViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,8 +45,14 @@ final class UserScreenViewController: UIViewController {
     
     @objc private func logOutButtonTapped() {
         logoutDelegate?.didLogout()
-        //navigationController?.popToRootViewController(animated: true)
     }
+    deinit {
+        print("➡️ user screen gone")
+    }
+}
+
+    //MARK: - layout
+extension UserScreenViewController {
     
     private func setupConstaints() {
         view.add(subviews: backgroundImage, userImage, userNameField,
@@ -153,9 +158,4 @@ final class UserScreenViewController: UIViewController {
         userNameField.backgroundColor = .clear
         backgroundImage.image = UIImage(named: "backtest")
     }
-    
-    deinit {
-        print("➡️ user screen gone")
-    }
-    
 }
