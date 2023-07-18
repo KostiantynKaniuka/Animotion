@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 import SnapKit
 
 protocol LoginViewControllerDelegate: AnyObject {
@@ -14,8 +15,8 @@ protocol LoginViewControllerDelegate: AnyObject {
 
 final class LoginViewController: UIViewController {
     private let backgroundImage = UIImageView()
-    private let emailTextField = LoginTextfiel()
-    private let passwordTextField = LoginTextfiel()
+    private let emailTextField = CustomTextField()
+    private let passwordTextField = CustomTextField()
     private let textFieldStack = UIStackView()
     private let loginButtonsStack = UIStackView()
     private let createAccountStack = UIStackView()
@@ -23,14 +24,34 @@ final class LoginViewController: UIViewController {
     private let logInButton = LoginButton()
     private let forgotPasswordBurron = ForgotPassButton()
     private let dontHaveAccoutButton = DontHaveAccountButton()
+    private let loginVM = LoginViewModel()
     weak var loginDelegate: LoginViewControllerDelegate?
+    
+    private var signinValidationPublishers: AnyPublisher<Bool, Never> {
+        return Publishers.CombineLatest(loginVM.passwordText, loginVM.emailText)
+            .map {  passwordText, emailText in
+                !passwordText.isEmpty && !emailText.isEmpty
+            }
+            .eraseToAnyPublisher()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
         logInButton.addTarget(self, action: #selector(sigInButtonTapped), for: .touchUpInside)
+        
+        
         emailTextField.delegate = self
         passwordTextField.delegate = self
+        emailTextField.addTarget(self, action: #selector(emailTextFiledTapped), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(passTextFiledTapped), for: .editingChanged)
+        dontHaveAccoutButton.addTarget(self, action: #selector(dontHaveAccountButtonTapped), for: .touchUpInside)
+        
+        signinValidationPublishers
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.isEnabled, on: logInButton)
+            .store(in: &loginVM.subscriptions)
+        
         setupAppearance()
         setUpConstraints()
     }
@@ -38,6 +59,37 @@ final class LoginViewController: UIViewController {
     @objc private func sigInButtonTapped() {
         loginDelegate?.didLogin()
     }
+    
+    @objc private func emailTextFiledTapped () {
+        loginVM.emailText.value = emailTextField.text ?? ""
+     
+    }
+    
+    @objc private func passTextFiledTapped () {
+        loginVM.passwordText.value = passwordTextField.text ?? ""
+    }
+    
+    @objc private func dontHaveAccountButtonTapped() {
+        let registrationVC = RegistrationViewController()
+        self.present(registrationVC, animated: true)
+    }
+    
+   
+    
+    deinit {
+        print("➡️ login gone")
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+extension LoginViewController {
     
     private func setUpConstraints() {
         createAccountStack.alignment = .fill
@@ -108,17 +160,5 @@ final class LoginViewController: UIViewController {
         
         passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         passwordTextField.isSecureTextEntry = true
-    }
-    
-    deinit {
-        print("➡️ login gone")
-    }
-}
-
-extension LoginViewController: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
     }
 }

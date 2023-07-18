@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class LoginTextfiel: UITextField {
+final class CustomTextField: UITextField {
     
     override init(frame: CGRect) {
         super.init(frame:frame)
@@ -19,7 +19,6 @@ final class LoginTextfiel: UITextField {
     }
     
     private func textFieldSettings() {
-        self.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = .white
         self.font = UIFont(name: "SanFrancisco", size: 17)
         self.textAlignment = .left
