@@ -15,33 +15,33 @@ final class RegistrationViewModel {
     var nameText = CurrentValueSubject<String, Never>("")
     var formIsValid = CurrentValueSubject<Bool, Never>(false)
     var bag = Set<AnyCancellable>()
-   
+    
     init() {
         isSignupFormValidPublisher
-             .receive(on: RunLoop.main)
-             .assign(to: \.formIsValid.value, on: self)
-             .store(in: &bag)
-         }
+            .receive(on: RunLoop.main)
+            .assign(to: \.formIsValid.value, on: self)
+            .store(in: &bag)
     }
-   
-    //MARK: - Validation rules
+}
+
+//MARK: - Validation rules
 extension RegistrationViewModel {
     var isUserNameValidPublisher: AnyPublisher<Bool, Never> {
         nameText
             .map { name in
-                return name.count >= 3
+                return name.count >= 3 && name.count <= 30
             }
             .eraseToAnyPublisher()
     }
     
     var isUserEmailValidPublisher: AnyPublisher<Bool, Never> {
-          emailText
-              .map { email in
-                  let emailPredicate = NSPredicate(format:"SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}")
-                  return emailPredicate.evaluate(with: email)
-              }
-              .eraseToAnyPublisher()
-      }
+        emailText
+            .map { email in
+                let emailPredicate = NSPredicate(format:"SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}")
+                return emailPredicate.evaluate(with: email)
+            }
+            .eraseToAnyPublisher()
+    }
     
     var isPasswordValidPublisher: AnyPublisher<Bool, Never> {
         passwordText
@@ -62,14 +62,63 @@ extension RegistrationViewModel {
     }
     
     var isSignupFormValidPublisher: AnyPublisher<Bool, Never> {
-          Publishers.CombineLatest4(
-              isUserNameValidPublisher,
-              isUserEmailValidPublisher,
-              isPasswordValidPublisher,
-              isPasswordEqualPublisher)
-              .map { isNameValid, isEmailValid, isPasswordValid, passwordMatches in
-                  return isNameValid && isEmailValid && isPasswordValid && passwordMatches
-              }
-              .eraseToAnyPublisher()
-      }
+        Publishers.CombineLatest4(
+            isUserNameValidPublisher,
+            isUserEmailValidPublisher,
+            isPasswordValidPublisher,
+            isPasswordEqualPublisher)
+        .map { isNameValid, isEmailValid, isPasswordValid, passwordMatches in
+            return isNameValid && isEmailValid && isPasswordValid && passwordMatches
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    
+    var isMinNumberOfCharactersValidPublisher: AnyPublisher<Bool, Never> {
+        passwordText
+            .map { password in
+                return password.count >= 8
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var isContainLowerRegisterValidPublisher: AnyPublisher<Bool, Never> {
+        passwordText
+            .map { password in
+                let lowercaseRegex = ".*[a-z]+.*"
+                let lowercasePredicate = NSPredicate(format: "SELF MATCHES %@", lowercaseRegex)
+                return lowercasePredicate.evaluate(with: password)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var isContainUpperRegisterValidPublisher: AnyPublisher<Bool, Never> {
+        passwordText
+            .map { password in
+                let uppercaseRegex = ".*[A-Z]+.*"
+                let uppercasePredicate = NSPredicate(format: "SELF MATCHES %@", uppercaseRegex)
+                return uppercasePredicate.evaluate(with: password)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var isContainDigitValidPublisher: AnyPublisher<Bool, Never> {
+        passwordText
+            .map { password in
+                let digitRegex = ".*\\d+.*"
+                let digitPredicate = NSPredicate(format: "SELF MATCHES %@", digitRegex)
+                return digitPredicate.evaluate(with: password)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var isContainSpecialCharacterValidPublisher: AnyPublisher<Bool, Never> {
+        passwordText
+            .map { password in
+                let specialCharacterRegex = ".*[$@$!%*?&]+.*"
+                let specialCharacterPredicate = NSPredicate(format: "SELF MATCHES %@", specialCharacterRegex)
+                return specialCharacterPredicate.evaluate(with: password)
+            }
+            .eraseToAnyPublisher()
+    }
 }

@@ -14,6 +14,6 @@ pod 'FirebaseAuth'
 pod 'FirebaseFirestore'
 pod 'FirebaseDatabase'
 pod 'SnapKit', '~> 5.6.0'
-pod 'CombineCocoa', :git => 'https://github.com/CombineCommunity/CombineCocoa.git', :branch => 'login'
+pod 'CombineCocoa'
 inhibit_all_warnings!
 end
