@@ -13,8 +13,10 @@ import CombineCocoa
 final class RegistrationViewController: UIViewController {
     
     //MARK: - UI OUTLETS
+    private let profileImage = UIImageView()
     private let backgroundImage = UIImageView()
     private var textFieldStack = UIStackView()
+    private var buttonsStackView = UIStackView()
     private lazy var labelStack = UIStackView()
     private lazy var labelView = UIView()
     private lazy var specialCharacterLabel = CustomLabel()
@@ -25,15 +27,14 @@ final class RegistrationViewController: UIViewController {
     private lazy var fieldsDontMatchLabel = CustomLabel()
     private let nameTextField = CustomTextField()
     private let emailTextField = CustomTextField()
-    private let passwordTextField = CustomTextField()
-    private let repeatPasswordTextField = CustomTextField()
+    private let passwordTextField = PasswordTextField()
+    private let repeatPasswordTextField = PasswordTextField()
     private let createAccButton = CreateAccountButton()
+    private let cancelRegistrationButton = CancelRegistrationButton()
     
     //MARK: - PROPERTIES
     private let registrationVM = RegistrationViewModel()
     private var isViewShiftedUp = false
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,8 +45,14 @@ final class RegistrationViewController: UIViewController {
         matchValidationColor()
         passwordTextField.delegate = self
         repeatPasswordTextField.delegate = self
+        emailTextField.delegate = self
+        nameTextField.delegate = self
+        cancelRegistrationButton.tapPublisher
+            .sink { [weak self] _ in
+                self?.dismiss(animated: true)
+            }
+            .store(in: &registrationVM.bag)
     }
-    
     
     private func removeValidationLabelsFromStackView() {
         if passwordTextField.resignFirstResponder() {
@@ -83,8 +90,6 @@ final class RegistrationViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .assign(to: \.isEnabled, on: createAccButton)
             .store(in: &registrationVM.bag)
-        
-        
     }
     
     private func matchValidationColor() {
@@ -123,17 +128,6 @@ final class RegistrationViewController: UIViewController {
             }
             .store(in: &registrationVM.bag)
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         registrationVM.isUserNameValidPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isValid in
@@ -161,8 +155,8 @@ final class RegistrationViewController: UIViewController {
                 make.bottom.equalTo(self.repeatPasswordTextField.snp.top).offset(15)
             }
         } else {
-            self.repeatPasswordTextField.layer.shadowColor = UIColor.black.cgColor
-            self.repeatPasswordTextField.layer.borderColor = UIColor.black.cgColor
+            self.repeatPasswordTextField.layer.shadowColor = UIColor.lightGray.cgColor
+            self.repeatPasswordTextField.layer.borderColor = UIColor.lightGray.cgColor
             self.fieldsDontMatchLabel.removeFromSuperview()
         }
     }
@@ -170,9 +164,9 @@ final class RegistrationViewController: UIViewController {
     deinit {
         print("➡️ registration gone")
     }
-    
 }
 
+//MARK: - TEXT FIELD DELEGATE
 extension RegistrationViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -182,11 +176,23 @@ extension RegistrationViewController: UITextFieldDelegate {
         }
     }
     
-    
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == passwordTextField {
             removeValidationLabelsFromStackView()
         }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+         let text = textField.text ?? ""
+        if text.count > 42 {
+            return false
+        }
+        if textField != nameTextField {
+            if string.contains(" ") {
+                return false
+            }
+        }
+            return true
     }
 }
 
@@ -197,15 +203,28 @@ extension RegistrationViewController {
         textFieldStack.spacing = 20
         textFieldStack.alignment = .center
         textFieldStack.axis = .vertical
-        textFieldStack.distribution = .fillProportionally
+        textFieldStack.distribution = .fill
+        
+        buttonsStackView.spacing = 20
+        buttonsStackView.alignment = .center
+        buttonsStackView.axis = .horizontal
+        buttonsStackView.distribution = .fill
         
         view.addSubview(backgroundImage)
+        view.addSubview(profileImage)
         view.addSubview(textFieldStack)
+        view.addSubview(buttonsStackView)
+       
+        
+        buttonsStackView.addArrangedSubviews([createAccButton, cancelRegistrationButton])
+        
         textFieldStack.addArrangedSubview(nameTextField)
         textFieldStack.addArrangedSubview(emailTextField)
         textFieldStack.addArrangedSubview(passwordTextField)
         textFieldStack.addArrangedSubview(repeatPasswordTextField)
-        textFieldStack.addArrangedSubview(createAccButton)
+        textFieldStack.addArrangedSubview(buttonsStackView)
+        
+      
         
         backgroundImage.snp.makeConstraints { make in
             make.bottom.equalTo(view.snp.bottom)
@@ -217,6 +236,13 @@ extension RegistrationViewController {
         textFieldStack.snp.makeConstraints { make in
             make.centerX.equalTo(view.snp.centerX)
             make.centerY.equalTo(view.snp.centerY)
+        }
+        
+        profileImage.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 100, height: 100))
+            make.centerX.equalTo(view.snp.centerX)
+            make.bottom.equalTo(textFieldStack.snp.top).offset(-50)
+            
         }
         
         nameTextField.snp.makeConstraints { make in
@@ -235,12 +261,24 @@ extension RegistrationViewController {
         }
         
         createAccButton.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 100, height: 40))
+            make.size.equalTo(CGSize(width: 100, height: 50))
+        }
+        
+        cancelRegistrationButton.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 100, height: 50))
         }
         
     }
     
     private func setUpAppearance() {
+        profileImage.image = UIImage(named: "back 1")
+        profileImage.frame.size = CGSize(width: 100, height: 100)
+        profileImage.layer.masksToBounds = false
+        profileImage.layer.borderWidth = 1
+        profileImage.layer.borderColor = UIColor.white.cgColor
+        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
+        profileImage.clipsToBounds = true
+        
         backgroundImage.image = UIImage(named: "backtest")
         nameTextField.attributedPlaceholder = NSAttributedString(string: "Enter your name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         

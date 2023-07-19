@@ -46,7 +46,7 @@ extension RegistrationViewModel {
     var isPasswordValidPublisher: AnyPublisher<Bool, Never> {
         passwordText
             .map { password in
-                let passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{8,}"
+                let passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{8,64}"
                 let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
                 return passwordPredicate.evaluate(with: password)
             }

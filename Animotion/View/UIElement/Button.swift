@@ -177,7 +177,7 @@ final class CreateAccountButton: UIButton {
     
     private func buttonSettings() {
         let attributedText = NSMutableAttributedString(string: "Create Account", attributes: [
-            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17),
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14),
             NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.kern: 1
         ])
@@ -186,9 +186,34 @@ final class CreateAccountButton: UIButton {
         self.configuration = loginButtonConfiguration
         self.setAttributedTitle(attributedText, for: .normal)
         self.layer.shadowRadius = 3.0
-        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowColor = UIColor.lightGray.cgColor
         self.layer.shadowOffset = CGSizeMake(1.0, 1.0)
         self.layer.shadowOpacity = 1.0
         self.titleLabel?.textAlignment = .center
     }
 }
+    
+    final class CancelRegistrationButton: UIButton {
+        
+        override init(frame: CGRect) {
+            super.init(frame:frame)
+            buttonSettings()
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+        private func buttonSettings() {
+            let attributedText = NSMutableAttributedString(string: "Cancel", attributes: [
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15),
+                NSAttributedString.Key.foregroundColor: UIColor.systemBlue,
+                NSAttributedString.Key.kern: 1
+            ])
+            let forgotButtonConfiguration = UIButton.Configuration.plain()
+            
+            self.configuration = forgotButtonConfiguration
+            self.setAttributedTitle(attributedText, for: .normal)
+            self.contentHorizontalAlignment = .left
+        }
+    }

@@ -13,16 +13,16 @@ protocol LogoutDelegate: AnyObject {
 }
 
 final class UserScreenViewController: UIViewController {
-    private let backgroundImage = UIImageView()
-    private let moodChartLabel = UILabel()
-    private let privacyPolicy = UILabel()
-    private let chartView = UIImageView()
-    private let userNameField = UITextView()
-    private var userImage = UIImageView()
-    private let logOutButton = LogoutButton()
-    private let editButton = EditAccountButton()
-    private let deleteAccountButton = DeleteAccountButton()
-    private let buttonsStack = UIStackView()
+    private let backgroundImage =       UIImageView()
+    private let moodChartLabel =        UILabel()
+    private let privacyPolicy =         UILabel()
+    private let chartView =             UIImageView()
+    private let userNameField =         UITextView()
+    private var userImage =             UIImageView()
+    private let logOutButton =          LogoutButton()
+    private let editButton =            EditAccountButton()
+    private let deleteAccountButton =   DeleteAccountButton()
+    private let buttonsStack =          UIStackView()
     weak var logoutDelegate: LogoutDelegate?
     
     override func viewDidLoad() {
@@ -46,18 +46,25 @@ final class UserScreenViewController: UIViewController {
     @objc private func logOutButtonTapped() {
         logoutDelegate?.didLogout()
     }
+    
     deinit {
         print("➡️ user screen gone")
     }
 }
 
-    //MARK: - layout
+//MARK: - layout
 extension UserScreenViewController {
     
     private func setupConstaints() {
-        view.add(subviews: backgroundImage, userImage, userNameField,
-                 chartView, moodChartLabel, buttonsStack,
-                 editButton, privacyPolicy)
+        view.add(subviews: backgroundImage,
+                 userImage,
+                 userNameField,
+                 chartView,
+                 moodChartLabel,
+                 buttonsStack,
+                 editButton,
+                 privacyPolicy
+        )
         
         buttonsStack.addArrangedSubview(logOutButton)
         buttonsStack.addArrangedSubview(deleteAccountButton)
@@ -116,46 +123,43 @@ extension UserScreenViewController {
             make.bottom.equalTo(view).offset(-32)
             make.centerX.equalTo(buttonsStack)
         }
-        
-        
     }
     
-    
     private func setupAppearance() {
-        privacyPolicy.text = "Privacy policy"
-        privacyPolicy.textColor = .darkGray
-        privacyPolicy.font = .systemFont(ofSize: 12)
+        privacyPolicy.text =                "Privacy policy"
+        privacyPolicy.textColor =           .darkGray
+        privacyPolicy.font =                .systemFont(ofSize: 12)
         
-        buttonsStack.spacing = 5
-        buttonsStack.alignment = .fill
-        buttonsStack.axis = .horizontal
-        buttonsStack.distribution = .fill
+        buttonsStack.spacing =              5
+        buttonsStack.alignment =            .fill
+        buttonsStack.axis =                 .horizontal
+        buttonsStack.distribution =         .fill
         
-        chartView.image = UIImage(named: "chart2")
-        chartView.contentMode = .scaleAspectFit
-        chartView.backgroundColor = .darkGray
-        chartView.layer.borderWidth = 1
-        chartView.layer.borderColor = UIColor.white.cgColor
+        chartView.image =                   UIImage(named: "chart2")
+        chartView.contentMode =             .scaleAspectFit
+        chartView.backgroundColor =         .darkGray
+        chartView.layer.borderWidth =       1
+        chartView.layer.borderColor =       UIColor.white.cgColor
         
-        moodChartLabel.text = "Your mood chart"
-        moodChartLabel.font = .systemFont(ofSize: 20)
+        moodChartLabel.text =               "Your mood chart"
+        moodChartLabel.font =               .systemFont(ofSize: 20)
         
+        userImage.image =                   UIImage(named: "back 1")
+        userImage.frame.size =              CGSize(width: 80, height: 80)
+        userImage.layer.borderWidth =       1
+        userImage.layer.borderColor =       UIColor.white.cgColor
+        userImage.layer.cornerRadius =      userImage.frame.size.width / 2
+        userImage.layer.masksToBounds =     false
+        userImage.clipsToBounds =           true
         
-        userImage.image = UIImage(named: "back 1")
-        userImage.frame.size = CGSize(width: 80, height: 80)
-        userImage.layer.borderWidth = 1
-        userImage.layer.borderColor = UIColor.white.cgColor
-        userImage.layer.cornerRadius = userImage.frame.size.width / 2
-        userImage.layer.masksToBounds = false
-        userImage.clipsToBounds = true
-        
-        userNameField.text = "User name"
-        userNameField.font = .systemFont(ofSize: 17)
-        userNameField.textAlignment = .center
-        userNameField.textColor = .white
-        userNameField.textContainer.maximumNumberOfLines = 1
-        userNameField.isEditable = true
-        userNameField.backgroundColor = .clear
-        backgroundImage.image = UIImage(named: "backtest")
+        userNameField.text =                "User name"
+        userNameField.font =                .systemFont(ofSize: 17)
+        userNameField.textAlignment =       .center
+        userNameField.textColor =           .white
+        userNameField.textContainer
+            .maximumNumberOfLines =         1
+        userNameField.isEditable =          true
+        userNameField.backgroundColor =     .clear
+        backgroundImage.image =             UIImage(named: "backtest")
     }
 }
