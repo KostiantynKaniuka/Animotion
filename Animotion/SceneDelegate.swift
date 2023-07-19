@@ -8,16 +8,66 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
-
-
+   
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-          let window = UIWindow(windowScene: windowScene)
-          window.rootViewController = MainViewController() // Where ViewController() is the initial View Controller
-          window.makeKeyAndVisible()
-          self.window = window
+        let window = UIWindow(windowScene: windowScene)
+        let loginVC = LoginViewController()
+        
+        let registrationVc = RegistrationViewController()
+        loginVC.loginDelegate = self
+        window.rootViewController = loginVC
+        window.makeKeyAndVisible()
+        self.window = window
         guard let _ = (scene as? UIWindowScene) else { return }
+    }
+}
+
+//MARK: - Login action
+extension SceneDelegate: LoginViewControllerDelegate {
+    func didLogin() {
+        let mainVc = MainViewController()
+        mainVc.userVCDelegate = self
+         let navVc = UINavigationController(rootViewController: mainVc)
+        setRootViewController(navVc)
+    }
+}
+
+//MARK: - Login action
+extension SceneDelegate: LogoutDelegate {
+    
+    func didLogout() {
+        let newSessionVc = LoginViewController()
+        newSessionVc.loginDelegate = self
+     setRootViewController(newSessionVc)
+    }
+}
+
+//MARK: - Logout action
+extension SceneDelegate {
+    
+    func setRootViewController(_ vc: UIViewController, animated: Bool = true) {
+        guard animated, let window = self.window else {
+            self.window?.rootViewController = vc
+            self.window?.makeKeyAndVisible()
+            return
+        }
+        
+        window.rootViewController = vc
+        window.makeKeyAndVisible()
+        UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil)
+    }
+}
+
+//MARK: - creating user screen for navigation
+extension SceneDelegate: PassUserViewController {
+    
+    var userViewConltoller: UIViewController {
+        get {
+            let vc = UserScreenViewController()
+            vc.logoutDelegate = self
+            return vc
+        }
     }
 }

@@ -13,6 +13,7 @@ pod 'FirebaseAnalytics'
 pod 'FirebaseAuth'
 pod 'FirebaseFirestore'
 pod 'FirebaseDatabase'
-
+pod 'SnapKit', '~> 5.6.0'
+pod 'CombineCocoa'
 inhibit_all_warnings!
 end

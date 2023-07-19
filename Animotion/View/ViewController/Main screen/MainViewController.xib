@@ -27,7 +27,7 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back 1" translatesAutoresizingMaskIntoConstraints="NO" id="kBu-l3-gNe">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backtest" translatesAutoresizingMaskIntoConstraints="NO" id="kBu-l3-gNe">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="14M-3I-y4w">
@@ -120,6 +120,9 @@
                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30"/>
                         <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </buttonConfiguration>
+                    <connections>
+                        <action selector="profileButtonTapped:" destination="-1" eventType="touchUpInside" id="Wj6-YJ-lK1"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose mood direction" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3s-vb-Iet">
                     <rect key="frame" x="74.000000000000014" y="87" width="245.33333333333337" height="30"/>
@@ -157,7 +160,7 @@
     </objects>
     <resources>
         <image name="Cross" width="550" height="556"/>
-        <image name="back 1" width="6000" height="4000"/>
+        <image name="backtest" width="744" height="1646"/>
         <image name="cloud.fill" catalog="system" width="128" height="87"/>
         <image name="hourglass.bottomhalf.filled" catalog="system" width="103" height="128"/>
         <image name="person.circle.fill" catalog="system" width="128" height="123"/>
