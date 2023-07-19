@@ -9,6 +9,7 @@ import UIKit
 import Combine
 import CombineCocoa
 import SnapKit
+import FirebaseAuth
 
 protocol LoginViewControllerDelegate: AnyObject {
     func didLogin()
@@ -39,7 +40,8 @@ final class LoginViewController: UIViewController {
         emailTextField.delegate = self
         passwordTextField.delegate = self
         bindTextField()
-       dontHaveAccoutButtonTapped()
+        dontHaveAccoutButtonTapped()
+        
     }
     
     private func bindTextField() {
@@ -92,10 +94,19 @@ final class LoginViewController: UIViewController {
     }
       
     @objc private func sigInButtonTapped() {
-        loginDelegate?.didLogin()
+        Auth.auth().signIn(withEmail: loginVM.emailText.value,
+                           password: loginVM.passwordText.value) { [weak self]  authResut, error in
+            guard let self = self else {return}
+            if let error = error as NSError? {
+                let message  = self.loginVM.formateAuthError(error)
+                self.loginVM.showAlert(message: message, vc: self)
+            }
+            if authResut != nil {
+                self.loginDelegate?.didLogin()
+            }
+            
+        }
     }
-    
-
     
     deinit {
         print("➡️ login gone")
@@ -204,5 +215,3 @@ extension LoginViewController {
         passwordTextField.isSecureTextEntry = true
     }
 }
-
-

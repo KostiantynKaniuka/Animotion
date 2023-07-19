@@ -33,6 +33,7 @@ final class CustomTextField: UITextField {
         self.layer.shadowOffset = CGSizeMake(1.0, 1.0)
         self.layer.shadowOpacity = 1.0
         self.textColor = .black
+        self.autocapitalizationType = .none
         self.setLeftPaddingPoints(8)
         self.setRightPaddingPoints(8)
     }

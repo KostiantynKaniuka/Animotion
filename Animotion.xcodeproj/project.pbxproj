@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		614068560C6C5B24682F3734 /* Pods_Animotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCB3CC4FA32298CBD6D7F7A6 /* Pods_Animotion.framework */; };
 		E7242D2A2A2F71F10072B625 /* FireBaseAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7242D292A2F71F10072B625 /* FireBaseAPIManager.swift */; };
+		E72876A82A683F1600428C5D /* FireError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72876A72A683F1600428C5D /* FireError.swift */; };
 		E73293C62A66B234007CF68F /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73293C52A66B234007CF68F /* CustomLabel.swift */; };
 		E73A00012A2DFCBE00AA421F /* CarouselCollectionVievModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73A00002A2DFCBE00AA421F /* CarouselCollectionVievModel.swift */; };
 		E73A00052A2E26CF00AA421F /* DotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73A00042A2E26CF00AA421F /* DotsView.swift */; };
@@ -46,6 +47,7 @@
 		27100A960F7EE5529B77A8C3 /* Pods-Animotion.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Animotion.release.xcconfig"; path = "Target Support Files/Pods-Animotion/Pods-Animotion.release.xcconfig"; sourceTree = "<group>"; };
 		524192AE8343C00B5BD5AD20 /* Pods-Animotion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Animotion.debug.xcconfig"; path = "Target Support Files/Pods-Animotion/Pods-Animotion.debug.xcconfig"; sourceTree = "<group>"; };
 		E7242D292A2F71F10072B625 /* FireBaseAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseAPIManager.swift; sourceTree = "<group>"; };
+		E72876A72A683F1600428C5D /* FireError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireError.swift; sourceTree = "<group>"; };
 		E73293C52A66B234007CF68F /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		E73A00002A2DFCBE00AA421F /* CarouselCollectionVievModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionVievModel.swift; sourceTree = "<group>"; };
 		E73A00042A2E26CF00AA421F /* DotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotsView.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				E7F168362A28C941004B4E49 /* UIColor.swift */,
 				E796AB582A5C031F0052A1F1 /* TextField.swift */,
 				E796AB622A5C05EE0052A1F1 /* Layout.swift */,
+				E72876A72A683F1600428C5D /* FireError.swift */,
 			);
 			path = "Extencion ";
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				E7693B3A2A293382003C5D3F /* CarouselCollectionView.swift in Sources */,
 				E782AA312A543E61008893CD /* SideMenuViewModel.swift in Sources */,
 				E76AE0B22A1FFF1A00102F15 /* AppDelegate.swift in Sources */,
+				E72876A82A683F1600428C5D /* FireError.swift in Sources */,
 				E7DAAFCF2A5C47DC0009D7B9 /* UserScreenViewController.swift in Sources */,
 				E73A00052A2E26CF00AA421F /* DotsView.swift in Sources */,
 				E76AE0B42A1FFF1A00102F15 /* SceneDelegate.swift in Sources */,
