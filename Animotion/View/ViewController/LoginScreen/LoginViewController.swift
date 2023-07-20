@@ -102,7 +102,14 @@ final class LoginViewController: UIViewController {
                 self.loginVM.showAlert(message: message, vc: self)
             }
             if authResut != nil {
-                self.loginDelegate?.didLogin()
+                let user = Auth.auth().currentUser
+                guard let currentUser = user else {return}
+                if currentUser.isEmailVerified {
+                    self.loginDelegate?.didLogin()
+                }
+                else {
+                    self.loginVM.showAlert(message: "Please verify your email", vc: self)
+                }
             }
             
         }
@@ -115,11 +122,16 @@ final class LoginViewController: UIViewController {
 
 extension LoginViewController: UITextFieldDelegate {
     
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-           if string.contains(" ") {
-               return false
-           }
-           return true
+        let text = textField.text ?? ""
+        let updatedText = (text as NSString).replacingCharacters(in: range, with: string)
+        
+        if updatedText.count > 42 || string.contains(" ") {
+            return false
+        } else {
+            return true
+        }
        }
 }
 

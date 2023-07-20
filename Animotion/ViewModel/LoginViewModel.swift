@@ -13,8 +13,7 @@ final class LoginViewModel {
     var emailText = CurrentValueSubject<String, Never>("")
     var passwordText = CurrentValueSubject<String, Never>("")
     var subscriptions = Set<AnyCancellable>()
-    
-    
+
     var signinValidationPublishers: AnyPublisher<Bool, Never> {
         return Publishers.CombineLatest(passwordText, emailText)
             .map {  passwordText, emailText in
@@ -22,8 +21,6 @@ final class LoginViewModel {
             }
             .eraseToAnyPublisher()
     }
-    
-    
     
     func formateAuthError(_ error: NSError) -> String {
         switch error.code {

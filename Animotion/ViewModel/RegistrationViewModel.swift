@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import FirebaseAuth
 
 final class RegistrationViewModel {
     var emailText = CurrentValueSubject<String, Never>("")
@@ -121,4 +122,32 @@ extension RegistrationViewModel {
             }
             .eraseToAnyPublisher()
     }
+}
+
+extension RegistrationViewModel {
+    
+    func formateAuthError(_ error: NSError) -> String {
+        switch error.code {
+        case AuthErrorCode.emailAlreadyInUse.rawValue:
+            return "Email already in use"
+        case AuthErrorCode.invalidEmail.rawValue:
+            return "Invalid email"
+        case AuthErrorCode.accountExistsWithDifferentCredential.rawValue:
+            return "Account exists with different credential"
+        case AuthErrorCode.networkError.rawValue:
+            return "Network Error"
+        case AuthErrorCode.userDisabled.rawValue:
+            return "Account is banned"
+        default:
+            return "unknown error: \(error.localizedDescription)"
+        }
+    }
+    
+    func showAlert(title: String, message: String, vc: RegistrationViewController, handler:((UIAlertAction) -> Void)? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: handler)
+        alertController.addAction(okAction)
+        vc.present(alertController, animated: true, completion: nil)
+    }
+
 }

@@ -7,6 +7,9 @@
 
 import UIKit
 import SnapKit
+import Combine
+import CombineCocoa
+import FirebaseAuth
 
 protocol LogoutDelegate: AnyObject {
     func didLogout()
@@ -23,6 +26,9 @@ final class UserScreenViewController: UIViewController {
     private let editButton =            EditAccountButton()
     private let deleteAccountButton =   DeleteAccountButton()
     private let buttonsStack =          UIStackView()
+    private let userScreenVM =          UserScreenViewModel()
+    
+    private var alertMessage: AlertMessage = .error
     weak var logoutDelegate: LogoutDelegate?
     
     override func viewDidLoad() {
@@ -36,11 +42,38 @@ final class UserScreenViewController: UIViewController {
         super.viewDidLayoutSubviews()
         setupAppearance()
         setupConstaints()
+        deleteButtonTapped()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
+    }
+    
+    private func deleteButtonTapped() {
+        let user = Auth.auth().currentUser
+        deleteAccountButton.tapPublisher
+            .sink { [weak self] _ in
+                guard let self = self else {return}
+                self.alertMessage = .delete
+                self.userScreenVM.showAlert(title: self.alertMessage.title,
+                                            message: self.alertMessage.body,
+                                            vc: self,
+                                            handler: ({ _ in
+                    user?.delete { error in
+                      if let error = error as NSError? {
+                         let message = self.userScreenVM.formateAuthError(error)
+                          self.userScreenVM.showAlert(title: self.alertMessage.title,
+                                                      message: message,
+                                                      vc: self)
+                      } else {
+                          self.logoutDelegate?.didLogout()
+                        print("😶‍🌫️ account deleted")
+                      }
+                    }
+                }), cancelhadler: UIAlertAction())
+            }
+            .store(in: &userScreenVM.bag)
     }
     
     @objc private func logOutButtonTapped() {

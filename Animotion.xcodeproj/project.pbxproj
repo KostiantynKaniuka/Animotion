@@ -36,6 +36,8 @@
 		E7DAAFCC2A5C39480009D7B9 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFCB2A5C39480009D7B9 /* Navigation.swift */; };
 		E7DAAFCF2A5C47DC0009D7B9 /* UserScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFCE2A5C47DC0009D7B9 /* UserScreenViewController.swift */; };
 		E7E4385E2A28EB3B002F63F6 /* Forum-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7E4385D2A28EB3B002F63F6 /* Forum-Regular.ttf */; };
+		E7E6FEA62A69539900431641 /* AlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E6FEA52A69539900431641 /* AlertMessage.swift */; };
+		E7E6FEA82A695E7E00431641 /* UserScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E6FEA72A695E7E00431641 /* UserScreenViewModel.swift */; };
 		E7EFA0E62A20FC3700544275 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EFA0E52A20FC3700544275 /* SideMenuViewController.swift */; };
 		E7F168372A28C941004B4E49 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F168362A28C941004B4E49 /* UIColor.swift */; };
 		E7F1683D2A28CA58004B4E49 /* SideMenuCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F1683B2A28CA58004B4E49 /* SideMenuCellTableViewCell.swift */; };
@@ -76,6 +78,8 @@
 		E7DAAFCB2A5C39480009D7B9 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		E7DAAFCE2A5C47DC0009D7B9 /* UserScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScreenViewController.swift; sourceTree = "<group>"; };
 		E7E4385D2A28EB3B002F63F6 /* Forum-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Forum-Regular.ttf"; sourceTree = "<group>"; };
+		E7E6FEA52A69539900431641 /* AlertMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMessage.swift; sourceTree = "<group>"; };
+		E7E6FEA72A695E7E00431641 /* UserScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScreenViewModel.swift; sourceTree = "<group>"; };
 		E7EFA0E52A20FC3700544275 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		E7F168362A28C941004B4E49 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		E7F1683B2A28CA58004B4E49 /* SideMenuCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCellTableViewCell.swift; sourceTree = "<group>"; };
@@ -253,6 +257,7 @@
 				E782AA302A543E61008893CD /* SideMenuViewModel.swift */,
 				E7920F442A668931002B988F /* LoginViewModel.swift */,
 				E7920F482A669A75002B988F /* RegistrationViewModel.swift */,
+				E7E6FEA72A695E7E00431641 /* UserScreenViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -284,6 +289,7 @@
 				E7F482002A2FB571008B3888 /* CarouselData.swift */,
 				E782AA2E2A5429D2008893CD /* SideMenu.swift */,
 				E7DAAFCB2A5C39480009D7B9 /* Navigation.swift */,
+				E7E6FEA52A69539900431641 /* AlertMessage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -424,6 +430,7 @@
 				E7242D2A2A2F71F10072B625 /* FireBaseAPIManager.swift in Sources */,
 				E796AB592A5C031F0052A1F1 /* TextField.swift in Sources */,
 				E7F482012A2FB571008B3888 /* CarouselData.swift in Sources */,
+				E7E6FEA62A69539900431641 /* AlertMessage.swift in Sources */,
 				E7DAAFCA2A5C11270009D7B9 /* Button.swift in Sources */,
 				E7EFA0E62A20FC3700544275 /* SideMenuViewController.swift in Sources */,
 				E73A00012A2DFCBE00AA421F /* CarouselCollectionVievModel.swift in Sources */,
@@ -439,6 +446,7 @@
 				E76AE0B42A1FFF1A00102F15 /* SceneDelegate.swift in Sources */,
 				E796AB632A5C05EE0052A1F1 /* Layout.swift in Sources */,
 				E7920F472A668DA1002B988F /* RegistrationViewController.swift in Sources */,
+				E7E6FEA82A695E7E00431641 /* UserScreenViewModel.swift in Sources */,
 				E796AB5E2A5C04380052A1F1 /* LoginViewController.swift in Sources */,
 				E7920F492A669A75002B988F /* RegistrationViewModel.swift in Sources */,
 				E796AB602A5C04550052A1F1 /* CustomTextField.swift in Sources */,

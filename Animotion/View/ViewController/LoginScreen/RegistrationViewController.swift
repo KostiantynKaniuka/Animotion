@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import Combine
 import CombineCocoa
+import FirebaseAuth
 
 final class RegistrationViewController: UIViewController {
     
@@ -35,6 +36,7 @@ final class RegistrationViewController: UIViewController {
     //MARK: - PROPERTIES
     private let registrationVM = RegistrationViewModel()
     private var isViewShiftedUp = false
+    private var alertMessage: AlertMessage = .error
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +45,7 @@ final class RegistrationViewController: UIViewController {
         setUpConstraints()
         bindTextfields()
         matchValidationColor()
+        createUserTapped()
         passwordTextField.delegate = self
         repeatPasswordTextField.delegate = self
         emailTextField.delegate = self
@@ -59,6 +62,42 @@ final class RegistrationViewController: UIViewController {
             textFieldStack.removeArrangedSubview(labelView)
             labelView.removeFromSuperview()
         }
+    }
+    
+    private func createUserTapped() {
+        createAccButton.tapPublisher
+            .sink { [weak self] _ in
+                guard let self = self else {return}
+                Auth.auth().createUser(withEmail: self.registrationVM.emailText.value,
+                                       password: self.registrationVM.passwordText.value) { authResult, error in
+                    
+                    if let error = error as NSError? {
+                        self.alertMessage = .error
+                        let message  = self.registrationVM.formateAuthError(error)
+                        self.registrationVM.showAlert(title: self.alertMessage.title,
+                                                      message: message, vc: self)
+                    }
+                    
+                    if authResult != nil {
+                        Auth.auth().currentUser?.sendEmailVerification { error in
+                            if let error = error as NSError? {
+                                self.alertMessage = .error
+                                let message  = self.registrationVM.formateAuthError(error)
+                                self.registrationVM.showAlert(title: self.alertMessage.title,
+                                                              message: message, vc: self)
+                            }
+                        }
+                        self.alertMessage = .verification
+                        self.registrationVM.showAlert(title: self.alertMessage.title,
+                                                      message: self.alertMessage.body,
+                                                      vc: self) { _ in
+                            
+                            self.dismiss(animated: true)
+                        }
+                    }
+                }
+            }
+            .store(in: &registrationVM.bag)
     }
     
     private func bindTextfields() {
@@ -182,17 +221,26 @@ extension RegistrationViewController: UITextFieldDelegate {
         }
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-         let text = textField.text ?? ""
-        if text.count > 42 {
-            return false
-        }
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        
+        let text = textField.text ?? ""
+        let updatedText = (text as NSString).replacingCharacters(in: range,
+                                                                 with: string)
         if textField != nameTextField {
-            if string.contains(" ") {
+            if updatedText.count > 42 || string.contains(" ") {
                 return false
+            } else {
+                return true
             }
-        }
-            return true
+        } else {
+                if updatedText.count > 42 {
+                    return false
+                } else {
+                    return true
+                }
+            }
     }
 }
 
@@ -216,7 +264,8 @@ extension RegistrationViewController {
         view.addSubview(buttonsStackView)
        
         
-        buttonsStackView.addArrangedSubviews([createAccButton, cancelRegistrationButton])
+        buttonsStackView.addArrangedSubviews([createAccButton,
+                                              cancelRegistrationButton])
         
         textFieldStack.addArrangedSubview(nameTextField)
         textFieldStack.addArrangedSubview(emailTextField)
@@ -280,17 +329,27 @@ extension RegistrationViewController {
         profileImage.clipsToBounds = true
         
         backgroundImage.image = UIImage(named: "backtest")
-        nameTextField.attributedPlaceholder = NSAttributedString(string: "Enter your name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        nameTextField.attributedPlaceholder =
+        NSAttributedString(string: "Enter your name",
+                         attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
+        emailTextField.attributedPlaceholder =
+        NSAttributedString(string: "Email",
+                          attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
-        emailTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         emailTextField.keyboardType = .emailAddress
         
-        passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        passwordTextField.attributedPlaceholder =
+        NSAttributedString(string: "Password",
+                         attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
         passwordTextField.textContentType = .oneTimeCode
         passwordTextField.isSecureTextEntry = true
         
-        repeatPasswordTextField.attributedPlaceholder = NSAttributedString(string: "Repeat password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        repeatPasswordTextField.attributedPlaceholder =
+        NSAttributedString(string: "Repeat password",
+                           attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
         repeatPasswordTextField.textContentType = .oneTimeCode
         repeatPasswordTextField.isSecureTextEntry = true
         
