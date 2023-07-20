@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         let loginVC = LoginViewController()
         
-        let registrationVc = RegistrationViewController()
+        //let registrationVc = RegistrationViewController()
         loginVC.loginDelegate = self
         window.rootViewController = loginVC
         window.makeKeyAndVisible()

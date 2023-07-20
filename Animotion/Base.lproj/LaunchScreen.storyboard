@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -16,21 +17,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView autoresizesSubviews="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.94999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splash" translatesAutoresizingMaskIntoConstraints="NO" id="XDX-zh-cxD">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backblacktest" translatesAutoresizingMaskIntoConstraints="NO" id="ojj-Vn-nV0">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="Logo Meditator-modified" translatesAutoresizingMaskIntoConstraints="NO" id="mgB-7S-5U5">
+                                <rect key="frame" x="121.66666666666669" y="179" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="dJ1-eD-HNC"/>
+                                    <constraint firstAttribute="height" constant="150" id="pdw-xE-OCU"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="XDX-zh-cxD" secondAttribute="bottom" id="4pu-Bh-cX5"/>
-                            <constraint firstItem="XDX-zh-cxD" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="6Tw-yR-ZnM"/>
-                            <constraint firstAttribute="bottom" secondItem="XDX-zh-cxD" secondAttribute="bottom" id="ErJ-KQ-Ihd"/>
-                            <constraint firstItem="XDX-zh-cxD" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="J0H-QJ-jxb"/>
-                            <constraint firstItem="XDX-zh-cxD" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="JWY-qX-L3i"/>
-                            <constraint firstItem="XDX-zh-cxD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bUq-zz-Bfc"/>
-                            <constraint firstItem="XDX-zh-cxD" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="dVC-uB-7dR"/>
-                            <constraint firstItem="XDX-zh-cxD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="vED-Dz-k7c"/>
+                            <constraint firstAttribute="bottom" secondItem="ojj-Vn-nV0" secondAttribute="bottom" id="E8I-hE-vvD"/>
+                            <constraint firstItem="ojj-Vn-nV0" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="cnY-MG-GTV"/>
+                            <constraint firstItem="mgB-7S-5U5" firstAttribute="centerX" secondItem="ojj-Vn-nV0" secondAttribute="centerX" id="dhD-NU-Q3c"/>
+                            <constraint firstItem="mgB-7S-5U5" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" constant="120" id="k9l-Vo-9f5"/>
+                            <constraint firstAttribute="trailing" secondItem="ojj-Vn-nV0" secondAttribute="trailing" id="pSf-Ea-tGk"/>
+                            <constraint firstItem="ojj-Vn-nV0" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="v4f-Hy-394"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -40,7 +46,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Splash" width="1017" height="1001"/>
+        <image name="Logo Meditator-modified" width="1024" height="1024"/>
+        <image name="backblacktest" width="744" height="1646"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
