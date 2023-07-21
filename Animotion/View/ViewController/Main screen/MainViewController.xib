@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -134,7 +133,7 @@
                 </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" red="0.76862752440000004" green="0.76862752440000004" blue="0.76862752440000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <constraints>
                 <constraint firstItem="C4w-k8-6x6" firstAttribute="top" secondItem="h3s-vb-Iet" secondAttribute="bottom" constant="60" id="30X-3U-Jyh"/>
                 <constraint firstItem="kBu-l3-gNe" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="CrA-YX-3Xd"/>
@@ -166,8 +165,5 @@
         <image name="person.circle.fill" catalog="system" width="128" height="123"/>
         <image name="tropicalstorm" catalog="system" width="88" height="128"/>
         <image name="water.waves" catalog="system" width="128" height="88"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

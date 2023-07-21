@@ -11,6 +11,7 @@ enum AlertMessage {
     case error
     case verification
     case delete
+    case reset
     
     var title: String {
         switch self {
@@ -20,6 +21,8 @@ enum AlertMessage {
             return "Please check your email"
         case .delete:
             return "Delete account?"
+        case .reset:
+            return "Please check your email"
         }
     }
     
@@ -31,6 +34,8 @@ enum AlertMessage {
            return "Please check your email and follow the instructions to activate your account."
         case .delete:
             return "Are you sure that you want to delete the account? All data will be erased."
+        case .reset:
+            return "Please check your email and follow the instructions to reset your password."
         }
     }
 }

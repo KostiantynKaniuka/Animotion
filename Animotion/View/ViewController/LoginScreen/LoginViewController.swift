@@ -41,6 +41,7 @@ final class LoginViewController: UIViewController {
         passwordTextField.delegate = self
         bindTextField()
         dontHaveAccoutButtonTapped()
+        forgotPasswordBurronTapped()
         
     }
     
@@ -114,6 +115,17 @@ final class LoginViewController: UIViewController {
             }
 
         }
+    }
+    
+    private func forgotPasswordBurronTapped() {
+        forgotPasswordBurron.tapPublisher
+            .sink { [weak self] _ in
+                guard let self = self else {return}
+                let vc = ResetPasswordViewController()
+                vc.modalPresentationStyle = .pageSheet
+                self.present(vc, animated: true)
+            }
+            .store(in: &loginVM.subscriptions)
     }
     
     deinit {

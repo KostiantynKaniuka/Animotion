@@ -44,6 +44,8 @@
 		E7F168372A28C941004B4E49 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F168362A28C941004B4E49 /* UIColor.swift */; };
 		E7F1683D2A28CA58004B4E49 /* SideMenuCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F1683B2A28CA58004B4E49 /* SideMenuCellTableViewCell.swift */; };
 		E7F1683E2A28CA58004B4E49 /* SideMenuCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7F1683C2A28CA58004B4E49 /* SideMenuCellTableViewCell.xib */; };
+		E7F28BD32A6AC18900693189 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F28BD22A6AC18900693189 /* ResetPasswordViewController.swift */; };
+		E7F28BD52A6ADA3500693189 /* ResetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F28BD42A6ADA3500693189 /* ResetPasswordViewModel.swift */; };
 		E7F482012A2FB571008B3888 /* CarouselData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F482002A2FB571008B3888 /* CarouselData.swift */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +90,8 @@
 		E7F168362A28C941004B4E49 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		E7F1683B2A28CA58004B4E49 /* SideMenuCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCellTableViewCell.swift; sourceTree = "<group>"; };
 		E7F1683C2A28CA58004B4E49 /* SideMenuCellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideMenuCellTableViewCell.xib; sourceTree = "<group>"; };
+		E7F28BD22A6AC18900693189 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		E7F28BD42A6ADA3500693189 /* ResetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewModel.swift; sourceTree = "<group>"; };
 		E7F482002A2FB571008B3888 /* CarouselData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselData.swift; sourceTree = "<group>"; };
 		FCB3CC4FA32298CBD6D7F7A6 /* Pods_Animotion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Animotion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -192,6 +196,7 @@
 			children = (
 				E796AB5D2A5C04380052A1F1 /* LoginViewController.swift */,
 				E7920F462A668DA1002B988F /* RegistrationViewController.swift */,
+				E7F28BD22A6AC18900693189 /* ResetPasswordViewController.swift */,
 			);
 			path = LoginScreen;
 			sourceTree = "<group>";
@@ -272,6 +277,7 @@
 				E7920F482A669A75002B988F /* RegistrationViewModel.swift */,
 				E7E6FEA72A695E7E00431641 /* UserScreenViewModel.swift */,
 				E74DFF072A6995C80057093F /* AuthStateViewModel.swift */,
+				E7F28BD42A6ADA3500693189 /* ResetPasswordViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -443,6 +449,7 @@
 				E7693B3D2A293B29003C5D3F /* CarouselCollectionViewCell.swift in Sources */,
 				E7242D2A2A2F71F10072B625 /* FireBaseAPIManager.swift in Sources */,
 				E796AB592A5C031F0052A1F1 /* TextField.swift in Sources */,
+				E7F28BD52A6ADA3500693189 /* ResetPasswordViewModel.swift in Sources */,
 				E7F482012A2FB571008B3888 /* CarouselData.swift in Sources */,
 				E7E6FEA62A69539900431641 /* AlertMessage.swift in Sources */,
 				E7DAAFCA2A5C11270009D7B9 /* Button.swift in Sources */,
@@ -457,6 +464,7 @@
 				E74DFF082A6995C80057093F /* AuthStateViewModel.swift in Sources */,
 				E76AE0B22A1FFF1A00102F15 /* AppDelegate.swift in Sources */,
 				E72876A82A683F1600428C5D /* FireError.swift in Sources */,
+				E7F28BD32A6AC18900693189 /* ResetPasswordViewController.swift in Sources */,
 				E7DAAFCF2A5C47DC0009D7B9 /* UserScreenViewController.swift in Sources */,
 				E73A00052A2E26CF00AA421F /* DotsView.swift in Sources */,
 				E76AE0B42A1FFF1A00102F15 /* SceneDelegate.swift in Sources */,

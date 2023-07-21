@@ -33,7 +33,7 @@ extension SceneDelegate: LoginViewControllerDelegate {
     }
 }
 
-//MARK: - Login action
+//MARK: - LogOutn action
 extension SceneDelegate: LogoutDelegate {
     
     func didLogout() {
@@ -71,6 +71,7 @@ extension SceneDelegate: PassUserViewController {
     }
 }
 
+//MARK: - Checking user authstate for navigation
 extension SceneDelegate: AuthNavigationToLogin {
     func navigateToLigin() {
         let vc = LoginViewController()

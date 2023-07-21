@@ -57,7 +57,7 @@ final class ForgotPassButton: UIButton {
         
         self.configuration = forgotButtonConfiguration
         self.setAttributedTitle(attributedText, for: .normal)
-        self.contentHorizontalAlignment = .left
+        self.contentHorizontalAlignment = .right
     }
 }
 
@@ -217,3 +217,32 @@ final class CreateAccountButton: UIButton {
             self.contentHorizontalAlignment = .left
         }
     }
+
+final class ResetPasswordButton: UIButton {
+    
+    override init(frame: CGRect) {
+        super.init(frame:frame)
+        buttonSettings()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func buttonSettings() {
+        let attributedText = NSMutableAttributedString(string: "Reset password", attributes: [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.kern: 1
+        ])
+        var loginButtonConfiguration = UIButton.Configuration.gray()
+        loginButtonConfiguration.baseBackgroundColor = .systemBlue
+        self.configuration = loginButtonConfiguration
+        self.setAttributedTitle(attributedText, for: .normal)
+        self.layer.shadowRadius = 3.0
+        self.layer.shadowColor = UIColor.lightGray.cgColor
+        self.layer.shadowOffset = CGSizeMake(1.0, 1.0)
+        self.layer.shadowOpacity = 1.0
+        self.titleLabel?.textAlignment = .center
+    }
+}

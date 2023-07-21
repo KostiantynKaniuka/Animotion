@@ -26,8 +26,6 @@ final class InitialViewController: UIViewController {
     weak var navigationToMainDelegate: AuthNavigationToMainDelegate?
     weak var navigationToLoginDelegate: AuthNavigationToLogin?
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpAperance()
@@ -84,15 +82,12 @@ extension InitialViewController {
         }
         
     }
-    
-    
+
     private func setUpAperance() {
         logoImage.image = UIImage(named: "AppIcon")
         logoImage.layer.cornerRadius = 20
         logoImage.layer.masksToBounds = false
         logoImage.clipsToBounds = true
         backgroundImage.image = UIImage(named: "backblacktest")
-        
-        
     }
 }

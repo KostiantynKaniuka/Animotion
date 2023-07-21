@@ -11,5 +11,4 @@ import Foundation
 enum LoginNavigation {
     case logedin
     case failure
-    
 }

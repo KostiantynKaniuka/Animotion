@@ -21,18 +21,18 @@ final class CarouselCollectionVievModel {
         return CGSize(width: cellWidgth, height: cellHeight)
     }
     weak var delegate: CarouselCollectionViewDelegate?
-
+    
     func loadCarouselData() {
-           FireAPIManager().getCarouselDataFromdb { [weak self] data in
-               DispatchQueue.main.async {
-                   self?.delegate?.carouselDataLoaded(data: data)
-               }
-           }
-       }
+        FireAPIManager().getCarouselDataFromdb { [weak self] data in
+            DispatchQueue.main.async {
+                self?.delegate?.carouselDataLoaded(data: data)
+            }
+        }
+    }
     
     func openUrl(myUrl: String) {
         if let url = URL(string: myUrl) {
             UIApplication.shared.open(url)
         }
     }
-    }
+}
