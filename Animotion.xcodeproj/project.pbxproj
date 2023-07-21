@@ -14,6 +14,8 @@
 		E73A00012A2DFCBE00AA421F /* CarouselCollectionVievModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73A00002A2DFCBE00AA421F /* CarouselCollectionVievModel.swift */; };
 		E73A00052A2E26CF00AA421F /* DotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73A00042A2E26CF00AA421F /* DotsView.swift */; };
 		E73F4F2C2A4AF8260035112A /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73F4F2B2A4AF8260035112A /* VideoPlayer.swift */; };
+		E74DFF062A6991AA0057093F /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74DFF052A6991AA0057093F /* InitialViewController.swift */; };
+		E74DFF082A6995C80057093F /* AuthStateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74DFF072A6995C80057093F /* AuthStateViewModel.swift */; };
 		E75B6E7C2A200587001BCB6D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B6E7A2A200587001BCB6D /* MainViewController.swift */; };
 		E75B6E7D2A200587001BCB6D /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E75B6E7B2A200587001BCB6D /* MainViewController.xib */; };
 		E7693B3A2A293382003C5D3F /* CarouselCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7693B392A293382003C5D3F /* CarouselCollectionView.swift */; };
@@ -54,6 +56,8 @@
 		E73A00002A2DFCBE00AA421F /* CarouselCollectionVievModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionVievModel.swift; sourceTree = "<group>"; };
 		E73A00042A2E26CF00AA421F /* DotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotsView.swift; sourceTree = "<group>"; };
 		E73F4F2B2A4AF8260035112A /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
+		E74DFF052A6991AA0057093F /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		E74DFF072A6995C80057093F /* AuthStateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStateViewModel.swift; sourceTree = "<group>"; };
 		E75B6E7A2A200587001BCB6D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E75B6E7B2A200587001BCB6D /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		E7693B392A293382003C5D3F /* CarouselCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionView.swift; sourceTree = "<group>"; };
@@ -131,6 +135,14 @@
 				E73F4F2B2A4AF8260035112A /* VideoPlayer.swift */,
 			);
 			path = VideoPlayer;
+			sourceTree = "<group>";
+		};
+		E74DFF042A69918E0057093F /* InitialViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E74DFF052A6991AA0057093F /* InitialViewController.swift */,
+			);
+			path = InitialViewController;
 			sourceTree = "<group>";
 		};
 		E7693B3B2A293B06003C5D3F /* СaroucelView */ = {
@@ -240,6 +252,7 @@
 		E7EFA0E42A20FBFE00544275 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				E74DFF042A69918E0057093F /* InitialViewController */,
 				E7DAAFCD2A5C47BC0009D7B9 /* UserScreen */,
 				E796AB5A2A5C03E90052A1F1 /* LoginScreen */,
 				E73F4F2A2A4AF8160035112A /* VideoPlayer */,
@@ -258,6 +271,7 @@
 				E7920F442A668931002B988F /* LoginViewModel.swift */,
 				E7920F482A669A75002B988F /* RegistrationViewModel.swift */,
 				E7E6FEA72A695E7E00431641 /* UserScreenViewModel.swift */,
+				E74DFF072A6995C80057093F /* AuthStateViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -439,6 +453,8 @@
 				E7DAAFCC2A5C39480009D7B9 /* Navigation.swift in Sources */,
 				E7693B3A2A293382003C5D3F /* CarouselCollectionView.swift in Sources */,
 				E782AA312A543E61008893CD /* SideMenuViewModel.swift in Sources */,
+				E74DFF062A6991AA0057093F /* InitialViewController.swift in Sources */,
+				E74DFF082A6995C80057093F /* AuthStateViewModel.swift in Sources */,
 				E76AE0B22A1FFF1A00102F15 /* AppDelegate.swift in Sources */,
 				E72876A82A683F1600428C5D /* FireError.swift in Sources */,
 				E7DAAFCF2A5C47DC0009D7B9 /* UserScreenViewController.swift in Sources */,

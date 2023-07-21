@@ -13,11 +13,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        let loginVC = LoginViewController()
-        
-        //let registrationVc = RegistrationViewController()
-        loginVC.loginDelegate = self
-        window.rootViewController = loginVC
+        let initialVC = InitialViewController()
+        initialVC.navigationToMainDelegate = self
+        initialVC.navigationToLoginDelegate = self
+        window.rootViewController = initialVC
         window.makeKeyAndVisible()
         self.window = window
         guard let _ = (scene as? UIWindowScene) else { return }
@@ -69,5 +68,22 @@ extension SceneDelegate: PassUserViewController {
             vc.logoutDelegate = self
             return vc
         }
+    }
+}
+
+extension SceneDelegate: AuthNavigationToLogin {
+    func navigateToLigin() {
+        let vc = LoginViewController()
+        vc.loginDelegate = self
+        setRootViewController(vc)
+    }
+}
+
+extension SceneDelegate: AuthNavigationToMainDelegate {
+    func navigateToMain() {
+        let vc = MainViewController()
+        vc.userVCDelegate = self
+         let navVc = UINavigationController(rootViewController: vc)
+        setRootViewController(navVc)
     }
 }

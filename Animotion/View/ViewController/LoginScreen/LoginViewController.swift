@@ -94,6 +94,7 @@ final class LoginViewController: UIViewController {
     }
       
     @objc private func sigInButtonTapped() {
+       // loginDelegate?.didLogin()
         Auth.auth().signIn(withEmail: loginVM.emailText.value,
                            password: loginVM.passwordText.value) { [weak self]  authResut, error in
             guard let self = self else {return}
@@ -111,7 +112,7 @@ final class LoginViewController: UIViewController {
                     self.loginVM.showAlert(message: "Please verify your email", vc: self)
                 }
             }
-            
+
         }
     }
     

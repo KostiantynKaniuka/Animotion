@@ -77,7 +77,12 @@ final class UserScreenViewController: UIViewController {
     }
     
     @objc private func logOutButtonTapped() {
-        logoutDelegate?.didLogout()
+        do {
+               try Auth.auth().signOut()
+               logoutDelegate?.didLogout()
+           } catch {
+               print("Unexpected error occurred while signing out: \(error)")
+           }
     }
     
     deinit {
