@@ -8,6 +8,9 @@
 import Foundation
 import Combine
 import FirebaseAuth
+import FirebaseCore
+import GoogleSignIn
+
 
 final class LoginViewModel {
     var emailText = CurrentValueSubject<String, Never>("")
@@ -46,5 +49,39 @@ final class LoginViewModel {
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(okAction)
         vc.present(alertController, animated: true, completion: nil)
+    }
+}
+
+extension LoginViewModel {
+    
+    func loginWithGoogleDoc(_ rootViewController: UIViewController, completion: @escaping () -> Void)  {
+      
+        guard let clientID = FirebaseApp.app()?.options.clientID else {return}
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
+        
+        // Start the sign in flow!
+        GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [unowned self] result, error in
+            guard error == nil else {return}
+            guard let result = result else {return}
+            let userAuth = result.user
+            guard let idToken = userAuth.idToken else {return}
+            
+            let accsesToken = userAuth.accessToken
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString,
+                                                           accessToken: accsesToken.tokenString)
+            
+            Auth.auth().signIn(with: credential) { authResult, error in
+                if let error = error as NSError? {
+                    let message  = self.formateAuthError(error)
+                    self.showAlert(message: message,
+                                   vc: rootViewController as! LoginViewController)
+                }
+                if let authResult = authResult {
+                    print(authResult.user)
+                    completion()
+                }
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ import Combine
 import CombineCocoa
 import SnapKit
 import FirebaseAuth
+import GoogleSignIn
 
 protocol LoginViewControllerDelegate: AnyObject {
     func didLogin()
@@ -23,19 +24,25 @@ final class LoginViewController: UIViewController {
     private let textFieldStack = UIStackView()
     private let loginButtonsStack = UIStackView()
     private let createAccountStack = UIStackView()
+    private let serviceLogInStack = UIStackView()
     private let createAccountLabel = UILabel()
     private let logInButton = LoginButton()
-    private let forgotPasswordBurron = ForgotPassButton()
+    private let googleSignInButton = GoogleSignInButton()
+    private let appleSignInButton = AppleSignInButton()
+    private let deviderLabel = UILabel()
+    private let leadingDevider = DevideView()
+    private let trailingDevider = DevideView()
+    private let deviderStack = UIStackView()
+    private let forgotPasswordButton = ForgotPassButton()
     private let dontHaveAccoutButton = DontHaveAccountButton()
     private let loginVM = LoginViewModel()
     weak var loginDelegate: LoginViewControllerDelegate?
     
-   
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
         logInButton.addTarget(self, action: #selector(sigInButtonTapped), for: .touchUpInside)
+        googleSignInButton.addTarget(self, action: #selector(googleSingInButtonTappes), for: .touchUpInside)
         
         emailTextField.delegate = self
         passwordTextField.delegate = self
@@ -117,8 +124,14 @@ final class LoginViewController: UIViewController {
         }
     }
     
+    @objc private func googleSingInButtonTappes()  {
+        loginVM.loginWithGoogleDoc(self) { [weak self] in
+            self?.loginDelegate?.didLogin()
+        }
+    }
+                
     private func forgotPasswordBurronTapped() {
-        forgotPasswordBurron.tapPublisher
+        forgotPasswordButton.tapPublisher
             .sink { [weak self] _ in
                 guard let self = self else {return}
                 let vc = ResetPasswordViewController()
@@ -160,23 +173,47 @@ extension LoginViewController {
         loginButtonsStack.axis = .vertical
         loginButtonsStack.distribution = .fill
         
+        deviderStack.alignment = .center
+        deviderStack.axis = .horizontal
+        deviderStack.distribution = .fill
+        
+        serviceLogInStack.spacing = 20
+        serviceLogInStack.alignment = .fill
+        serviceLogInStack.axis = .vertical
+        serviceLogInStack.distribution = .fill
+        
         textFieldStack.spacing = 20
         textFieldStack.alignment = .fill
         textFieldStack.axis = .vertical
         textFieldStack.distribution = .fill
+        
+        deviderStack.addArrangedSubviews([leadingDevider,deviderLabel,trailingDevider])
+        
+        serviceLogInStack.addArrangedSubviews([appleSignInButton, googleSignInButton])
         createAccountStack.addArrangedSubview(createAccountLabel)
         createAccountStack.addArrangedSubview(dontHaveAccoutButton)
-        
+     
         textFieldStack.addArrangedSubview(emailTextField)
         textFieldStack.addArrangedSubview(passwordTextField)
         
-        loginButtonsStack.addArrangedSubview(forgotPasswordBurron)
+        loginButtonsStack.addArrangedSubview(forgotPasswordButton)
         loginButtonsStack.addArrangedSubview(logInButton)
-        
+        loginButtonsStack.addArrangedSubview(deviderStack)
+       
         textFieldStack.addArrangedSubview(loginButtonsStack)
         
-        view.add(subviews: backgroundImage,textFieldStack, createAccountStack)
+        view.add(subviews: backgroundImage,textFieldStack, createAccountStack,serviceLogInStack)
         backgroundImage.addSubview(logoImage)
+        
+      
+          
+        trailingDevider.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 125, height: 1))
+        }
+        
+        leadingDevider.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 125, height: 1))
+        }
         
         emailTextField.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 300, height: 40))
@@ -213,6 +250,20 @@ extension LoginViewController {
             make.centerY.equalTo(view.snp.centerY)
         }
         
+        googleSignInButton.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 300, height: 40))
+        }
+      
+      appleSignInButton.snp.makeConstraints { make in
+          make.size.equalTo(CGSize(width: 300, height: 40))
+      }
+      
+      serviceLogInStack.snp.makeConstraints { make in
+          make.centerX.equalTo(view.snp.centerX)
+          make.top.equalTo(logInButton.snp.bottom).offset(50)
+          
+      }
+        
         textFieldStack.setContentHuggingPriority(.sceneSizeStayPut, for: .vertical)
         createAccountStack.snp.makeConstraints { make in
                make.centerX.equalTo(view.snp.centerX)
@@ -221,6 +272,11 @@ extension LoginViewController {
     }
     
     func setupAppearance() {
+        googleSignInButton.frame.size = CGSize(width: 300, height: 40)
+        appleSignInButton.frame.size = CGSize(width: 300, height: 40)
+      
+        
+        
         logoImage.image = UIImage(named: "AppIcon")
         logoImage.layer.cornerRadius = 20
         logoImage.layer.masksToBounds = false
@@ -229,6 +285,11 @@ extension LoginViewController {
         createAccountLabel.text = "Don't  have an account?"
         createAccountLabel.textColor = .darkGray
         createAccountLabel.font = .systemFont(ofSize: 15)
+        
+        deviderLabel.text = "or"
+        deviderLabel.textColor = .darkGray
+        deviderLabel.font = .systemFont(ofSize: 15)
+        deviderLabel.textAlignment = .center
         
         emailTextField.attributedPlaceholder = NSAttributedString(string: "Email",
                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])

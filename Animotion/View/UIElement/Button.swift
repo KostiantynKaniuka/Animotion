@@ -49,7 +49,7 @@ final class ForgotPassButton: UIButton {
     
     private func buttonSettings() {
         let attributedText = NSMutableAttributedString(string: "Forgot password?", attributes: [
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15),
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),
             NSAttributedString.Key.foregroundColor: UIColor.systemBlue,
             NSAttributedString.Key.kern: 1
         ])
@@ -233,7 +233,6 @@ final class ResetPasswordButton: UIButton {
         let attributedText = NSMutableAttributedString(string: "Reset password", attributes: [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),
             NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.kern: 1
         ])
         var loginButtonConfiguration = UIButton.Configuration.gray()
         loginButtonConfiguration.baseBackgroundColor = .systemBlue
@@ -245,4 +244,56 @@ final class ResetPasswordButton: UIButton {
         self.layer.shadowOpacity = 1.0
         self.titleLabel?.textAlignment = .center
     }
+}
+
+final class GoogleSignInButton: UIButton {
+    
+    override init(frame: CGRect) {
+        super.init(frame:frame)
+        buttonSettings()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func buttonSettings() {
+        self.setImage(UIImage(named: "icons8-google (5)"), for: .normal)
+        let attributedText = NSMutableAttributedString(string: "Sign in with Google", attributes: [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),
+            NSAttributedString.Key.foregroundColor: UIColor.black,
+        ])
+        var loginButtonConfiguration = UIButton.Configuration.gray()
+        loginButtonConfiguration.imagePlacement = .leading
+        loginButtonConfiguration.imagePadding = 25
+        self.setAttributedTitle(attributedText, for: .normal)
+        self.backgroundColor = .white
+        self.layer.cornerRadius = 10
+    }
+}
+    
+    final class AppleSignInButton: UIButton {
+        
+        override init(frame: CGRect) {
+            super.init(frame:frame)
+            buttonSettings()
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        private func buttonSettings() {
+            self.setImage(UIImage(named: "appleLargewhite"), for: .normal)
+            let attributedText = NSMutableAttributedString(string: "Sign in with Apple", attributes: [
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),
+                NSAttributedString.Key.foregroundColor: UIColor.black,
+                NSAttributedString.Key.kern: 1
+            ])
+            var loginButtonConfiguration = UIButton.Configuration.gray()
+            loginButtonConfiguration.imagePlacement = .leading
+            loginButtonConfiguration.imagePadding = 25
+            self.setAttributedTitle(attributedText, for: .normal)
+            self.backgroundColor = .white
+            self.layer.cornerRadius = 10
+        }
 }
