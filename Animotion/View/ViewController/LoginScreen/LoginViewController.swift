@@ -11,12 +11,14 @@ import CombineCocoa
 import SnapKit
 import FirebaseAuth
 import GoogleSignIn
+import AuthenticationServices
 
 protocol LoginViewControllerDelegate: AnyObject {
     func didLogin()
 }
 
 final class LoginViewController: UIViewController {
+    //MARK: - UI OUTLETS
     private let logoImage = UIImageView()
     private let backgroundImage = UIImageView()
     private let emailTextField = CustomTextField()
@@ -35,14 +37,23 @@ final class LoginViewController: UIViewController {
     private let deviderStack = UIStackView()
     private let forgotPasswordButton = ForgotPassButton()
     private let dontHaveAccoutButton = DontHaveAccountButton()
+    //private let applebutton = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
+    
+    //MARK: - PROPERTIES
     private let loginVM = LoginViewModel()
     weak var loginDelegate: LoginViewControllerDelegate?
+    fileprivate var currentNonce: String?
     
+    //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
-        logInButton.addTarget(self, action: #selector(sigInButtonTapped), for: .touchUpInside)
-        googleSignInButton.addTarget(self, action: #selector(googleSingInButtonTappes), for: .touchUpInside)
+        logInButton.addTarget(self, action: #selector(sigInButtonTapped),
+                              for: .touchUpInside)
+        googleSignInButton.addTarget(self, action: #selector(googleSingInButtonTappes),
+                                     for: .touchUpInside)
+        appleSignInButton.addTarget(self, action: #selector(siginWithApple),
+                                    for: .touchUpInside)
         
         emailTextField.delegate = self
         passwordTextField.delegate = self
@@ -50,6 +61,37 @@ final class LoginViewController: UIViewController {
         dontHaveAccoutButtonTapped()
         forgotPasswordBurronTapped()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.layoutIfNeeded() // fixing buttons stackview
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        setUpConstraints()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setupAppearance()
+    }
+    
+    //MARK: - METHODS
+    
+    private func startSignInWithAppleFlow() {
+        let nonce = loginVM.randomNonceString()
+        currentNonce = nonce
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = loginVM.sha256(nonce)
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
     }
     
     private func bindTextField() {
@@ -86,23 +128,8 @@ final class LoginViewController: UIViewController {
             .store(in: &loginVM.subscriptions)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        view.layoutIfNeeded() // fixing buttons stackview
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        setUpConstraints()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        setupAppearance()
-    }
-      
+    //MARK: - @OBJC LOGIN ACTIONS
     @objc private func sigInButtonTapped() {
-       // loginDelegate?.didLogin()
         Auth.auth().signIn(withEmail: loginVM.emailText.value,
                            password: loginVM.passwordText.value) { [weak self]  authResut, error in
             guard let self = self else {return}
@@ -120,8 +147,12 @@ final class LoginViewController: UIViewController {
                     self.loginVM.showAlert(message: "Please verify your email", vc: self)
                 }
             }
-
+            
         }
+    }
+    
+    @objc private func siginWithApple() {
+        startSignInWithAppleFlow()
     }
     
     @objc private func googleSingInButtonTappes()  {
@@ -129,7 +160,7 @@ final class LoginViewController: UIViewController {
             self?.loginDelegate?.didLogin()
         }
     }
-                
+    
     private func forgotPasswordBurronTapped() {
         forgotPasswordButton.tapPublisher
             .sink { [weak self] _ in
@@ -146,8 +177,8 @@ final class LoginViewController: UIViewController {
     }
 }
 
+//MARK: - TextFields Delegate
 extension LoginViewController: UITextFieldDelegate {
-    
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let text = textField.text ?? ""
@@ -158,9 +189,67 @@ extension LoginViewController: UITextFieldDelegate {
         } else {
             return true
         }
-       }
+    }
 }
 
+
+
+//MARK: - Apple SignIn DELEGATE
+extension LoginViewController: ASAuthorizationControllerDelegate {
+    
+    func authorizationController(controller: ASAuthorizationController,
+                                 didCompleteWithAuthorization authorization: ASAuthorization) {
+        
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            guard let nonce = currentNonce else {
+                fatalError("Invalid state: A login callback was received, but no login request was sent.")
+            }
+            guard let appleIDToken = appleIDCredential.identityToken else {
+                print("Unable to fetch identity token")
+                return
+            }
+            guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+                print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+                return
+            }
+            let credential = OAuthProvider.appleCredential(withIDToken: idTokenString,
+                                                           rawNonce: nonce,
+                                                           fullName: appleIDCredential.fullName)
+            // Sign in with Firebase.
+            
+            loginVM.signInWithAppleCred(credential, vc: self) { [unowned self] in
+                self.loginDelegate?.didLogin()
+            }
+        }
+    }
+    
+//MARK: - Apple AUTH ERORR
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        guard let error = error as? ASAuthorizationError else {return}
+        let message = loginVM.formateAppleAuthError(error)
+        loginVM.showAlert(message: message, vc: self)
+        print("Sign in with Apple errored: \(error)")
+    }
+    
+}
+
+extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
+    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        let keyWindow = UIApplication.shared.connectedScenes
+            .filter({$0.activationState == .foregroundActive})
+            .compactMap({$0 as? UIWindowScene})
+            .first?.windows
+            .filter({$0.isKeyWindow}).first
+        
+        guard let window = view?.window else {
+            return keyWindow ?? ASPresentationAnchor()
+        }
+        return window
+    }
+}
+
+//MARK: - LayoutConstraints
 extension LoginViewController {
     
     private func setUpConstraints() {
@@ -187,26 +276,34 @@ extension LoginViewController {
         textFieldStack.axis = .vertical
         textFieldStack.distribution = .fill
         
-        deviderStack.addArrangedSubviews([leadingDevider,deviderLabel,trailingDevider])
+        deviderStack.addArrangedSubviews([leadingDevider,
+                                          deviderLabel,
+                                          trailingDevider])
         
-        serviceLogInStack.addArrangedSubviews([appleSignInButton, googleSignInButton])
+        serviceLogInStack.addArrangedSubviews([appleSignInButton,
+                                               googleSignInButton])
+        
         createAccountStack.addArrangedSubview(createAccountLabel)
         createAccountStack.addArrangedSubview(dontHaveAccoutButton)
-     
+        
         textFieldStack.addArrangedSubview(emailTextField)
         textFieldStack.addArrangedSubview(passwordTextField)
         
         loginButtonsStack.addArrangedSubview(forgotPasswordButton)
         loginButtonsStack.addArrangedSubview(logInButton)
         loginButtonsStack.addArrangedSubview(deviderStack)
-       
+        
         textFieldStack.addArrangedSubview(loginButtonsStack)
         
-        view.add(subviews: backgroundImage,textFieldStack, createAccountStack,serviceLogInStack)
+        view.add(subviews: backgroundImage,
+                 textFieldStack,
+                 createAccountStack,
+                 serviceLogInStack)
+        
         backgroundImage.addSubview(logoImage)
         
-      
-          
+        
+        
         trailingDevider.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 125, height: 1))
         }
@@ -233,14 +330,14 @@ extension LoginViewController {
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
         }
-    
+        
         logoImage.snp.makeConstraints { make in
-           
-              if UIScreen.main.bounds.size.height >= 812 { // iPhone X and newer models
-                  make.top.equalTo(view.snp.top).offset(120)
-              } else { // iPhone 8 and older models
-                  make.top.equalTo(view.snp.top).offset(50)
-              }
+            
+            if UIScreen.main.bounds.size.height >= 812 { // iPhone X and newer models
+                make.top.equalTo(view.snp.top).offset(120)
+            } else { // iPhone 8 and older models
+                make.top.equalTo(view.snp.top).offset(50)
+            }
             make.centerX.equalTo(view.snp.centerX)
             make.size.equalTo(CGSize(width: 150, height: 150))
         }
@@ -253,28 +350,32 @@ extension LoginViewController {
         googleSignInButton.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 300, height: 40))
         }
-      
-      appleSignInButton.snp.makeConstraints { make in
-          make.size.equalTo(CGSize(width: 300, height: 40))
-      }
-      
-      serviceLogInStack.snp.makeConstraints { make in
-          make.centerX.equalTo(view.snp.centerX)
-          make.top.equalTo(logInButton.snp.bottom).offset(50)
-          
-      }
+        
+        appleSignInButton.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 300, height: 40))
+        }
+//        applebutton.snp.makeConstraints { make in
+//            make.size.equalTo(CGSize(width: 300, height: 40))
+//        }
+        
+        serviceLogInStack.snp.makeConstraints { make in
+            make.centerX.equalTo(view.snp.centerX)
+            make.top.equalTo(logInButton.snp.bottom).offset(50)
+            
+        }
         
         textFieldStack.setContentHuggingPriority(.sceneSizeStayPut, for: .vertical)
         createAccountStack.snp.makeConstraints { make in
-               make.centerX.equalTo(view.snp.centerX)
-               make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-24)
-           }
+            make.centerX.equalTo(view.snp.centerX)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-24)
+        }
     }
     
+    //MARK: - UI Style
     func setupAppearance() {
         googleSignInButton.frame.size = CGSize(width: 300, height: 40)
         appleSignInButton.frame.size = CGSize(width: 300, height: 40)
-      
+        //applebutton.frame.size = CGSize(width: 300, height: 400)
         
         
         logoImage.image = UIImage(named: "AppIcon")

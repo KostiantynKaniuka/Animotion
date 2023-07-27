@@ -20,7 +20,7 @@ final class LoginButton: UIButton {
     
     private func buttonSettings() {
         let attributedText = NSMutableAttributedString(string: "Sign in", attributes: [
-            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17),
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16),
             NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.kern: 1
         ])
@@ -258,14 +258,15 @@ final class GoogleSignInButton: UIButton {
     }
     
     private func buttonSettings() {
-        self.setImage(UIImage(named: "icons8-google (5)"), for: .normal)
+        self.setImage(UIImage(named: "icons8-google (7)"), for: .normal)
         let attributedText = NSMutableAttributedString(string: "Sign in with Google", attributes: [
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16),
             NSAttributedString.Key.foregroundColor: UIColor.black,
         ])
-        var loginButtonConfiguration = UIButton.Configuration.gray()
-        loginButtonConfiguration.imagePlacement = .leading
-        loginButtonConfiguration.imagePadding = 25
+        var loginButtonConfiguration = UIButton.Configuration.plain()
+        loginButtonConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0)
+        self.contentHorizontalAlignment = .center
+        self.configuration = loginButtonConfiguration
         self.setAttributedTitle(attributedText, for: .normal)
         self.backgroundColor = .white
         self.layer.cornerRadius = 10
@@ -283,15 +284,15 @@ final class GoogleSignInButton: UIButton {
             fatalError("init(coder:) has not been implemented")
         }
         private func buttonSettings() {
-            self.setImage(UIImage(named: "appleLargewhite"), for: .normal)
+            let image = UIImage(named: "applemid")
+            
+            self.setImage(image, for: .normal)
+           
             let attributedText = NSMutableAttributedString(string: "Sign in with Apple", attributes: [
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),
+                NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16),
                 NSAttributedString.Key.foregroundColor: UIColor.black,
-                NSAttributedString.Key.kern: 1
             ])
-            var loginButtonConfiguration = UIButton.Configuration.gray()
-            loginButtonConfiguration.imagePlacement = .leading
-            loginButtonConfiguration.imagePadding = 25
+            self.contentHorizontalAlignment = .center
             self.setAttributedTitle(attributedText, for: .normal)
             self.backgroundColor = .white
             self.layer.cornerRadius = 10
