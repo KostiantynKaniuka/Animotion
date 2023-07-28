@@ -258,14 +258,12 @@ final class GoogleSignInButton: UIButton {
     }
     
     private func buttonSettings() {
-        self.setImage(UIImage(named: "icons8-google (7)"), for: .normal)
+        self.setImage(UIImage(named: "googleicon"), for: .normal)
         let attributedText = NSMutableAttributedString(string: "Sign in with Google", attributes: [
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16),
             NSAttributedString.Key.foregroundColor: UIColor.black,
         ])
-        var loginButtonConfiguration = UIButton.Configuration.plain()
-        loginButtonConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0)
-        self.contentHorizontalAlignment = .center
+        let loginButtonConfiguration = UIButton.Configuration.plain()
         self.configuration = loginButtonConfiguration
         self.setAttributedTitle(attributedText, for: .normal)
         self.backgroundColor = .white
@@ -282,17 +280,19 @@ final class GoogleSignInButton: UIButton {
         
         required init?(coder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
+        
         }
         private func buttonSettings() {
-            let image = UIImage(named: "applemid")
-            
-            self.setImage(image, for: .normal)
+            self.setImage(UIImage(named: "appleicon"), for: .normal)
            
-            let attributedText = NSMutableAttributedString(string: "Sign in with Apple", attributes: [
+            let attributedText = NSMutableAttributedString(string: "Sign in with Apple  ", attributes: [
                 NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16),
                 NSAttributedString.Key.foregroundColor: UIColor.black,
             ])
+            let loginButtonConfiguration = UIButton.Configuration.plain()
+            self.configuration = loginButtonConfiguration
             self.contentHorizontalAlignment = .center
+       
             self.setAttributedTitle(attributedText, for: .normal)
             self.backgroundColor = .white
             self.layer.cornerRadius = 10
