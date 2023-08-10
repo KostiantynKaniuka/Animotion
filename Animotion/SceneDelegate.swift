@@ -13,10 +13,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        //let tabBarVC = TabBarViewController()
         let initialVC = InitialViewController()
-        let loginVC = LoginViewController()
-        
         initialVC.navigationToMainDelegate = self
         initialVC.navigationToLoginDelegate = self
         window.rootViewController = initialVC
@@ -28,11 +25,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 //MARK: - Login action
 extension SceneDelegate: LoginViewControllerDelegate {
+    
     func didLogin() {
-        let mainVc = MainViewController()
-        mainVc.userVCDelegate = self
-         let navVc = UINavigationController(rootViewController: mainVc)
-        setRootViewController(navVc)
+        let mainVc = TabBarViewController()
+        mainVc.userVC.logoutDelegate = self
+        setRootViewController(mainVc)
     }
 }
 
@@ -62,18 +59,6 @@ extension SceneDelegate {
     }
 }
 
-//MARK: - creating user screen for navigation
-extension SceneDelegate: PassUserViewController {
-    
-    var userViewConltoller: UIViewController {
-        get {
-            let vc = UserScreenViewController()
-            vc.logoutDelegate = self
-            return vc
-        }
-    }
-}
-
 //MARK: - Checking user authstate for navigation
 extension SceneDelegate: AuthNavigationToLogin {
     func navigateToLigin() {
@@ -85,11 +70,8 @@ extension SceneDelegate: AuthNavigationToLogin {
 
 extension SceneDelegate: AuthNavigationToMainDelegate {
     func navigateToMain() {
-        let vc = MainViewController()
-        vc.userVCDelegate = self
-        let tabBarVc = TabBarViewController()
-        tabBarVc.homeVC = vc
-         let navVc = UINavigationController(rootViewController: vc)
-        setRootViewController(navVc)
+        let  vc = TabBarViewController()
+        vc.userVC.logoutDelegate = self
+        setRootViewController(vc)
     }
 }

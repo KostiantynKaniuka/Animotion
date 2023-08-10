@@ -8,15 +8,9 @@
 import UIKit
 import SideMenu
 
-protocol PassUserViewController: AnyObject {
-    var userViewConltoller: UIViewController { get }
-} // implement to avoid using singlton / memory leak 
-
 final class MainViewController: UIViewController {
-    @IBOutlet weak var profileButton: UIButton!
 
     @IBOutlet weak var dreamButton: UIButton!
-    weak var userVCDelegate: PassUserViewController?
     private let sideMenu = SideMenuViewController()
     private let carouselView = CarouselCollectionView(layout: UICollectionViewFlowLayout())
     lazy var menu = SideMenuNavigationController(rootViewController: sideMenu)
@@ -44,12 +38,6 @@ final class MainViewController: UIViewController {
     
     @IBAction func dreamButtonTapped(_ sender: UIButton) {
         present(menu, animated: true, completion: nil)
-    }
-    
-    
-    @IBAction func profileButtonTapped(_ sender: UIButton) {
-        guard let userVc = userVCDelegate?.userViewConltoller else { return }
-        navigationController?.show(userVc, sender: true)
     }
     
     private func setUpUI() {

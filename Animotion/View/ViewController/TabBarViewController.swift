@@ -8,18 +8,20 @@
 import UIKit
 
 final class TabBarViewController: UITabBarController {
-    var homeVC: UIViewController?
-    var userVC: UIViewController?
+    //var homeVC = MainViewController()
+    var userVC = UserScreenViewController()
     
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let home = self.createNav(with: "Home", and: UIImage(systemName: "house"), vc: homeVC ?? UIViewController())
-        self.setViewControllers([], animated: false)
-        let user = self.createNav(with: "User", and: UIImage(systemName: "person.circle"), vc: userVC ?? UIViewController())
+   setTabBar()
+    }
+    
+    func setTabBar() {
+        let home = self.createNav(with: "Home", and: UIImage(systemName: "house"), vc: MainViewController())
+        let user = self.createNav(with: "User", and: UIImage(systemName: "person.circle"), vc: userVC )
         self.setViewControllers([home, user], animated: false)
         setUpTabBarColors()
-        
     }
     
     private func createNav(with title: String, and image: UIImage? , vc: UIViewController) -> UINavigationController {
@@ -33,7 +35,5 @@ final class TabBarViewController: UITabBarController {
         self.tabBar.backgroundColor = .barBackground
         self.tabBar.tintColor = .white
         self.tabBar.unselectedItemTintColor = .black
-        
-        
     }
 }
