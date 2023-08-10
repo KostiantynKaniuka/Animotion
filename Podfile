@@ -16,5 +16,6 @@ pod 'FirebaseDatabase'
 pod 'SnapKit', '~> 5.6.0'
 pod 'CombineCocoa'
 pod 'GoogleSignIn'
+pod 'DGCharts'
 inhibit_all_warnings!
 end
