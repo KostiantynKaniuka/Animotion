@@ -37,7 +37,7 @@ class CarouselCollectionView: UICollectionViewController {
         let contentOffset = collectionView.contentOffset
         collectionView.scrollRectToVisible(CGRectMake(contentOffset.x + cellSize.width, contentOffset.y, cellSize.width, cellSize.height), animated: true);
       }
-    
+
     private func setUpUI() {
         collectionView.collectionViewLayout = layout
         layout.scrollDirection = .horizontal

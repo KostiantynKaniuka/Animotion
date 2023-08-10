@@ -13,13 +13,9 @@ protocol PassUserViewController: AnyObject {
 } // implement to avoid using singlton / memory leak 
 
 final class MainViewController: UIViewController {
-    @IBOutlet weak var choosePathLabel: UILabel!
     @IBOutlet weak var profileButton: UIButton!
-    @IBOutlet weak var relaxButton: UIButton!
+
     @IBOutlet weak var dreamButton: UIButton!
-    @IBOutlet weak var inspireButton: UIButton!
-    @IBOutlet weak var focusButton: UIButton!
-    @IBOutlet weak var directionImageView: UIImageView!
     weak var userVCDelegate: PassUserViewController?
     private let sideMenu = SideMenuViewController()
     private let carouselView = CarouselCollectionView(layout: UICollectionViewFlowLayout())
@@ -50,9 +46,6 @@ final class MainViewController: UIViewController {
         present(menu, animated: true, completion: nil)
     }
     
-    @IBAction func inspireButtonTapped(_ sender: UIButton) {
-      
-    }
     
     @IBAction func profileButtonTapped(_ sender: UIButton) {
         guard let userVc = userVCDelegate?.userViewConltoller else { return }
@@ -67,7 +60,7 @@ final class MainViewController: UIViewController {
         view.addSubview(carouselView.view)
         view.addSubview(pageView)
         NSLayoutConstraint.activate([
-            carouselView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+            carouselView.view.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             carouselView.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             carouselView.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             carouselView.view.heightAnchor.constraint(equalToConstant: 300),
@@ -75,34 +68,6 @@ final class MainViewController: UIViewController {
             pageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             pageView.topAnchor.constraint(equalTo: carouselView.view.bottomAnchor)
         ])
-    }
-    
-    private func animateButtonAppearance() {
-        let buttonAnimations = [
-            (button: profileButton, delay: 0.0),
-            (button: dreamButton, delay: 0.5),
-            (button: relaxButton, delay: 1.0),
-            (button: focusButton, delay: 1.5),
-            (button: inspireButton, delay: 2.0),
-        ]
-        directionImageView.alpha = 0.0
-        
-        for animation in buttonAnimations {
-            animation.button?.alpha = 0.0 // Set initial alpha to 0
-
-            UIView.animate(withDuration: 1, delay: animation.delay, animations: {
-                animation.button?.alpha = 1.0 // Set final alpha to 1
-            }, completion: { _ in
-                DispatchQueue.main.async { [self] in
-                   
-                  impactFeedbackGenerator.prepare()
-                  impactFeedbackGenerator.impactOccurred()
-                }
-            })
-        }
-        UIView.animate(withDuration: 1, delay: 2.5, animations: { [weak self] in
-            self?.directionImageView.alpha = 1
-        })
     }
 }
 

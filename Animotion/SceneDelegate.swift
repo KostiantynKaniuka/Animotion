@@ -13,8 +13,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
+        //let tabBarVC = TabBarViewController()
         let initialVC = InitialViewController()
-        //let loginVC = LoginViewController()
+        let loginVC = LoginViewController()
+        
         initialVC.navigationToMainDelegate = self
         initialVC.navigationToLoginDelegate = self
         window.rootViewController = initialVC
@@ -85,6 +87,8 @@ extension SceneDelegate: AuthNavigationToMainDelegate {
     func navigateToMain() {
         let vc = MainViewController()
         vc.userVCDelegate = self
+        let tabBarVc = TabBarViewController()
+        tabBarVc.homeVC = vc
          let navVc = UINavigationController(rootViewController: vc)
         setRootViewController(navVc)
     }

@@ -34,6 +34,7 @@
 		E796AB602A5C04550052A1F1 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E796AB5F2A5C04550052A1F1 /* CustomTextField.swift */; };
 		E796AB632A5C05EE0052A1F1 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E796AB622A5C05EE0052A1F1 /* Layout.swift */; };
 		E7AEC3F12A2FA52300EC21DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7AEC3F02A2FA52300EC21DE /* GoogleService-Info.plist */; };
+		E7D457A62A8504BB006D59F1 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D457A52A8504BB006D59F1 /* TabBarViewController.swift */; };
 		E7DAAFCA2A5C11270009D7B9 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFC92A5C11270009D7B9 /* Button.swift */; };
 		E7DAAFCC2A5C39480009D7B9 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFCB2A5C39480009D7B9 /* Navigation.swift */; };
 		E7DAAFCF2A5C47DC0009D7B9 /* UserScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFCE2A5C47DC0009D7B9 /* UserScreenViewController.swift */; };
@@ -81,6 +82,7 @@
 		E796AB622A5C05EE0052A1F1 /* Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
 		E7A4E0552A729B5C00577C44 /* Animotion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Animotion.entitlements; sourceTree = "<group>"; };
 		E7AEC3F02A2FA52300EC21DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E7D457A52A8504BB006D59F1 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		E7DAAFC92A5C11270009D7B9 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		E7DAAFCB2A5C39480009D7B9 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		E7DAAFCE2A5C47DC0009D7B9 /* UserScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScreenViewController.swift; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 		E7EFA0E42A20FBFE00544275 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				E7D457A52A8504BB006D59F1 /* TabBarViewController.swift */,
 				E74DFF042A69918E0057093F /* InitialViewController */,
 				E7DAAFCD2A5C47BC0009D7B9 /* UserScreen */,
 				E796AB5A2A5C03E90052A1F1 /* LoginScreen */,
@@ -472,6 +475,7 @@
 				E76AE0B42A1FFF1A00102F15 /* SceneDelegate.swift in Sources */,
 				E796AB632A5C05EE0052A1F1 /* Layout.swift in Sources */,
 				E7920F472A668DA1002B988F /* RegistrationViewController.swift in Sources */,
+				E7D457A62A8504BB006D59F1 /* TabBarViewController.swift in Sources */,
 				E7E6FEA82A695E7E00431641 /* UserScreenViewModel.swift in Sources */,
 				E796AB5E2A5C04380052A1F1 /* LoginViewController.swift in Sources */,
 				E7920F492A669A75002B988F /* RegistrationViewModel.swift in Sources */,
