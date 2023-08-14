@@ -7,8 +7,10 @@
 
 import UIKit
 import SnapKit
+import Combine
+import CombineCocoa
 
-final class MoodCaptureViewController: UIViewController, UIPickerViewDelegate {
+final class MoodCaptureViewController: UIViewController {
     
     private let scrollView = UIScrollView()
     private let backgroundImage = UIImageView()
@@ -25,8 +27,8 @@ final class MoodCaptureViewController: UIViewController, UIPickerViewDelegate {
     private let reasonTextField = CustomTextField()
     private let submitButton = SubmitButton()
     private let cancelButton = CancelCaptureButton()
+    private var captureVM = CaptureMoodViewModel()
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Capture mood here"
@@ -34,14 +36,35 @@ final class MoodCaptureViewController: UIViewController, UIPickerViewDelegate {
         mentalStatePickerView.delegate = self
         moodPickerView.delegate = self
         moodPickerView.dataSource = self
-        view.backgroundColor = .white
+        reasonTextField.delegate = self
         setUpLayout()
         applyUISettings()
+       submitButtonTapped()
+        cancelButtonTapped()
     }
-
-
+    
+    
+    private func submitButtonTapped() {
+        submitButton.tapPublisher
+            .sink { [weak self]_ in
+                self?.captureVM.menthalCount[(self?.captureVM.methalData)!]! += 1
+                print(self?.captureVM.menthalCount)
+            }
+            .store(in: &captureVM.bag)
+        
+    }
+    
+    private func cancelButtonTapped() {
+        cancelButton.tapPublisher
+            .sink { [weak self] _ in
+                guard let self = self else {return}
+                self.reasonTextField.text = nil
+                self.moodPickerView.selectRow(0, inComponent: 0, animated: true)
+                self.mentalStatePickerView.selectRow(0, inComponent: 0, animated: true)
+            }
+            .store(in: &captureVM.bag)
+    }
 }
-
 
 extension MoodCaptureViewController: UIPickerViewDataSource {
     
@@ -50,18 +73,63 @@ extension MoodCaptureViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        10
+        var result = 0
+        if pickerView == moodPickerView {
+            result = CaptureMoodViewModel.moodPickerData.count
+        }
+        if pickerView == mentalStatePickerView {
+            result = CaptureMoodViewModel.menthalStatePickerData.count
+        }
+       
+        return result
     }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return "Test"
-    }
-    
+        
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return NSAttributedString(string: "Test", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+        var title: NSAttributedString = NSAttributedString(string: "")
+        if pickerView == moodPickerView {
+           title = NSAttributedString(string: String(CaptureMoodViewModel.moodPickerData[row]), attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+        }
+        
+        if pickerView == mentalStatePickerView {
+           title = NSAttributedString(string: CaptureMoodViewModel.menthalStatePickerData[row], attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+        }
+        return title
+    }
+}
+
+//MARK: - Picker delegate
+
+extension MoodCaptureViewController: UIPickerViewDelegate {
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == moodPickerView {
+            captureVM.moodData = CaptureMoodViewModel.moodPickerData[row]
+        }
+        if pickerView == mentalStatePickerView {
+            captureVM.methalData = CaptureMoodViewModel.menthalStatePickerData[row]
+        }
+        print(captureVM.moodData)
+        print(captureVM.methalData)
     }
     
-    
+}
+
+//MARK: - TextFieldDelegate
+
+extension MoodCaptureViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        
+        let text = textField.text ?? ""
+        let updatedText = (text as NSString).replacingCharacters(in: range,
+                                                                 with: string)
+        if updatedText.count > 30 {
+            return false
+        } else {
+            return true
+        }
+    }
     
 }
 
@@ -189,7 +257,6 @@ extension MoodCaptureViewController {
                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
         dividerView.backgroundColor = .lightGray
-        
         pickersSection.backgroundColor = .pickerSection
         pickersSection.layer.cornerRadius = 10
         moodPickerView.backgroundColor = .barBackground

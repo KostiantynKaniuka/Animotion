@@ -47,16 +47,13 @@ class FireAPIManager {
         })
     }
     
-    func addingDataToDb(name: String, completion: @escaping (Error?) -> Void) {
+    func addingUserToFirebase(user: MyUser) {
         let db = configureFB()
-        ref = db.child("CarouselData").child(name)
-        ref.setValue([ "imageUrl": "",
-                       "descriptionText": "",
-                       "linkToBlog": ""]) {(error, _) in
-            print("✅ data added" )
-            completion(error)
+        let usersRef = db.child("Users")
+        let userRef = usersRef.child("\(user.id)")
+        userRef.setValue(user.toDictionary())
         }
-    }
+
     
     func getUkraineMenuData(completion: @escaping ([UkraineSection]) -> Void) {
         let db = configureFB()
