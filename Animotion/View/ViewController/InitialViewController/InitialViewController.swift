@@ -15,7 +15,7 @@ protocol AuthNavigationToMainDelegate: AnyObject {
 }
 
 protocol AuthNavigationToLogin: AnyObject {
-    func navigateToLigin()
+    func navigateToLogin()
 }
 
 final class InitialViewController: UIViewController {
@@ -40,7 +40,7 @@ final class InitialViewController: UIViewController {
                  case .unauthenticated:
                      print("unauthenticated")
                      DispatchQueue.main.async {
-                         self?.navigationToLoginDelegate?.navigateToLigin()
+                         self?.navigationToLoginDelegate?.navigateToLogin()
                      }
                  case .authenticating:
                      print("checking the user state")

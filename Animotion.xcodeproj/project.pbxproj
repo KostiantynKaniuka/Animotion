@@ -24,6 +24,7 @@
 		E76AE0B42A1FFF1A00102F15 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76AE0B32A1FFF1A00102F15 /* SceneDelegate.swift */; };
 		E76AE0BB2A1FFF1B00102F15 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E76AE0BA2A1FFF1B00102F15 /* Assets.xcassets */; };
 		E76AE0BE2A1FFF1B00102F15 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E76AE0BC2A1FFF1B00102F15 /* LaunchScreen.storyboard */; };
+		E77A63AA2A8A64E8001BBE14 /* CaptureMoodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77A63A92A8A64E8001BBE14 /* CaptureMoodViewModel.swift */; };
 		E782AA2F2A5429D2008893CD /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E782AA2E2A5429D2008893CD /* SideMenu.swift */; };
 		E782AA312A543E61008893CD /* SideMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E782AA302A543E61008893CD /* SideMenuViewModel.swift */; };
 		E7920F452A668931002B988F /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7920F442A668931002B988F /* LoginViewModel.swift */; };
@@ -72,6 +73,7 @@
 		E76AE0BA2A1FFF1B00102F15 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E76AE0BD2A1FFF1B00102F15 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E76AE0BF2A1FFF1B00102F15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E77A63A92A8A64E8001BBE14 /* CaptureMoodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureMoodViewModel.swift; sourceTree = "<group>"; };
 		E782AA2E2A5429D2008893CD /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		E782AA302A543E61008893CD /* SideMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewModel.swift; sourceTree = "<group>"; };
 		E7920F442A668931002B988F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -218,6 +220,14 @@
 			path = UIElement;
 			sourceTree = "<group>";
 		};
+		E7D457A92A853452006D59F1 /* MoodGraph */ = {
+			isa = PBXGroup;
+			children = (
+				E7D457A72A853141006D59F1 /* MoodCaptureViewController.swift */,
+			);
+			path = MoodGraph;
+			sourceTree = "<group>";
+		};
 		E7D87B8B2A3B0EEE00BECCBE /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -263,6 +273,7 @@
 		E7EFA0E42A20FBFE00544275 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				E7D457A92A853452006D59F1 /* MoodGraph */,
 				E7D457A52A8504BB006D59F1 /* TabBarViewController.swift */,
 				E74DFF042A69918E0057093F /* InitialViewController */,
 				E7DAAFCD2A5C47BC0009D7B9 /* UserScreen */,
@@ -271,7 +282,6 @@
 				E7D87B8C2A3B12AD00BECCBE /* Main screen */,
 				E7F168382A28CA1E004B4E49 /* MenuSideBar */,
 				E7693B3B2A293B06003C5D3F /* СaroucelView */,
-				E7D457A72A853141006D59F1 /* MoodCaptureViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -286,6 +296,7 @@
 				E7E6FEA72A695E7E00431641 /* UserScreenViewModel.swift */,
 				E74DFF072A6995C80057093F /* AuthStateViewModel.swift */,
 				E7F28BD42A6ADA3500693189 /* ResetPasswordViewModel.swift */,
+				E77A63A92A8A64E8001BBE14 /* CaptureMoodViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -468,6 +479,7 @@
 				E7DAAFCC2A5C39480009D7B9 /* Navigation.swift in Sources */,
 				E7693B3A2A293382003C5D3F /* CarouselCollectionView.swift in Sources */,
 				E7D457A82A853141006D59F1 /* MoodCaptureViewController.swift in Sources */,
+				E77A63AA2A8A64E8001BBE14 /* CaptureMoodViewModel.swift in Sources */,
 				E782AA312A543E61008893CD /* SideMenuViewModel.swift in Sources */,
 				E74DFF062A6991AA0057093F /* InitialViewController.swift in Sources */,
 				E74DFF082A6995C80057093F /* AuthStateViewModel.swift in Sources */,
@@ -632,8 +644,8 @@
 				INFOPLIST_FILE = Animotion/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -662,8 +674,8 @@
 				INFOPLIST_FILE = Animotion/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

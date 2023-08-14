@@ -61,7 +61,7 @@ extension SceneDelegate {
 
 //MARK: - Checking user authstate for navigation
 extension SceneDelegate: AuthNavigationToLogin {
-    func navigateToLigin() {
+    func navigateToLogin() {
         let vc = LoginViewController()
         vc.loginDelegate = self
         setRootViewController(vc)
