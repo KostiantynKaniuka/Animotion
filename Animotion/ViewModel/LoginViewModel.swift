@@ -89,6 +89,25 @@ extension LoginViewModel {
             guard let result = result else {return}
             let userAuth = result.user
             guard let idToken = userAuth.idToken else {return}
+            guard let id = userAuth.userID else {return}
+                    let graphData = [
+                        "\(Date())" : 0, // Convert Date to String
+                    ]
+
+                    let radarData = [
+                            "Happy": 0,
+                            "Good": 0,
+                            "Satisfied": 0,
+                            "Anxious": 0,
+                            "Angry": 0,
+                            "Sad": 0
+                    ]
+           
+                   let user = MyUser(id: id, name: "test", graphData: graphData, radarData: radarData)
+            FireAPIManager.shared.addingUserToFirebase(user: user)
+            print(user)
+            print("➡️ user added")
+            
             
             let accsesToken = userAuth.accessToken
             let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString,

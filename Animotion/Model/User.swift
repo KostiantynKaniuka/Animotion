@@ -11,17 +11,8 @@ struct MyUser {
     let id: String
     var name: String
     var photo: String?
-    var graphData: [String: Any]
-    var radarData: [String: Any]
-}
-
-struct RadarData {
-    var data: [String:Int]
-}
-
-struct GraphData {
-    let date: Date
-    let point: Int
+    var graphData: [String : Int]
+    var radarData: [String: Int]
 }
 
 extension MyUser {

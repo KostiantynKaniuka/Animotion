@@ -49,10 +49,33 @@ class FireAPIManager {
     
     func addingUserToFirebase(user: MyUser) {
         let db = configureFB()
-        let usersRef = db.child("Users")
+        let usersRef = db.child("users")
         let userRef = usersRef.child("\(user.id)")
         userRef.setValue(user.toDictionary())
         }
+    
+    func getUserFromDB(_ id: String, completion: @escaping (MyUser?) -> Void) {
+        let db = configureFB()
+      
+        db.child("users").child(id).getData(completion: { error, user in
+            guard error == nil else {
+                print(error?.localizedDescription ?? "❌ oops no user")
+                completion(nil)
+                return
+            }
+            var userData: MyUser?
+            
+                 if let dataDict = user?.value as? [String: Any] {
+                     let id = dataDict["id"] as? String ?? ""
+                     let name = dataDict["name"] as? String ?? ""
+                     let graphData = dataDict["graphData"] as? [String: Int] ?? [:]
+                     let radarData = dataDict["radarData"] as? [String: Int] ?? [:]
+                     
+                     userData = MyUser(id: id, name: name, graphData: graphData, radarData: radarData)
+                 }
+           completion(userData)
+        })
+    }
 
     
     func getUkraineMenuData(completion: @escaping ([UkraineSection]) -> Void) {

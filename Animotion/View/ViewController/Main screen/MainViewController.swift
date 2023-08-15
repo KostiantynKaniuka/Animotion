@@ -37,6 +37,9 @@ final class MainViewController: UIViewController {
     }
     
     @IBAction func dreamButtonTapped(_ sender: UIButton) {
+//        FireAPIManager.shared.getUserFromDB("101179715326235069578") { user in
+//            print("➡️",user)
+//        }
         present(menu, animated: true, completion: nil)
     }
     
