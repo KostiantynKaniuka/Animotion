@@ -35,6 +35,8 @@
 		E796AB602A5C04550052A1F1 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E796AB5F2A5C04550052A1F1 /* CustomTextField.swift */; };
 		E796AB632A5C05EE0052A1F1 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E796AB622A5C05EE0052A1F1 /* Layout.swift */; };
 		E7AEC3F12A2FA52300EC21DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7AEC3F02A2FA52300EC21DE /* GoogleService-Info.plist */; };
+		E7BD05F42A8BE12F00BB1D07 /* DateValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BD05F32A8BE12F00BB1D07 /* DateValueFormatter.swift */; };
+		E7BD05F62A8BE17900BB1D07 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BD05F52A8BE17900BB1D07 /* ChartView.swift */; };
 		E7D457A62A8504BB006D59F1 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D457A52A8504BB006D59F1 /* TabBarViewController.swift */; };
 		E7D457A82A853141006D59F1 /* MoodCaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D457A72A853141006D59F1 /* MoodCaptureViewController.swift */; };
 		E7DAAFCA2A5C11270009D7B9 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFC92A5C11270009D7B9 /* Button.swift */; };
@@ -85,6 +87,8 @@
 		E796AB622A5C05EE0052A1F1 /* Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
 		E7A4E0552A729B5C00577C44 /* Animotion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Animotion.entitlements; sourceTree = "<group>"; };
 		E7AEC3F02A2FA52300EC21DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E7BD05F32A8BE12F00BB1D07 /* DateValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateValueFormatter.swift; sourceTree = "<group>"; };
+		E7BD05F52A8BE17900BB1D07 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		E7D457A52A8504BB006D59F1 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		E7D457A72A853141006D59F1 /* MoodCaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodCaptureViewController.swift; sourceTree = "<group>"; };
 		E7DAAFC92A5C11270009D7B9 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
@@ -220,6 +224,14 @@
 			path = UIElement;
 			sourceTree = "<group>";
 		};
+		E7BD05F22A8BE11D00BB1D07 /* Chart */ = {
+			isa = PBXGroup;
+			children = (
+				E7BD05F32A8BE12F00BB1D07 /* DateValueFormatter.swift */,
+			);
+			path = Chart;
+			sourceTree = "<group>";
+		};
 		E7D457A92A853452006D59F1 /* MoodGraph */ = {
 			isa = PBXGroup;
 			children = (
@@ -231,6 +243,7 @@
 		E7D87B8B2A3B0EEE00BECCBE /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				E7BD05F22A8BE11D00BB1D07 /* Chart */,
 				E7F168352A28C933004B4E49 /* Extencion  */,
 			);
 			path = Helpers;
@@ -241,6 +254,7 @@
 			children = (
 				E75B6E7A2A200587001BCB6D /* MainViewController.swift */,
 				E75B6E7B2A200587001BCB6D /* MainViewController.xib */,
+				E7BD05F52A8BE17900BB1D07 /* ChartView.swift */,
 			);
 			path = "Main screen";
 			sourceTree = "<group>";
@@ -491,6 +505,8 @@
 				E76AE0B42A1FFF1A00102F15 /* SceneDelegate.swift in Sources */,
 				E796AB632A5C05EE0052A1F1 /* Layout.swift in Sources */,
 				E7920F472A668DA1002B988F /* RegistrationViewController.swift in Sources */,
+				E7BD05F42A8BE12F00BB1D07 /* DateValueFormatter.swift in Sources */,
+				E7BD05F62A8BE17900BB1D07 /* ChartView.swift in Sources */,
 				E7D457A62A8504BB006D59F1 /* TabBarViewController.swift in Sources */,
 				E7E6FEA82A695E7E00431641 /* UserScreenViewModel.swift in Sources */,
 				E796AB5E2A5C04380052A1F1 /* LoginViewController.swift in Sources */,

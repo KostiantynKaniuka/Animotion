@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let initialVC = InitialViewController()
         initialVC.navigationToMainDelegate = self
         initialVC.navigationToLoginDelegate = self
-        window.rootViewController = initialVC
+        window.rootViewController = ChartView()
         window.makeKeyAndVisible()
         self.window = window
         guard let _ = (scene as? UIWindowScene) else { return }
