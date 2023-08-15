@@ -8,16 +8,136 @@
 import Foundation
 import DGCharts
 
-public class DateValueFormatter: NSObject, AxisValueFormatter {
-    private let dateFormatter = DateFormatter()
+class MyXAxisFormatter: NSObject, AxisValueFormatter {
+    let dateFormatter: DateFormatter
+        
+        override init() {
+            dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd MMM yyyy"
+            super.init()
+        }
+        
+    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        // Calculate the visible range of x-values
+        let visibleRange = axis?.axisMaximum ?? 0.0 - axis!.axisMinimum ?? 0.0
+        
+        // Choose date format based on the visible range
+        if visibleRange <= 30.0 { // Adjust the threshold as needed
+            dateFormatter.dateFormat = "dd MMM yyyy"
+        } else {
+            dateFormatter.dateFormat = "MMM yyyy"
+        }
+        
+        let startDate = Calendar.current.date(from: DateComponents(year: 2023, month: 1, day: 1))!
+        if let date = Calendar.current.date(byAdding: .day, value: Int(value), to: startDate) {
+            return dateFormatter.string(from: date)
+        } else {
+            return ""
+        }
+    }
+
+  }
+
+
+public class DayAxisValueFormatter: NSObject, AxisValueFormatter {
+    weak var chart: LineChartView?
+    let months = ["Jan", "Feb", "Mar",
+                  "Apr", "May", "Jun",
+                  "Jul", "Aug", "Sep",
+                  "Oct", "Nov", "Dec"]
     
-    override init() {
-        super.init()
-        dateFormatter.dateFormat = "dd MMM HH:mm"
+    init(chart: LineChartView) {
+        self.chart = chart
     }
     
     public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        return dateFormatter.string(from: Date(timeIntervalSince1970: value))
+        let days = Int(value)
+        let year = determineYear(forDays: days)
+        let month = determineMonth(forDayOfYear: days)
+        let dayOfMonth = determineDayOfMonth(forDays: days, month: month)
+        
+        let monthName = months[month % months.count]
+        
+        if let chart = chart, chart.visibleXRange > 30 * 6 {
+            return "\(monthName) \(year)"
+        } else {
+            var appendix: String
+            switch dayOfMonth {
+            case 1, 21, 31: appendix = "st"
+            case 2, 22: appendix = "nd"
+            case 3, 23: appendix = "rd"
+            default: appendix = "th"
+            }
+            
+            return "\(dayOfMonth)\(appendix) \(monthName)"
+        }
+    }
+ 
+
+
+
+
+
+
+    
+    private func days(forMonth month: Int, year: Int) -> Int {
+        // month is 0-based
+        switch month {
+        case 1:
+            var is29Feb = false
+            if year < 1582 {
+                is29Feb = (year < 1 ? year + 1 : year) % 4 == 0
+            } else if year > 1582 {
+                is29Feb = year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)
+            }
+            
+            return is29Feb ? 29 : 28
+            
+        case 3, 5, 8, 10:
+            return 30
+            
+        default:
+            return 31
+        }
+    }
+    
+    private func determineMonth(forDayOfYear dayOfYear: Int) -> Int {
+        var month = -1
+        var days = 0
+        
+        while days < dayOfYear {
+            month += 1
+            if month >= 12 {
+                month = 0
+            }
+            
+            let year = determineYear(forDays: days)
+            days += self.days(forMonth: month, year: year)
+        }
+        
+        return max(month, 0)
+    }
+    
+    private func determineDayOfMonth(forDays days: Int, month: Int) -> Int {
+        var count = 0
+        var daysForMonth = 0
+        
+        while count < month {
+            let year = determineYear(forDays: days)
+            daysForMonth += self.days(forMonth: count % 12, year: year)
+            count += 1
+        }
+        
+        return days - daysForMonth
+    }
+    
+    private func determineYear(forDays days: Int) -> Int {
+        switch days {
+        case ...365: return 2023
+        case 366...730: return 2024
+        case 731...1094: return 2025
+        case 1095...1458: return 2026
+        default: return 2027
+        }
     }
 }
-

@@ -27,7 +27,8 @@ final class ChartView: UIViewController {
         chartView.xAxis.setLabelCount(6, force: false)
         chartView.xAxis.labelTextColor = .white
         chartView.xAxis.axisLineColor = .systemBlue
-        chartView.xAxis.valueFormatter = DateValueFormatter()
+        chartView.xAxis.granularity = 1
+        chartView.xAxis.valueFormatter = DayAxisValueFormatter(chart: chartView)
         chartView.animate(xAxisDuration: 1)
         
         
@@ -63,24 +64,23 @@ final class ChartView: UIViewController {
         set1.drawHorizontalHighlightIndicatorEnabled = false
         let data = LineChartData(dataSet: set1)
         data.setDrawValues(false)
-        lineChartView.data = data
+       lineChartView.data = data
         
     }
+     
+    var const = 0.08333333
     
     
-    
-    let data = [ChartDataEntry(x: 0.0, y: 0.0),
-                ChartDataEntry(x: 1.0, y: 1.0),
-                ChartDataEntry(x: 2.0, y: 2.0),
-                ChartDataEntry(x: 3.0, y: 3.0),
-                ChartDataEntry(x: 4.0, y: 4.0),
-                ChartDataEntry(x: 2.0, y: 5.0),
-                ChartDataEntry(x: 4.0, y: 6.0),
-                ChartDataEntry(x: 5.0, y: 7.0),
-                ChartDataEntry(x: 6.0, y: 8.0),
-                ChartDataEntry(x: 7.0, y: 9.0),
-                ChartDataEntry(x: 8.0, y: 10.0)
-            
+    let data = [ChartDataEntry(x: 0.0, y: 1.0),
+                ChartDataEntry(x: 1, y: 1.0),
+                ChartDataEntry(x: 2, y: 3),
+                ChartDataEntry(x: 3, y: 10),
+                ChartDataEntry(x: 4, y: 4),
+                ChartDataEntry(x: 5, y: 3),
+                ChartDataEntry(x: 5.08333333, y: 6),
+                ChartDataEntry(x: 5.16666667, y: 3),
+                ChartDataEntry(x: 5.24999997, y: 4),
+                ChartDataEntry(x: 5.3333333  , y: 5)
     ]
 }
 
