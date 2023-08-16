@@ -34,10 +34,11 @@ class FireAPIManager {
         let db = configureFB()
         let graphRef = db.child("graphData")
         let userRef = graphRef.child("graphdataFor\(id)")
-        let dateRef = userRef.child("date")
-        let valuesRef = userRef.child("value")
-        dateRef.setValue(["date": graphData.date])
-        valuesRef.setValue(["value": graphData.value])
+        let dataRef = userRef.child("data")
+        let valueRef = dataRef.child("value")
+        let dateRef = dataRef.child("date")
+        valueRef.setValue(graphData.value)
+        dateRef.setValue(graphData.date)
     }
     
     
@@ -156,12 +157,13 @@ class FireAPIManager {
         let db = configureFB()
         let graphRef = db.child("graphData")
         let userRef = graphRef.child("graphdataFor\(id)")
-        let dateRef = userRef.child("date")
-        let valuesRef = userRef.child("value")
+        let dataRef = userRef.child("data")
+        let valueRef = dataRef.child("value")
+        let dateRef = dataRef.child("date")
         
-        
-        valuesRef.setValue(["value": graphData.value])
-    }
+        valueRef.updateChildValues(graphData.value)
+        dateRef.updateChildValues(graphData.date)
+            }
     
     
 }

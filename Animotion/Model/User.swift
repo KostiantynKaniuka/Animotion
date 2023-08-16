@@ -14,9 +14,9 @@ struct MyUser {
     var radarData: [String: Int]
 }
 
-struct GraphData {
-    let data: [Double:Int]
-    let value: [Int]
+struct GraphData: Encodable {
+    let date: [String: Double]
+    let value: [String: Int]
 }
 
 extension MyUser {
@@ -35,5 +35,14 @@ extension GraphData {
             "date": date,
             "value": value
         ]
+    }
+}
+
+extension Encodable {
+    var toDictionnary: [String : Any]? {
+        guard let data =  try? JSONEncoder().encode(self) else {
+            return nil
+        }
+        return try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any]
     }
 }

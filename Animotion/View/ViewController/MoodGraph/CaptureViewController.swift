@@ -54,11 +54,11 @@ final class CaptureViewController: UIViewController {
                 let currentDate = dateFormatter.string(from: Date())
                 let formatedDate = dateFormatter.date(from: currentDate)
                 let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
-                let userGraph = GraphData(date: doubleDate, value: 4)
+                let userGraph = GraphData(date: ["2": doubleDate], value: ["2": 9])
                 guard let user = Auth.auth().currentUser else {return}
                 let id = user.uid
-                FireAPIManager.shared.addGraphData(id: id, graphData: userGraph)
-                
+                FireAPIManager.shared.updateGraphData(id: id, graphData: userGraph)
+
             }
             .store(in: &captureVM.bag)
         
