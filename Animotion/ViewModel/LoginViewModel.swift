@@ -90,8 +90,12 @@ extension LoginViewModel {
             let userAuth = result.user
             guard let idToken = userAuth.idToken else {return}
             guard let id = userAuth.userID else {return}
+            let dateConverter = DateConvertor()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+           
                     let graphData = [
-                        "\(Date())" : 0, // Convert Date to String
+                        "\(dateConverter.convertDateToNum(date: ))" : 0, // Convert Date to String
                     ]
 
                     let radarData = [
@@ -103,10 +107,10 @@ extension LoginViewModel {
                             "Sad": 0
                     ]
            
-                   let user = MyUser(id: id, name: "test", graphData: graphData, radarData: radarData)
-            FireAPIManager.shared.addingUserToFirebase(user: user)
-            print(user)
-            print("➡️ user added")
+//                   let user = MyUser(id: id, name: "test", graphData: graphData, radarData: radarData)
+//            FireAPIManager.shared.addingUserToFirebase(user: user)
+//            print(user)
+//            print("➡️ user added")
             
             
             let accsesToken = userAuth.accessToken

@@ -8,37 +8,6 @@
 import Foundation
 import DGCharts
 
-class MyXAxisFormatter: NSObject, AxisValueFormatter {
-    let dateFormatter: DateFormatter
-        
-        override init() {
-            dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd MMM yyyy"
-            super.init()
-        }
-        
-    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        // Calculate the visible range of x-values
-        let visibleRange = axis?.axisMaximum ?? 0.0 - axis!.axisMinimum ?? 0.0
-        
-        // Choose date format based on the visible range
-        if visibleRange <= 30.0 { // Adjust the threshold as needed
-            dateFormatter.dateFormat = "dd MMM yyyy"
-        } else {
-            dateFormatter.dateFormat = "MMM yyyy"
-        }
-        
-        let startDate = Calendar.current.date(from: DateComponents(year: 2023, month: 1, day: 1))!
-        if let date = Calendar.current.date(byAdding: .day, value: Int(value), to: startDate) {
-            return dateFormatter.string(from: date)
-        } else {
-            return ""
-        }
-    }
-
-  }
-
-
 public class DayAxisValueFormatter: NSObject, AxisValueFormatter {
     weak var chart: LineChartView?
     let months = ["Jan", "Feb", "Mar",
@@ -72,13 +41,6 @@ public class DayAxisValueFormatter: NSObject, AxisValueFormatter {
             return "\(dayOfMonth)\(appendix) \(monthName)"
         }
     }
- 
-
-
-
-
-
-
     
     private func days(forMonth month: Int, year: Int) -> Int {
         // month is 0-based

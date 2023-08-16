@@ -20,6 +20,8 @@ class FireAPIManager {
         return db
     }
     
+    
+    //MARK: - Carousel data
     func getCarouselDataFromdb(completion:  @escaping ([CarouselData]) -> Void ) {
         let db = configureFB()
         db.child("CarouselData").getData(completion: { error, snapshot in
@@ -47,12 +49,15 @@ class FireAPIManager {
         })
     }
     
+    //MARK: - Adding user to db
     func addingUserToFirebase(user: MyUser) {
         let db = configureFB()
         let usersRef = db.child("users")
         let userRef = usersRef.child("\(user.id)")
         userRef.setValue(user.toDictionary())
         }
+    
+    
     
     func getUserFromDB(_ id: String, completion: @escaping (MyUser?) -> Void) {
         let db = configureFB()
@@ -68,7 +73,7 @@ class FireAPIManager {
                  if let dataDict = user?.value as? [String: Any] {
                      let id = dataDict["id"] as? String ?? ""
                      let name = dataDict["name"] as? String ?? ""
-                     let graphData = dataDict["graphData"] as? [String: Int] ?? [:]
+                     let graphData = dataDict["graphData"] as? [Double: Int] ?? [:]
                      let radarData = dataDict["radarData"] as? [String: Int] ?? [:]
                      
                      userData = MyUser(id: id, name: name, graphData: graphData, radarData: radarData)
@@ -76,8 +81,13 @@ class FireAPIManager {
            completion(userData)
         })
     }
-
     
+    
+    func getUserGraphData(_ id: String, completion: @escaping (MyUser?) -> Void) {
+        
+    }
+
+    //MARK: - Get Ukraine Data
     func getUkraineMenuData(completion: @escaping ([UkraineSection]) -> Void) {
         let db = configureFB()
         db.child("Ukraine").getData(completion: { error, snapshot in
@@ -104,6 +114,7 @@ class FireAPIManager {
         })
     }
     
+    //MARK: - Get SafeSpaceData
     func getSafeSpaceMenuData(completion: @escaping ([SafeSpace]) -> Void) {
         let db = configureFB()
         db.child("sidemenu").getData(completion: { error, snapshot in

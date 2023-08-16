@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		614068560C6C5B24682F3734 /* Pods_Animotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCB3CC4FA32298CBD6D7F7A6 /* Pods_Animotion.framework */; };
+		E70360582A8CFFC700FEAD1A /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70360572A8CFFC700FEAD1A /* ChartViewModel.swift */; };
+		E70360602A8D053E00FEAD1A /* AnimotionUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E703605F2A8D053E00FEAD1A /* AnimotionUnitTests.swift */; };
+		E70360672A8D24E300FEAD1A /* DateConvertor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70360662A8D24E300FEAD1A /* DateConvertor.swift */; };
 		E7242D2A2A2F71F10072B625 /* FireBaseAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7242D292A2F71F10072B625 /* FireBaseAPIManager.swift */; };
 		E73293C62A66B234007CF68F /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73293C52A66B234007CF68F /* CustomLabel.swift */; };
 		E73A00012A2DFCBE00AA421F /* CarouselCollectionVievModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73A00002A2DFCBE00AA421F /* CarouselCollectionVievModel.swift */; };
@@ -54,9 +57,23 @@
 		E7F482012A2FB571008B3888 /* CarouselData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F482002A2FB571008B3888 /* CarouselData.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		E70360612A8D053E00FEAD1A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E76AE0A62A1FFF1A00102F15 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E76AE0AD2A1FFF1A00102F15;
+			remoteInfo = Animotion;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		27100A960F7EE5529B77A8C3 /* Pods-Animotion.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Animotion.release.xcconfig"; path = "Target Support Files/Pods-Animotion/Pods-Animotion.release.xcconfig"; sourceTree = "<group>"; };
 		524192AE8343C00B5BD5AD20 /* Pods-Animotion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Animotion.debug.xcconfig"; path = "Target Support Files/Pods-Animotion/Pods-Animotion.debug.xcconfig"; sourceTree = "<group>"; };
+		E70360572A8CFFC700FEAD1A /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
+		E703605D2A8D053E00FEAD1A /* AnimotionUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AnimotionUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E703605F2A8D053E00FEAD1A /* AnimotionUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimotionUnitTests.swift; sourceTree = "<group>"; };
+		E70360662A8D24E300FEAD1A /* DateConvertor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConvertor.swift; sourceTree = "<group>"; };
 		E7242D292A2F71F10072B625 /* FireBaseAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseAPIManager.swift; sourceTree = "<group>"; };
 		E73293C52A66B234007CF68F /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		E73A00002A2DFCBE00AA421F /* CarouselCollectionVievModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionVievModel.swift; sourceTree = "<group>"; };
@@ -108,6 +125,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E703605A2A8D053E00FEAD1A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E76AE0AB2A1FFF1A00102F15 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -134,6 +158,14 @@
 				27100A960F7EE5529B77A8C3 /* Pods-Animotion.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E703605E2A8D053E00FEAD1A /* AnimotionUnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				E703605F2A8D053E00FEAD1A /* AnimotionUnitTests.swift */,
+			);
+			path = AnimotionUnitTests;
 			sourceTree = "<group>";
 		};
 		E73A00062A2E4A4000AA421F /* Network */ = {
@@ -173,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				E76AE0B02A1FFF1A00102F15 /* Animotion */,
+				E703605E2A8D053E00FEAD1A /* AnimotionUnitTests */,
 				E76AE0AF2A1FFF1A00102F15 /* Products */,
 				2AE36784ACF1960373F4CEEF /* Pods */,
 				221BD035CFD8AA3A7EE13918 /* Frameworks */,
@@ -183,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				E76AE0AE2A1FFF1A00102F15 /* Animotion.app */,
+				E703605D2A8D053E00FEAD1A /* AnimotionUnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -228,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				E7BD05F32A8BE12F00BB1D07 /* DateValueFormatter.swift */,
+				E70360662A8D24E300FEAD1A /* DateConvertor.swift */,
 			);
 			path = Chart;
 			sourceTree = "<group>";
@@ -253,8 +288,8 @@
 			isa = PBXGroup;
 			children = (
 				E75B6E7A2A200587001BCB6D /* MainViewController.swift */,
-				E75B6E7B2A200587001BCB6D /* MainViewController.xib */,
 				E7BD05F52A8BE17900BB1D07 /* ChartView.swift */,
+				E75B6E7B2A200587001BCB6D /* MainViewController.xib */,
 			);
 			path = "Main screen";
 			sourceTree = "<group>";
@@ -311,6 +346,7 @@
 				E74DFF072A6995C80057093F /* AuthStateViewModel.swift */,
 				E7F28BD42A6ADA3500693189 /* ResetPasswordViewModel.swift */,
 				E77A63A92A8A64E8001BBE14 /* CaptureMoodViewModel.swift */,
+				E70360572A8CFFC700FEAD1A /* ChartViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -362,6 +398,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		E703605C2A8D053E00FEAD1A /* AnimotionUnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E70360632A8D053E00FEAD1A /* Build configuration list for PBXNativeTarget "AnimotionUnitTests" */;
+			buildPhases = (
+				E70360592A8D053E00FEAD1A /* Sources */,
+				E703605A2A8D053E00FEAD1A /* Frameworks */,
+				E703605B2A8D053E00FEAD1A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E70360622A8D053E00FEAD1A /* PBXTargetDependency */,
+			);
+			name = AnimotionUnitTests;
+			productName = AnimotionUnitTests;
+			productReference = E703605D2A8D053E00FEAD1A /* AnimotionUnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		E76AE0AD2A1FFF1A00102F15 /* Animotion */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E76AE0C22A1FFF1B00102F15 /* Build configuration list for PBXNativeTarget "Animotion" */;
@@ -391,6 +445,10 @@
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
+					E703605C2A8D053E00FEAD1A = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = E76AE0AD2A1FFF1A00102F15;
+					};
 					E76AE0AD2A1FFF1A00102F15 = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -410,11 +468,19 @@
 			projectRoot = "";
 			targets = (
 				E76AE0AD2A1FFF1A00102F15 /* Animotion */,
+				E703605C2A8D053E00FEAD1A /* AnimotionUnitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E703605B2A8D053E00FEAD1A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E76AE0AC2A1FFF1A00102F15 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -473,6 +539,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E70360592A8D053E00FEAD1A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E70360602A8D053E00FEAD1A /* AnimotionUnitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E76AE0AA2A1FFF1A00102F15 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -489,7 +563,9 @@
 				E7EFA0E62A20FC3700544275 /* SideMenuViewController.swift in Sources */,
 				E73A00012A2DFCBE00AA421F /* CarouselCollectionVievModel.swift in Sources */,
 				E73293C62A66B234007CF68F /* CustomLabel.swift in Sources */,
+				E70360582A8CFFC700FEAD1A /* ChartViewModel.swift in Sources */,
 				E7F168372A28C941004B4E49 /* UIColor.swift in Sources */,
+				E70360672A8D24E300FEAD1A /* DateConvertor.swift in Sources */,
 				E7DAAFCC2A5C39480009D7B9 /* Navigation.swift in Sources */,
 				E7693B3A2A293382003C5D3F /* CarouselCollectionView.swift in Sources */,
 				E7D457A82A853141006D59F1 /* MoodCaptureViewController.swift in Sources */,
@@ -520,6 +596,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		E70360622A8D053E00FEAD1A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E76AE0AD2A1FFF1A00102F15 /* Animotion */;
+			targetProxy = E70360612A8D053E00FEAD1A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		E76AE0BC2A1FFF1B00102F15 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -532,6 +616,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		E70360642A8D053E00FEAD1A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 882F2W2464;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = konstantinkaniuka.AnimotionUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Animotion.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Animotion";
+			};
+			name = Debug;
+		};
+		E70360652A8D053E00FEAD1A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 882F2W2464;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = konstantinkaniuka.AnimotionUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Animotion.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Animotion";
+			};
+			name = Release;
+		};
 		E76AE0C02A1FFF1B00102F15 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -709,6 +829,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E70360632A8D053E00FEAD1A /* Build configuration list for PBXNativeTarget "AnimotionUnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E70360642A8D053E00FEAD1A /* Debug */,
+				E70360652A8D053E00FEAD1A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E76AE0A92A1FFF1A00102F15 /* Build configuration list for PBXProject "Animotion" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

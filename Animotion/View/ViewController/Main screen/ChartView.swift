@@ -31,14 +31,9 @@ final class ChartView: UIViewController {
         chartView.xAxis.valueFormatter = DayAxisValueFormatter(chart: chartView)
         chartView.animate(xAxisDuration: 1)
         
-        
-        
-        
         return chartView
     }()
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(lineChartView)
@@ -51,9 +46,8 @@ final class ChartView: UIViewController {
         setChartData()
     }
     
-    
     func setChartData() {
-        let set1 = LineChartDataSet(entries: data, label: "data smple")
+        let set1 = LineChartDataSet(entries: data, label: "Mood data")
         set1.mode = .cubicBezier
         set1.drawCirclesEnabled = false
         set1.lineWidth = 3
@@ -65,22 +59,15 @@ final class ChartView: UIViewController {
         let data = LineChartData(dataSet: set1)
         data.setDrawValues(false)
        lineChartView.data = data
-        
     }
      
     var const = 0.08333333
     
-    
-    let data = [ChartDataEntry(x: 0.0, y: 1.0),
-                ChartDataEntry(x: 1, y: 1.0),
-                ChartDataEntry(x: 2, y: 3),
-                ChartDataEntry(x: 3, y: 10),
-                ChartDataEntry(x: 4, y: 4),
-                ChartDataEntry(x: 5, y: 3),
-                ChartDataEntry(x: 5.08333333, y: 6),
-                ChartDataEntry(x: 5.16666667, y: 3),
-                ChartDataEntry(x: 5.24999997, y: 4),
-                ChartDataEntry(x: 5.3333333  , y: 5)
+    let data = [
+        ChartDataEntry(x: 227.71194469295168, y: 1.0),
+        ChartDataEntry(x:  228.95833333333334, y: 2)
+  
+   
     ]
 }
 
@@ -89,4 +76,3 @@ extension ChartView: ChartViewDelegate {
         print(entry)
     }
 }
-

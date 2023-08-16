@@ -11,7 +11,7 @@ struct MyUser {
     let id: String
     var name: String
     var photo: String?
-    var graphData: [String : Int]
+    var graphData: [Double : Int]
     var radarData: [String: Int]
 }
 
