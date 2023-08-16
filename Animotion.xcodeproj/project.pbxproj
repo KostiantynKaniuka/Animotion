@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		614068560C6C5B24682F3734 /* Pods_Animotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCB3CC4FA32298CBD6D7F7A6 /* Pods_Animotion.framework */; };
 		E70360582A8CFFC700FEAD1A /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70360572A8CFFC700FEAD1A /* ChartViewModel.swift */; };
-		E70360602A8D053E00FEAD1A /* AnimotionUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E703605F2A8D053E00FEAD1A /* AnimotionUnitTests.swift */; };
+		E70360602A8D053E00FEAD1A /* DateConverterUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E703605F2A8D053E00FEAD1A /* DateConverterUnitTests.swift */; };
 		E70360672A8D24E300FEAD1A /* DateConvertor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70360662A8D24E300FEAD1A /* DateConvertor.swift */; };
 		E7242D2A2A2F71F10072B625 /* FireBaseAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7242D292A2F71F10072B625 /* FireBaseAPIManager.swift */; };
 		E73293C62A66B234007CF68F /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73293C52A66B234007CF68F /* CustomLabel.swift */; };
@@ -41,7 +41,7 @@
 		E7BD05F42A8BE12F00BB1D07 /* DateValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BD05F32A8BE12F00BB1D07 /* DateValueFormatter.swift */; };
 		E7BD05F62A8BE17900BB1D07 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BD05F52A8BE17900BB1D07 /* ChartView.swift */; };
 		E7D457A62A8504BB006D59F1 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D457A52A8504BB006D59F1 /* TabBarViewController.swift */; };
-		E7D457A82A853141006D59F1 /* MoodCaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D457A72A853141006D59F1 /* MoodCaptureViewController.swift */; };
+		E7D457A82A853141006D59F1 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D457A72A853141006D59F1 /* CaptureViewController.swift */; };
 		E7DAAFCA2A5C11270009D7B9 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFC92A5C11270009D7B9 /* Button.swift */; };
 		E7DAAFCC2A5C39480009D7B9 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFCB2A5C39480009D7B9 /* Navigation.swift */; };
 		E7DAAFCF2A5C47DC0009D7B9 /* UserScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFCE2A5C47DC0009D7B9 /* UserScreenViewController.swift */; };
@@ -72,7 +72,7 @@
 		524192AE8343C00B5BD5AD20 /* Pods-Animotion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Animotion.debug.xcconfig"; path = "Target Support Files/Pods-Animotion/Pods-Animotion.debug.xcconfig"; sourceTree = "<group>"; };
 		E70360572A8CFFC700FEAD1A /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		E703605D2A8D053E00FEAD1A /* AnimotionUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AnimotionUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E703605F2A8D053E00FEAD1A /* AnimotionUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimotionUnitTests.swift; sourceTree = "<group>"; };
+		E703605F2A8D053E00FEAD1A /* DateConverterUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverterUnitTests.swift; sourceTree = "<group>"; };
 		E70360662A8D24E300FEAD1A /* DateConvertor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConvertor.swift; sourceTree = "<group>"; };
 		E7242D292A2F71F10072B625 /* FireBaseAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseAPIManager.swift; sourceTree = "<group>"; };
 		E73293C52A66B234007CF68F /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 		E7BD05F32A8BE12F00BB1D07 /* DateValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateValueFormatter.swift; sourceTree = "<group>"; };
 		E7BD05F52A8BE17900BB1D07 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		E7D457A52A8504BB006D59F1 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		E7D457A72A853141006D59F1 /* MoodCaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodCaptureViewController.swift; sourceTree = "<group>"; };
+		E7D457A72A853141006D59F1 /* CaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		E7DAAFC92A5C11270009D7B9 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		E7DAAFCB2A5C39480009D7B9 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		E7DAAFCE2A5C47DC0009D7B9 /* UserScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScreenViewController.swift; sourceTree = "<group>"; };
@@ -163,7 +163,7 @@
 		E703605E2A8D053E00FEAD1A /* AnimotionUnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				E703605F2A8D053E00FEAD1A /* AnimotionUnitTests.swift */,
+				E703605F2A8D053E00FEAD1A /* DateConverterUnitTests.swift */,
 			);
 			path = AnimotionUnitTests;
 			sourceTree = "<group>";
@@ -270,7 +270,7 @@
 		E7D457A92A853452006D59F1 /* MoodGraph */ = {
 			isa = PBXGroup;
 			children = (
-				E7D457A72A853141006D59F1 /* MoodCaptureViewController.swift */,
+				E7D457A72A853141006D59F1 /* CaptureViewController.swift */,
 			);
 			path = MoodGraph;
 			sourceTree = "<group>";
@@ -543,7 +543,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E70360602A8D053E00FEAD1A /* AnimotionUnitTests.swift in Sources */,
+				E70360602A8D053E00FEAD1A /* DateConverterUnitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,7 +568,7 @@
 				E70360672A8D24E300FEAD1A /* DateConvertor.swift in Sources */,
 				E7DAAFCC2A5C39480009D7B9 /* Navigation.swift in Sources */,
 				E7693B3A2A293382003C5D3F /* CarouselCollectionView.swift in Sources */,
-				E7D457A82A853141006D59F1 /* MoodCaptureViewController.swift in Sources */,
+				E7D457A82A853141006D59F1 /* CaptureViewController.swift in Sources */,
 				E77A63AA2A8A64E8001BBE14 /* CaptureMoodViewModel.swift in Sources */,
 				E77A63AE2A8A7797001BBE14 /* User.swift in Sources */,
 				E782AA312A543E61008893CD /* SideMenuViewModel.swift in Sources */,

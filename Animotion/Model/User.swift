@@ -11,8 +11,12 @@ struct MyUser {
     let id: String
     var name: String
     var photo: String?
-    var graphData: [Double : Int]
     var radarData: [String: Int]
+}
+
+struct GraphData {
+    let data: [Double:Int]
+    let value: [Int]
 }
 
 extension MyUser {
@@ -21,8 +25,15 @@ extension MyUser {
             "id": id,
             "name": name,
             "photo": photo ?? "",
-            "graphData": graphData,
             "radarData": radarData
+        ]
+    }}
+    
+extension GraphData {
+    func graphToDictionary() -> [String: Any] {
+        return [
+            "date": date,
+            "value": value
         ]
     }
 }

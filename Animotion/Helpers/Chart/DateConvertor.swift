@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+// Convert users captured date to value for graph xASIS
 final class DateConvertor {
     
     func convertDateToNum(date: Date) -> Double {

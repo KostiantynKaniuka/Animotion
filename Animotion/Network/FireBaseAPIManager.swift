@@ -21,6 +21,27 @@ class FireAPIManager {
     }
     
     
+    //MARK: - ADD
+    //MARK: - Adding user to db
+    func addingUserToFirebase(user: MyUser) {
+        let db = configureFB()
+        let usersRef = db.child("users")
+        let userRef = usersRef.child("\(user.id)")
+        userRef.setValue(user.toDictionary())
+        }
+    
+    func addGraphData(id:String, graphData: GraphData) {
+        let db = configureFB()
+        let graphRef = db.child("graphData")
+        let userRef = graphRef.child("graphdataFor\(id)")
+        let dateRef = userRef.child("date")
+        let valuesRef = userRef.child("value")
+        dateRef.setValue(["date": graphData.date])
+        valuesRef.setValue(["value": graphData.value])
+    }
+    
+    
+    //MARK: - GET
     //MARK: - Carousel data
     func getCarouselDataFromdb(completion:  @escaping ([CarouselData]) -> Void ) {
         let db = configureFB()
@@ -48,17 +69,7 @@ class FireAPIManager {
                     completion(carouselData)
         })
     }
-    
-    //MARK: - Adding user to db
-    func addingUserToFirebase(user: MyUser) {
-        let db = configureFB()
-        let usersRef = db.child("users")
-        let userRef = usersRef.child("\(user.id)")
-        userRef.setValue(user.toDictionary())
-        }
-    
-    
-    
+
     func getUserFromDB(_ id: String, completion: @escaping (MyUser?) -> Void) {
         let db = configureFB()
       
@@ -73,10 +84,8 @@ class FireAPIManager {
                  if let dataDict = user?.value as? [String: Any] {
                      let id = dataDict["id"] as? String ?? ""
                      let name = dataDict["name"] as? String ?? ""
-                     let graphData = dataDict["graphData"] as? [Double: Int] ?? [:]
                      let radarData = dataDict["radarData"] as? [String: Int] ?? [:]
-                     
-                     userData = MyUser(id: id, name: name, graphData: graphData, radarData: radarData)
+                     userData = MyUser(id: id, name: name, radarData: radarData)
                  }
            completion(userData)
         })
@@ -140,4 +149,22 @@ class FireAPIManager {
                     completion(sideMenuData)
         })
     }
+    
+    //MARK: - UPDATE
+    
+    func updateGraphData(id: String, graphData: GraphData) {
+        let db = configureFB()
+        let graphRef = db.child("graphData")
+        let userRef = graphRef.child("graphdataFor\(id)")
+        let dateRef = userRef.child("date")
+        let valuesRef = userRef.child("value")
+        
+        
+        valuesRef.setValue(["value": graphData.value])
+    }
+    
+    
 }
+
+
+

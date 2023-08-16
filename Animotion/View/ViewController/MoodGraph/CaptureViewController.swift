@@ -7,10 +7,11 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
 import Combine
 import CombineCocoa
 
-final class MoodCaptureViewController: UIViewController {
+final class CaptureViewController: UIViewController {
     
     private let scrollView = UIScrollView()
     private let backgroundImage = UIImageView()
@@ -47,8 +48,17 @@ final class MoodCaptureViewController: UIViewController {
     private func submitButtonTapped() {
         submitButton.tapPublisher
             .sink { [weak self]_ in
-                self?.captureVM.menthalCount[(self?.captureVM.methalData)!]! += 1
-                print(self?.captureVM.menthalCount)
+                let dateConverter = DateConvertor()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+                let currentDate = dateFormatter.string(from: Date())
+                let formatedDate = dateFormatter.date(from: currentDate)
+                let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
+                let userGraph = GraphData(date: doubleDate, value: 4)
+                guard let user = Auth.auth().currentUser else {return}
+                let id = user.uid
+                FireAPIManager.shared.addGraphData(id: id, graphData: userGraph)
+                
             }
             .store(in: &captureVM.bag)
         
@@ -66,7 +76,7 @@ final class MoodCaptureViewController: UIViewController {
     }
 }
 
-extension MoodCaptureViewController: UIPickerViewDataSource {
+extension CaptureViewController: UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
@@ -99,7 +109,7 @@ extension MoodCaptureViewController: UIPickerViewDataSource {
 
 //MARK: - Picker delegate
 
-extension MoodCaptureViewController: UIPickerViewDelegate {
+extension CaptureViewController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == moodPickerView {
@@ -116,7 +126,7 @@ extension MoodCaptureViewController: UIPickerViewDelegate {
 
 //MARK: - TextFieldDelegate
 
-extension MoodCaptureViewController: UITextFieldDelegate {
+extension CaptureViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
@@ -134,7 +144,7 @@ extension MoodCaptureViewController: UITextFieldDelegate {
 }
 
 //MARK: - Layout
-extension MoodCaptureViewController {
+extension CaptureViewController {
     
     private func setUpLayout() {
         view.add(subviews: backgroundImage,
