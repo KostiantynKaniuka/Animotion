@@ -158,7 +158,7 @@ extension UserScreenViewController {
         }
         
         privacyPolicy.snp.makeConstraints { make in
-            make.bottom.equalTo(view).offset(-32)
+            make.top.equalTo(editButton.snp.bottom).offset(16)
             make.centerX.equalTo(buttonsStack)
         }
     }

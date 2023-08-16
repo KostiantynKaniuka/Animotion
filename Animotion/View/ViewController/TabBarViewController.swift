@@ -20,7 +20,8 @@ final class TabBarViewController: UITabBarController {
     func setTabBar() {
         let home = self.createNav(with: "Home", and: UIImage(systemName: "house"), vc: MainViewController())
         let user = self.createNav(with: "User", and: UIImage(systemName: "person.circle"), vc: userVC )
-        self.setViewControllers([home, user], animated: false)
+        let capture = self.createNav(with: "Capture", and:  UIImage(systemName: "camera.filters"), vc: CaptureViewController())
+        self.setViewControllers([home, capture, user], animated: false)
         setUpTabBarColors()
     }
     

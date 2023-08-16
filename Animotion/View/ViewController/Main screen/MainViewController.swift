@@ -12,10 +12,10 @@ final class MainViewController: UIViewController {
 
     @IBOutlet weak var dreamButton: UIButton!
     private let sideMenu = SideMenuViewController()
-    private let carouselView = CarouselCollectionView(layout: UICollectionViewFlowLayout())
+    //private let carouselView = CarouselCollectionView(layout: UICollectionViewFlowLayout())
     lazy var menu = SideMenuNavigationController(rootViewController: sideMenu)
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
-    private lazy var pageView = carouselView.dots
+   // private lazy var pageView = carouselView.dots
     
    
   //MARK: - Lifecycle
@@ -27,8 +27,8 @@ final class MainViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
      super.viewDidAppear(animated)
      
-        carouselView.setUpMargins()
-        carouselView.scrollToNextCell()
+       // carouselView.setUpMargins()
+        //carouselView.scrollToNextCell()
         menu.leftSide = true
     }
 
@@ -37,25 +37,28 @@ final class MainViewController: UIViewController {
     }
     
     @IBAction func dreamButtonTapped(_ sender: UIButton) {
+//        FireAPIManager.shared.getUserFromDB("101179715326235069578") { user in
+//            print("➡️",user)
+//        }
         present(menu, animated: true, completion: nil)
     }
     
     private func setUpUI() {
         view.backgroundColor = UIColor(red: 178/255, green: 236/255, blue: 197/255, alpha: 1)
-        carouselView.view.translatesAutoresizingMaskIntoConstraints = false
-        pageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(carouselView.view)
-        view.addSubview(pageView)
-        NSLayoutConstraint.activate([
-            carouselView.view.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            carouselView.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            carouselView.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            carouselView.view.heightAnchor.constraint(equalToConstant: 300),
-            
-            pageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            pageView.topAnchor.constraint(equalTo: carouselView.view.bottomAnchor)
-        ])
+//        carouselView.view.translatesAutoresizingMaskIntoConstraints = false
+//        pageView.translatesAutoresizingMaskIntoConstraints = false
+//
+//        view.addSubview(carouselView.view)
+//        view.addSubview(pageView)
+//        NSLayoutConstraint.activate([
+//            carouselView.view.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+//            carouselView.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            carouselView.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            carouselView.view.heightAnchor.constraint(equalToConstant: 300),
+//
+//            pageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            pageView.topAnchor.constraint(equalTo: carouselView.view.bottomAnchor)
+//        ])
     }
 }
 

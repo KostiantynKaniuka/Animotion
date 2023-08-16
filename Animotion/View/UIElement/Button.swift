@@ -298,3 +298,54 @@ final class GoogleSignInButton: UIButton {
             self.layer.cornerRadius = 10
         }
 }
+
+
+final class SubmitButton: UIButton {
+    
+    override init(frame: CGRect) {
+        super.init(frame:frame)
+        buttonSettings()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func buttonSettings() {
+        let attributedText = NSMutableAttributedString(string: "Submit", attributes: [
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12),
+            NSAttributedString.Key.foregroundColor: UIColor.darkGray,
+            NSAttributedString.Key.kern: 1
+        ])
+        var logoutButtonConfiguration = UIButton.Configuration.gray()
+        logoutButtonConfiguration.baseBackgroundColor = .white
+        self.configuration = logoutButtonConfiguration
+        self.setAttributedTitle(attributedText, for: .normal)
+    }
+}
+
+final class CancelCaptureButton: UIButton {
+    
+    override init(frame: CGRect) {
+        super.init(frame:frame)
+        buttonSettings()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func buttonSettings() {
+        let attributedText = NSMutableAttributedString(string: "Cancel", attributes: [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12),
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.kern: 1
+        ])
+        let deleteButtonConfiguration = UIButton.Configuration.plain()
+        
+        self.configuration = deleteButtonConfiguration
+        self.setAttributedTitle(attributedText, for: .normal)
+        self.contentHorizontalAlignment = .left
+       
+    }
+}
