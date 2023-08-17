@@ -15,8 +15,8 @@ struct MyUser {
 }
 
 struct GraphData: Encodable {
-    let date: [String: Double]
-    let value: [String: Int]
+    let date: Double
+    let value: Int
 }
 
 extension MyUser {
@@ -29,14 +29,14 @@ extension MyUser {
         ]
     }}
     
-extension GraphData {
-    func graphToDictionary() -> [String: Any] {
-        return [
-            "date": date,
-            "value": value
-        ]
-    }
-}
+//extension GraphData {
+//    func graphToDictionary() -> [String: Any] {
+//        return [
+//            "date": date,
+//            "value": value
+//        ]
+//    }
+//}
 
 extension Encodable {
     var toDictionnary: [String : Any]? {

@@ -10,7 +10,8 @@ import FirebaseCore
 import FirebaseDatabase
 
 class FireAPIManager {
-    fileprivate var GraphIndex: Int = 0
+    fileprivate var graphIndex: Int = 0 //Graph database indexing do not modify
+    
     static let shared = FireAPIManager()
     private var ref: DatabaseReference!
     
@@ -37,8 +38,10 @@ class FireAPIManager {
         let dataRef = userRef.child("data")
         let valueRef = dataRef.child("value")
         let dateRef = dataRef.child("date")
-        valueRef.setValue(graphData.value)
-        dateRef.setValue(graphData.date)
+        valueRef.setValue(["\(graphIndex)" : graphData.value])
+        dateRef.setValue(["\(graphIndex)" : graphData.date])
+        
+        graphIndex += 1
     }
     
     
@@ -93,8 +96,21 @@ class FireAPIManager {
     }
     
     
-    func getUserGraphData(_ id: String, completion: @escaping (MyUser?) -> Void) {
-        
+    func getUserGraphData(_ id: String){
+        let db = configureFB()
+        let valueRef = db.child("graphData").child("graphdataFor\(id)").child("data").child("value")
+        valueRef.queryOrderedByKey()
+        valueRef.getData { error, values in
+            if let error = error {
+                print("Error fetching graph data: \(error)")
+                return
+            }
+            print("Raw data: \(values)")
+            
+            if let data = values?.value as? [Int] {
+                print("Parsed data: \(data)")
+            }
+        }
     }
 
     //MARK: - Get Ukraine Data
@@ -161,7 +177,9 @@ class FireAPIManager {
         let valueRef = dataRef.child("value")
         let dateRef = dataRef.child("date")
         
-        valueRef.updateChildValues(graphData.value)
-        dateRef.updateChildValues(graphData.date)
+        valueRef.updateChildValues(["\(graphIndex)" : graphData.value])
+        dateRef.updateChildValues(["\(graphIndex)" : graphData.date])
+        
+        graphIndex += 1
     }
 }

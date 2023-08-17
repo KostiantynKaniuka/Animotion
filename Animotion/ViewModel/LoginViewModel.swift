@@ -122,7 +122,7 @@ extension LoginViewModel {
                             ]
                    
                            let user = MyUser(id: id, name: "test", radarData: radarData)
-                    let userGraph = GraphData(date: ["0": doubleDate], value: ["0": 5])
+                    let userGraph = GraphData(date: doubleDate, value: 5)
                     FireAPIManager.shared.addingUserToFirebase(user: user)
                     FireAPIManager.shared.addGraphData(id: id, graphData: userGraph)
                     print(user)
