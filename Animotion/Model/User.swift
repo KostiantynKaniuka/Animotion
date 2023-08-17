@@ -27,17 +27,9 @@ extension MyUser {
             "photo": photo ?? "",
             "radarData": radarData
         ]
-    }}
+    }
+}
     
-//extension GraphData {
-//    func graphToDictionary() -> [String: Any] {
-//        return [
-//            "date": date,
-//            "value": value
-//        ]
-//    }
-//}
-
 extension Encodable {
     var toDictionnary: [String : Any]? {
         guard let data =  try? JSONEncoder().encode(self) else {

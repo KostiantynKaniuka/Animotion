@@ -123,8 +123,8 @@ extension LoginViewModel {
                    
                            let user = MyUser(id: id, name: "test", radarData: radarData)
                     let userGraph = GraphData(date: doubleDate, value: 5)
-                    FireAPIManager.shared.addingUserToFirebase(user: user)
-                    FireAPIManager.shared.addGraphData(id: id, graphData: userGraph)
+//                    FireAPIManager.shared.addingUserToFirebase(user: user)
+//                    FireAPIManager.shared.addGraphData(id: id, graphData: userGraph)
                     print(user)
                     print("➡️ user added")
                     print(authResult.user)
@@ -146,6 +146,7 @@ extension LoginViewModel {
         }.joined()
         return hashString
     }
+    
     func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
         var randomBytes = [UInt8](repeating: 0, count: length)

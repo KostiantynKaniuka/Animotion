@@ -96,19 +96,33 @@ class FireAPIManager {
     }
     
     
-    func getUserGraphData(_ id: String){
+    func getUserGraphData(_ id: String, completion: @escaping (([Int],[Double])) -> Void){
         let db = configureFB()
         let valueRef = db.child("graphData").child("graphdataFor\(id)").child("data").child("value")
-        valueRef.queryOrderedByKey()
+        let dateRef = db.child("graphData").child("graphdataFor\(id)").child("data").child("date")
+        var valuesArray = [Double]()
+        var keysArray = [Int]()
+        
+        dateRef.getData { error, values in
+            if let error = error {
+                print("Error fetching graph data: \(error)")
+                return
+            }
+            
+            if let data = values?.value as? [Double] {
+                valuesArray = data
+            }
+        }
+        
         valueRef.getData { error, values in
             if let error = error {
                 print("Error fetching graph data: \(error)")
                 return
             }
-            print("Raw data: \(values)")
             
             if let data = values?.value as? [Int] {
-                print("Parsed data: \(data)")
+                keysArray = data
+                completion((keysArray, valuesArray))
             }
         }
     }

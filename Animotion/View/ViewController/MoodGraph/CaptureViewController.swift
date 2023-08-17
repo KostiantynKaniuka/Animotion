@@ -48,6 +48,8 @@ final class CaptureViewController: UIViewController {
     private func submitButtonTapped() {
         submitButton.tapPublisher
             .sink {
+                guard let user = Auth.auth().currentUser else {return}
+                let id = user.uid
 //                let dateConverter = DateConvertor()
 //                let dateFormatter = DateFormatter()
 //                dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
@@ -55,12 +57,18 @@ final class CaptureViewController: UIViewController {
 //                let formatedDate = dateFormatter.date(from: currentDate)
 //                let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
 //                let userGraph = GraphData(date: doubleDate, value: 6)
-//                guard let user = Auth.auth().currentUser else {return}
-//                let id = user.uid
-//                FireAPIManager.shared.updateGraphData(id: id, graphData: userGraph)
-                guard let user = Auth.auth().currentUser else {return}
-                let id = user.uid
-                FireAPIManager.shared.getUserGraphData(id) 
+            
+               // FireAPIManager.shared.updateGraphData(id: id, graphData: userGraph)
+                FireAPIManager.shared.getUserGraphData(id) { (keys, values) in
+                    var graphDictionary = [Int: Double]()
+                    let count = min(keys.count, values.count)
+                    for i in 0..<count  {
+                        graphDictionary[keys[i]] = values[i]
+                    }
+                        print(graphDictionary)
+                    
+                }
+              
             }
             .store(in: &captureVM.bag)
         

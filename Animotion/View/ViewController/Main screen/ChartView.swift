@@ -10,8 +10,9 @@ import SnapKit
 import DGCharts
 
 final class ChartView: UIViewController {
+    private let chartVM = ChartViewModel()
     
-    lazy var lineChartView: LineChartView = {
+    private lazy var lineChartView: LineChartView = {
         let chartView = LineChartView()
         chartView.backgroundColor = .black
         chartView.rightAxis.enabled = false
@@ -34,6 +35,8 @@ final class ChartView: UIViewController {
         return chartView
     }()
     
+   private var data = [ChartDataEntry]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(lineChartView)
@@ -42,12 +45,12 @@ final class ChartView: UIViewController {
             make.width.equalTo(view.snp.width)
             make.height.equalTo(lineChartView.snp.width)
         }
-        
-        setChartData()
+        lineChartView.delegate = self
+        fetchGraphData()
     }
     
-    func setChartData() {
-        let set1 = LineChartDataSet(entries: data, label: "Mood data")
+    private func setChartData() {
+        let set1 = LineChartDataSet(entries: data, label: "Mood Chart")
         set1.mode = .cubicBezier
         set1.drawCirclesEnabled = false
         set1.lineWidth = 3
@@ -58,17 +61,20 @@ final class ChartView: UIViewController {
         set1.drawHorizontalHighlightIndicatorEnabled = false
         let data = LineChartData(dataSet: set1)
         data.setDrawValues(false)
-       lineChartView.data = data
+        lineChartView.data = data
     }
-     
-    var const = 0.08333333
     
-    let data = [
-        ChartDataEntry(x: 227.71194469295168, y: 1.0),
-        ChartDataEntry(x:  228.95833333333334, y: 2)
-  
-   
-    ]
+    
+    private func fetchGraphData() {
+        chartVM.getUserGraphData {
+            DispatchQueue.main.async {  [weak self] in
+                guard let self = self else { return }
+                self.data = self.chartVM.chartData
+                self.setChartData()
+            }
+        }
+        
+    }
 }
 
 extension ChartView: ChartViewDelegate {
