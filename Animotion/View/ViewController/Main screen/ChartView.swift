@@ -12,9 +12,8 @@ import DGCharts
 final class ChartView: UIViewController {
     private let chartVM = ChartViewModel()
     
-    private lazy var lineChartView: LineChartView = {
+    lazy var lineChartView: LineChartView = {
         let chartView = LineChartView()
-        chartView.backgroundColor = .black
         chartView.rightAxis.enabled = false
         let yAxis = chartView.leftAxis
         yAxis.labelFont = .boldSystemFont(ofSize: 12)
@@ -27,7 +26,7 @@ final class ChartView: UIViewController {
         chartView.xAxis.labelFont = .boldSystemFont(ofSize: 12)
         chartView.xAxis.setLabelCount(6, force: false)
         chartView.xAxis.labelTextColor = .white
-        chartView.xAxis.axisLineColor = .systemBlue
+        chartView.xAxis.axisLineColor = .white
         chartView.xAxis.granularity = 1
         chartView.xAxis.valueFormatter = DayAxisValueFormatter(chart: chartView)
         chartView.animate(xAxisDuration: 1)
@@ -39,12 +38,14 @@ final class ChartView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor  = .clear
+       
         view.addSubview(lineChartView)
         lineChartView.snp.makeConstraints { make in
-            make.center.equalTo(view.center)
-            make.width.equalTo(view.snp.width)
-            make.height.equalTo(lineChartView.snp.width)
+            make.centerX.equalToSuperview()
+            make.size.equalToSuperview()
         }
+        setUpAppearance()
         lineChartView.delegate = self
         fetchGraphData()
     }
@@ -81,4 +82,16 @@ extension ChartView: ChartViewDelegate {
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         print(entry)
     }
+}
+
+extension ChartView {
+    
+    private func setUpAppearance() {
+        lineChartView.backgroundColor = .clear
+        //lineChartView.layer.backgroundColor = UIColor.graphBackground.cgColor
+        lineChartView.layer.cornerRadius = 10
+        lineChartView.layer.borderWidth = 1
+        lineChartView.layer.borderColor = UIColor.white.cgColor
+    }
+    
 }
