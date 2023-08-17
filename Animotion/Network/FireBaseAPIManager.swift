@@ -10,9 +10,9 @@ import FirebaseCore
 import FirebaseDatabase
 
 class FireAPIManager {
-    
+    fileprivate var GraphIndex: Int = 0
     static let shared = FireAPIManager()
-    var ref: DatabaseReference!
+    private var ref: DatabaseReference!
     
     private func configureFB() -> DatabaseReference {
         let db = Database.database().reference()
@@ -163,10 +163,5 @@ class FireAPIManager {
         
         valueRef.updateChildValues(graphData.value)
         dateRef.updateChildValues(graphData.date)
-            }
-    
-    
+    }
 }
-
-
-

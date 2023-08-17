@@ -47,7 +47,7 @@ final class CaptureViewController: UIViewController {
     
     private func submitButtonTapped() {
         submitButton.tapPublisher
-            .sink { [weak self]_ in
+            .sink {
                 let dateConverter = DateConvertor()
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
