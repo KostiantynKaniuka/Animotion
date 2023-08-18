@@ -10,9 +10,10 @@ import FirebaseCore
 import FirebaseDatabase
 
 class FireAPIManager {
+    fileprivate var graphIndex: Int = 0 //Graph database indexing do not modify
     
     static let shared = FireAPIManager()
-    var ref: DatabaseReference!
+    private var ref: DatabaseReference!
     
     private func configureFB() -> DatabaseReference {
         let db = Database.database().reference()
@@ -37,8 +38,10 @@ class FireAPIManager {
         let dataRef = userRef.child("data")
         let valueRef = dataRef.child("value")
         let dateRef = dataRef.child("date")
-        valueRef.setValue(graphData.value)
-        dateRef.setValue(graphData.date)
+        valueRef.setValue(["\(graphIndex)" : graphData.value])
+        dateRef.setValue(["\(graphIndex)" : graphData.date])
+        
+        graphIndex += 1
     }
     
     
@@ -92,9 +95,49 @@ class FireAPIManager {
         })
     }
     
+    func checkUserIndb(_ id: String, completion: @escaping (Bool) -> Void) {
+        let db = configureFB()
+        db.child("users").child(id).observeSingleEvent(of: .value) { snapshot in
+            if snapshot.exists() {
+                print("👨‍💼 User exists")
+                completion(true)
+            } else {
+                print("🚫 User does not exist")
+                completion(false)
+            }
+        }
+    }
     
-    func getUserGraphData(_ id: String, completion: @escaping (MyUser?) -> Void) {
+    func getUserGraphData(_ id: String, completion: @escaping (([Int],[Double])) -> Void){
+        let db = configureFB()
+        let valueRef = db.child("graphData").child("graphdataFor\(id)").child("data").child("value")
+        let dateRef = db.child("graphData").child("graphdataFor\(id)").child("data").child("date")
+        var valuesArray = [Double]()
+        var keysArray = [Int]()
         
+        dateRef.getData { error, values in
+            if let error = error {
+                print("Error fetching graph data: \(error)")
+                return
+            }
+            
+            if let data = values?.value as? [Double] {
+                valuesArray = data
+            }
+        }
+        
+        valueRef.getData { error, values in
+            if let error = error {
+                print("Error fetching graph data: \(error)")
+                return
+            }
+            
+            if let data = values?.value as? [Int] {
+                keysArray = data
+                print(keysArray, valuesArray)
+                completion((keysArray, valuesArray))
+            }
+        }
     }
 
     //MARK: - Get Ukraine Data
@@ -153,7 +196,7 @@ class FireAPIManager {
     
     //MARK: - UPDATE
     
-    func updateGraphData(id: String, graphData: GraphData) {
+    func updateGraphData(id: String, graphData: GraphData, completion: @escaping () -> Void) {
         let db = configureFB()
         let graphRef = db.child("graphData")
         let userRef = graphRef.child("graphdataFor\(id)")
@@ -161,12 +204,10 @@ class FireAPIManager {
         let valueRef = dataRef.child("value")
         let dateRef = dataRef.child("date")
         
-        valueRef.updateChildValues(graphData.value)
-        dateRef.updateChildValues(graphData.date)
-            }
-    
-    
+        valueRef.updateChildValues(["\(graphIndex)" : graphData.value])
+        dateRef.updateChildValues(["\(graphIndex)" : graphData.date])
+        
+        graphIndex += 1
+        completion()
+    }
 }
-
-
-

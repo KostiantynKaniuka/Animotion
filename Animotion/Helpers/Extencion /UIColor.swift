@@ -14,4 +14,5 @@ extension UIColor {
     static let appBackground = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
     static let barBackground = UIColor(red: 169/255, green: 169/255, blue: 169/255, alpha: 0.5)
     static let pickerSection = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.6)
+    static let graphBackground = UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)
 }

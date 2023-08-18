@@ -11,6 +11,10 @@ import FirebaseAuth
 import Combine
 import CombineCocoa
 
+protocol GraphDataDelegate: AnyObject {
+    func refetchData()
+}
+
 final class CaptureViewController: UIViewController {
     
     private let scrollView = UIScrollView()
@@ -29,6 +33,7 @@ final class CaptureViewController: UIViewController {
     private let submitButton = SubmitButton()
     private let cancelButton = CancelCaptureButton()
     private var captureVM = CaptureMoodViewModel()
+    weak var graphDelegate: GraphDataDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,21 +52,24 @@ final class CaptureViewController: UIViewController {
     
     private func submitButtonTapped() {
         submitButton.tapPublisher
-            .sink { [weak self]_ in
+            .sink { [weak self] in
+                guard let self = self else {return}
+                guard let user = Auth.auth().currentUser else {return}
+                let id = user.uid
                 let dateConverter = DateConvertor()
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
                 let currentDate = dateFormatter.string(from: Date())
                 let formatedDate = dateFormatter.date(from: currentDate)
                 let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
-                let userGraph = GraphData(date: ["2": doubleDate], value: ["2": 9])
-                guard let user = Auth.auth().currentUser else {return}
-                let id = user.uid
-                FireAPIManager.shared.updateGraphData(id: id, graphData: userGraph)
+                let moodData = self.captureVM.moodData
+                let userGraph = GraphData(date: doubleDate, value: moodData)
 
+                FireAPIManager.shared.updateGraphData(id: id, graphData: userGraph) {
+                    self.graphDelegate?.refetchData()
+                }
             }
             .store(in: &captureVM.bag)
-        
     }
     
     private func cancelButtonTapped() {
@@ -127,6 +135,7 @@ extension CaptureViewController: UIPickerViewDelegate {
 //MARK: - TextFieldDelegate
 
 extension CaptureViewController: UITextFieldDelegate {
+    
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
@@ -141,6 +150,11 @@ extension CaptureViewController: UITextFieldDelegate {
         }
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() 
+        return true
+    }
+
 }
 
 //MARK: - Layout
@@ -176,7 +190,6 @@ extension CaptureViewController {
             make.left.right.equalTo(self.view)
             make.width.equalTo(self.scrollView)
             make.height.equalTo(self.scrollView)
-            
         }
         
         backgroundImage.snp.makeConstraints { make in
