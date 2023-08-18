@@ -39,14 +39,15 @@ final class ChartView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor  = .clear
-       
         view.addSubview(lineChartView)
         lineChartView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.size.equalToSuperview()
         }
-        setUpAppearance()
+        
+       
         lineChartView.delegate = self
+        setUpAppearance()
         fetchGraphData()
     }
     
@@ -70,11 +71,11 @@ final class ChartView: UIViewController {
         chartVM.getUserGraphData {
             DispatchQueue.main.async {  [weak self] in
                 guard let self = self else { return }
+                self.data = []
                 self.data = self.chartVM.chartData
                 self.setChartData()
             }
         }
-        
     }
 }
 
@@ -88,10 +89,14 @@ extension ChartView {
     
     private func setUpAppearance() {
         lineChartView.backgroundColor = .clear
-        //lineChartView.layer.backgroundColor = UIColor.graphBackground.cgColor
         lineChartView.layer.cornerRadius = 10
         lineChartView.layer.borderWidth = 1
         lineChartView.layer.borderColor = UIColor.white.cgColor
     }
-    
+}
+
+extension ChartView: GraphDataDelegate {
+    func refetchData() {
+     fetchGraphData()
+    }
 }

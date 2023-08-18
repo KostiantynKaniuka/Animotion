@@ -95,6 +95,18 @@ class FireAPIManager {
         })
     }
     
+    func checkUserIndb(_ id: String, completion: @escaping (Bool) -> Void) {
+        let db = configureFB()
+        db.child("users").child(id).observeSingleEvent(of: .value) { snapshot in
+            if snapshot.exists() {
+                print("👨‍💼 User exists")
+                completion(true)
+            } else {
+                print("🚫 User does not exist")
+                completion(false)
+            }
+        }
+    }
     
     func getUserGraphData(_ id: String, completion: @escaping (([Int],[Double])) -> Void){
         let db = configureFB()
@@ -122,6 +134,7 @@ class FireAPIManager {
             
             if let data = values?.value as? [Int] {
                 keysArray = data
+                print(keysArray, valuesArray)
                 completion((keysArray, valuesArray))
             }
         }
@@ -183,7 +196,7 @@ class FireAPIManager {
     
     //MARK: - UPDATE
     
-    func updateGraphData(id: String, graphData: GraphData) {
+    func updateGraphData(id: String, graphData: GraphData, completion: @escaping () -> Void) {
         let db = configureFB()
         let graphRef = db.child("graphData")
         let userRef = graphRef.child("graphdataFor\(id)")
@@ -195,5 +208,6 @@ class FireAPIManager {
         dateRef.updateChildValues(["\(graphIndex)" : graphData.date])
         
         graphIndex += 1
+        completion()
     }
 }

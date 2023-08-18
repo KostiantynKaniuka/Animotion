@@ -10,18 +10,22 @@ import UIKit
 final class TabBarViewController: UITabBarController {
     //var homeVC = MainViewController()
     var userVC = UserScreenViewController()
+    var captureVC = CaptureViewController()
+    var mainVC = MainViewController()
     
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        captureVC.graphDelegate = mainVC.chartView
    setTabBar()
     }
     
     func setTabBar() {
-        let home = self.createNav(with: "Home", and: UIImage(systemName: "house"), vc: MainViewController())
+        let home = self.createNav(with: "Home", and: UIImage(systemName: "house"), vc: mainVC)
         let user = self.createNav(with: "User", and: UIImage(systemName: "person.circle"), vc: userVC )
-        let capture = self.createNav(with: "Capture", and:  UIImage(systemName: "camera.filters"), vc: CaptureViewController())
+        let capture = self.createNav(with: "Capture", and:  UIImage(systemName: "camera.filters"), vc: captureVC)
         self.setViewControllers([home, capture, user], animated: false)
+    
         setUpTabBarColors()
     }
     

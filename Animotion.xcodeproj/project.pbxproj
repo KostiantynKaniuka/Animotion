@@ -270,7 +270,7 @@
 		E7D457A92A853452006D59F1 /* MoodGraph */ = {
 			isa = PBXGroup;
 			children = (
-				E7D457A72A853141006D59F1 /* CaptureViewController.swift */,
+				E7BD05F52A8BE17900BB1D07 /* ChartView.swift */,
 			);
 			path = MoodGraph;
 			sourceTree = "<group>";
@@ -288,7 +288,6 @@
 			isa = PBXGroup;
 			children = (
 				E75B6E7A2A200587001BCB6D /* MainViewController.swift */,
-				E7BD05F52A8BE17900BB1D07 /* ChartView.swift */,
 				E75B6E7B2A200587001BCB6D /* MainViewController.xib */,
 			);
 			path = "Main screen";
@@ -322,8 +321,9 @@
 		E7EFA0E42A20FBFE00544275 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				E7D457A92A853452006D59F1 /* MoodGraph */,
 				E7D457A52A8504BB006D59F1 /* TabBarViewController.swift */,
+				E7D457A72A853141006D59F1 /* CaptureViewController.swift */,
+				E7D457A92A853452006D59F1 /* MoodGraph */,
 				E74DFF042A69918E0057093F /* InitialViewController */,
 				E7DAAFCD2A5C47BC0009D7B9 /* UserScreen */,
 				E796AB5A2A5C03E90052A1F1 /* LoginScreen */,

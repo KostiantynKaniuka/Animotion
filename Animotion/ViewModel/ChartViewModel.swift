@@ -14,20 +14,25 @@ final class ChartViewModel {
     
     func getUserGraphData(comletion: @escaping () -> Void) {
         guard let user = Auth.auth().currentUser else {return}
+        chartData = []
         let id = user.uid
         FireAPIManager.shared.getUserGraphData(id) { (keys, values) in
-            var graphDictionary = [Int: Double]()
-            let count = min(keys.count, values.count) //check if two arrays are coming
-            for i in 0..<count  {
-                graphDictionary[keys[i]] = values[i]
+            print("data",keys, values)
+            var tupleArray = [(Int,Double)]()
+            let count = (keys.count + values.count) / 2
+            if count % 2 != 0 {
+                print("❌ Some key-value lost")
+               return
             }
             
-            let sortedGraph = graphDictionary.sorted { $0.value < $1.value }
-            
-            for entry in sortedGraph {
-                let chartEntry = ChartDataEntry(x: entry.value, y: Double(entry.key))
+            for i in 0...count - 1 {
+                tupleArray.append((keys[i], values[i]))
+            }
+            tupleArray.forEach( { (key,value) in
+                let chartEntry = ChartDataEntry(x: value, y: Double(key))
                 self.chartData.append(chartEntry)
-            }
+            })
+            print(self.chartData)
             comletion()
         }
     }

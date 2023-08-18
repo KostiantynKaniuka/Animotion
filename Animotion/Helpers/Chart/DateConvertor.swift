@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 // Convert users captured date to value for graph xASIS
 final class DateConvertor {
     
@@ -48,7 +49,7 @@ final class DateConvertor {
        }
     
        private func determineDate(forDays days: Int) -> Date {
-           var year = determineYear(forDays: days)
+           let year = determineYear(forDays: days)
            var remainingDays = days
            var month = 1
            

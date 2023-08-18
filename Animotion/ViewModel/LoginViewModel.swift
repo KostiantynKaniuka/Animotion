@@ -77,7 +77,8 @@ final class LoginViewModel {
 //MARK: - Sign in with Google
 extension LoginViewModel {
     
-    func loginWithGoogleDoc(_ rootViewController: UIViewController, completion: @escaping () -> Void)  {
+    func loginWithGoogleDoc(_ rootViewController: UIViewController,
+                            completion: @escaping () -> Void)  {
         
         guard let clientID = FirebaseApp.app()?.options.clientID else {return}
         let config = GIDConfiguration(clientID: clientID)
@@ -89,9 +90,6 @@ extension LoginViewModel {
             guard let result = result else {return}
             let userAuth = result.user
             guard let idToken = userAuth.idToken else {return}
-
-            
-            
             let accsesToken = userAuth.accessToken
             let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString,
                                                            accessToken: accsesToken.tokenString)
@@ -99,36 +97,44 @@ extension LoginViewModel {
             Auth.auth().signIn(with: credential) { authResult, error in
                 if let error = error as NSError? {
                     let message  = self.formateAuthError(error)
+                    
                     self.showAlert(message: message,
                                    vc: rootViewController as! LoginViewController)
                 }
                 if let authResult = authResult {
                     let id = authResult.user.uid
-                    let dateConverter = DateConvertor()
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
-                    let currentDate = dateFormatter.string(from: Date())
-                    let formatedDate = dateFormatter.date(from: currentDate)
-                    let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
-                   
-
+                    
+                    FireAPIManager.shared.checkUserIndb(id) { exist in
+                        if exist {
+                            completion()
+                        } else {
+                            //MARK: - Creating user with google
+                            let dateConverter = DateConvertor()
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+                            let currentDate = dateFormatter.string(from: Date())
+                            let formatedDate = dateFormatter.date(from: currentDate)
+                            let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
                             let radarData = [
-                                    "Happy": 0,
-                                    "Good": 0,
-                                    "Satisfied": 0,
-                                    "Anxious": 0,
-                                    "Angry": 0,
-                                    "Sad": 0
+                                "Happy": 0,
+                                "Good": 0,
+                                "Satisfied": 0,
+                                "Anxious": 0,
+                                "Angry": 0,
+                                "Sad": 0
                             ]
-                   
-                           let user = MyUser(id: id, name: "test", radarData: radarData)
-                    let userGraph = GraphData(date: doubleDate, value: 5)
-//                    FireAPIManager.shared.addingUserToFirebase(user: user)
-//                    FireAPIManager.shared.addGraphData(id: id, graphData: userGraph)
-                    print(user)
-                    print("➡️ user added")
-                    print(authResult.user)
-                    completion()
+                            let user = MyUser(id: id, name: "Name", radarData: radarData)
+                            let userGraph = GraphData(date: doubleDate, value: 5)
+                            
+                            FireAPIManager.shared.addingUserToFirebase(user: user)
+                            
+                            FireAPIManager.shared.addGraphData(id: id, graphData: userGraph)
+                            print(user)
+                            print("➡️ user added")
+                            print(authResult.user)
+                            completion()
+                        }
+                    }
                 }
             }
         }
@@ -176,7 +182,41 @@ extension LoginViewModel {
                     return
                 }
             }
+            if let authResult = authResult {
+                let id = authResult.user.uid
+                
+                FireAPIManager.shared.checkUserIndb(id) { exist in
+                    if exist {
+                        completion()
+                    } else {
+                        //MARK: - Creating user with apple
+                        let dateConverter = DateConvertor()
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+                        let currentDate = dateFormatter.string(from: Date())
+                        let formatedDate = dateFormatter.date(from: currentDate)
+                        let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
+                        let radarData = [
+                            "Happy": 0,
+                            "Good": 0,
+                            "Satisfied": 0,
+                            "Anxious": 0,
+                            "Angry": 0,
+                            "Sad": 0
+                        ]
+                        let user = MyUser(id: id, name: "Name", radarData: radarData)
+                        let userGraph = GraphData(date: doubleDate, value: 5)
+                        
+                        FireAPIManager.shared.addingUserToFirebase(user: user)
+                        
+                        FireAPIManager.shared.addGraphData(id: id, graphData: userGraph)
+                        print(user)
+                        print("➡️ user added")
+                        print(authResult.user)
+                        completion()
+                    }
+                }
+            }
         }
-        completion()
     }
 }

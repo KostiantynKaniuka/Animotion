@@ -79,22 +79,50 @@ final class RegistrationViewController: UIViewController {
                     }
                     
                     if authResult != nil {
+                        
                         Auth.auth().currentUser?.sendEmailVerification { error in
                             if let error = error as NSError? {
                                 self.alertMessage = .error
                                 let message  = self.registrationVM.formateAuthError(error)
                                 self.registrationVM.showAlert(title: self.alertMessage.title,
                                                               message: message, vc: self)
+                                Auth.auth().currentUser?.delete()
+                            } else {
+                                guard let id = authResult?.user.uid else {return}
+                                
+                                //MARK: - CREATING USER IN DB
+                                let dateConverter = DateConvertor()
+                                let dateFormatter = DateFormatter()
+                                dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+                                let currentDate = dateFormatter.string(from: Date())
+                                let formatedDate = dateFormatter.date(from: currentDate)
+                                let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
+                                let radarData = [
+                                    "Happy": 0,
+                                    "Good": 0,
+                                    "Satisfied": 0,
+                                    "Anxious": 0,
+                                    "Angry": 0,
+                                    "Sad": 0
+                                ]
+                                let user = MyUser(id: id, name: "Name", radarData: radarData)
+                                let userGraph = GraphData(date: doubleDate, value: 5)
+                                
+                                FireAPIManager.shared.addingUserToFirebase(user: user)
+                                
+                                FireAPIManager.shared.addGraphData(id: id, graphData: userGraph)
+                                print(user)
+                                print("➡️ user added")
                             }
                         }
-                        self.alertMessage = .verification
-                        self.registrationVM.showAlert(title: self.alertMessage.title,
-                                                      message: self.alertMessage.body,
-                                                      vc: self) { _ in
-                            
-                            self.dismiss(animated: true)
-                        }
                     }
+                }
+                self.alertMessage = .verification
+                self.registrationVM.showAlert(title: self.alertMessage.title,
+                                              message: self.alertMessage.body,
+                                              vc: self) { _ in
+                    
+                    self.dismiss(animated: true)
                 }
             }
             .store(in: &registrationVM.bag)
@@ -262,8 +290,7 @@ extension RegistrationViewController {
         view.addSubview(profileImage)
         view.addSubview(textFieldStack)
         view.addSubview(buttonsStackView)
-       
-        
+    
         buttonsStackView.addArrangedSubviews([createAccButton,
                                               cancelRegistrationButton])
         
@@ -272,8 +299,6 @@ extension RegistrationViewController {
         textFieldStack.addArrangedSubview(passwordTextField)
         textFieldStack.addArrangedSubview(repeatPasswordTextField)
         textFieldStack.addArrangedSubview(buttonsStackView)
-        
-      
         
         backgroundImage.snp.makeConstraints { make in
             make.bottom.equalTo(view.snp.bottom)
@@ -291,7 +316,6 @@ extension RegistrationViewController {
             make.size.equalTo(CGSize(width: 100, height: 100))
             make.centerX.equalTo(view.snp.centerX)
             make.bottom.equalTo(textFieldStack.snp.top).offset(-50)
-            
         }
         
         nameTextField.snp.makeConstraints { make in
@@ -352,8 +376,6 @@ extension RegistrationViewController {
         
         repeatPasswordTextField.textContentType = .oneTimeCode
         repeatPasswordTextField.isSecureTextEntry = true
-        
-        
     }
     
     private func setupLabels() {
@@ -380,8 +402,6 @@ extension RegistrationViewController {
         labelStack.addArrangedSubview(containUpperRegisterLabel)
         labelStack.addArrangedSubview(containDidgitLabel)
         labelStack.addArrangedSubview(specialCharacterLabel)
-        
-        
         labelView.addSubview(labelStack)
         
         labelView.snp.makeConstraints { make in

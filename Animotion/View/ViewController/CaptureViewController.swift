@@ -11,6 +11,10 @@ import FirebaseAuth
 import Combine
 import CombineCocoa
 
+protocol GraphDataDelegate: AnyObject {
+    func refetchData()
+}
+
 final class CaptureViewController: UIViewController {
     
     private let scrollView = UIScrollView()
@@ -29,6 +33,7 @@ final class CaptureViewController: UIViewController {
     private let submitButton = SubmitButton()
     private let cancelButton = CancelCaptureButton()
     private var captureVM = CaptureMoodViewModel()
+    weak var graphDelegate: GraphDataDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,31 +52,24 @@ final class CaptureViewController: UIViewController {
     
     private func submitButtonTapped() {
         submitButton.tapPublisher
-            .sink {
+            .sink { [weak self] in
+                guard let self = self else {return}
                 guard let user = Auth.auth().currentUser else {return}
                 let id = user.uid
-//                let dateConverter = DateConvertor()
-//                let dateFormatter = DateFormatter()
-//                dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
-//                let currentDate = dateFormatter.string(from: Date())
-//                let formatedDate = dateFormatter.date(from: currentDate)
-//                let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
-//                let userGraph = GraphData(date: doubleDate, value: 6)
-            
-               // FireAPIManager.shared.updateGraphData(id: id, graphData: userGraph)
-                FireAPIManager.shared.getUserGraphData(id) { (keys, values) in
-                    var graphDictionary = [Int: Double]()
-                    let count = min(keys.count, values.count)
-                    for i in 0..<count  {
-                        graphDictionary[keys[i]] = values[i]
-                    }
-                        print(graphDictionary)
-                    
+                let dateConverter = DateConvertor()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+                let currentDate = dateFormatter.string(from: Date())
+                let formatedDate = dateFormatter.date(from: currentDate)
+                let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
+                let moodData = self.captureVM.moodData
+                let userGraph = GraphData(date: doubleDate, value: moodData)
+
+                FireAPIManager.shared.updateGraphData(id: id, graphData: userGraph) {
+                    self.graphDelegate?.refetchData()
                 }
-              
             }
             .store(in: &captureVM.bag)
-        
     }
     
     private func cancelButtonTapped() {
@@ -137,6 +135,7 @@ extension CaptureViewController: UIPickerViewDelegate {
 //MARK: - TextFieldDelegate
 
 extension CaptureViewController: UITextFieldDelegate {
+    
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
@@ -151,6 +150,11 @@ extension CaptureViewController: UITextFieldDelegate {
         }
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() 
+        return true
+    }
+
 }
 
 //MARK: - Layout
@@ -186,7 +190,6 @@ extension CaptureViewController {
             make.left.right.equalTo(self.view)
             make.width.equalTo(self.scrollView)
             make.height.equalTo(self.scrollView)
-            
         }
         
         backgroundImage.snp.makeConstraints { make in
