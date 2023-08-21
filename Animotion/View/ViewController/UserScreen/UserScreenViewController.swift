@@ -26,11 +26,11 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     private let editButton =            EditAccountButton()
     private let deleteAccountButton =   DeleteAccountButton()
     private let buttonsStack =          UIStackView()
-    private let contentview = UIView()
-    private let scrollView = UIScrollView()
     
     private let userScreenVM =          UserScreenViewModel()
-    let menthalState = ["Happy","Good","Anxious","Sad","Angry","Satisfied"]
+    
+    private let menthalState = ["Happy","Good","Anxious","Sad","Angry","Satisfied"]
+    private var radarData = [String: Double]()
     
     private var alertMessage: AlertMessage = .error
     weak var logoutDelegate: LogoutDelegate?
@@ -58,21 +58,22 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     }
     
     private func setRadarData() {
-       
-        let radarEntries = [RadarChartDataEntry(value: 10),
-                    RadarChartDataEntry(value: 2),
-                    RadarChartDataEntry(value: 10),
-                    RadarChartDataEntry(value: 2),
-                    RadarChartDataEntry(value: 2),
-                    RadarChartDataEntry(value: 2)
+        radarData = userScreenVM.menthalCount
+     
+        let radarEntries = [RadarChartDataEntry(value: radarData["Happy"] ?? 0),
+                            RadarChartDataEntry(value: radarData["Good"] ?? 0),
+                            RadarChartDataEntry(value: radarData["Anxious"] ?? 0),
+                            RadarChartDataEntry(value: radarData["Sad"] ?? 0),
+                            RadarChartDataEntry(value: radarData["Angry"] ?? 0),
+                            RadarChartDataEntry(value: radarData["Satisfied"] ?? 0)
          ]
         
         let set1 = RadarChartDataSet(entries: radarEntries, label: "Menthal State")
-        set1.setColor(UIColor(red: 103/255, green: 110/255, blue: 129/255, alpha: 1))
-        set1.fillColor = UIColor(red: 103/255, green: 110/255, blue: 129/255, alpha: 1)
+        set1.setColor(UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1))
+        set1.fillColor = userScreenVM.setChartColor(data: radarData)
         set1.drawFilledEnabled = true
         set1.fillAlpha = 0.7
-        set1.lineWidth = 2
+        set1.lineWidth = 1
         set1.drawHighlightCircleEnabled = true
         set1.setDrawHighlightIndicators(false)
         
@@ -137,55 +138,36 @@ extension UserScreenViewController: AxisValueFormatter {
 extension UserScreenViewController {
     
     private func setupConstaints() {
-//        view.add(subviews: backgroundImage,
-//                 userImage,
-//                 userNameField,
-//                 chartView,
-//                 buttonsStack,
-//                 editButton,
-//                 privacyPolicy
-//        )
+        view.add(subviews: backgroundImage,
+                 userImage,
+                 userNameField,
+                 chartView,
+                 buttonsStack,
+                 editButton,
+                 privacyPolicy
+        )
         
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentview)
-        
-        contentview.add(subviews: backgroundImage,
-                        userImage,
-                        userNameField,
-                        chartView,
-                        buttonsStack,
-                        editButton,
-                        privacyPolicy)
 
-        
-        
         buttonsStack.addArrangedSubview(logOutButton)
         buttonsStack.addArrangedSubview(deleteAccountButton)
-
-        scrollView.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview()
-            make.width.equalTo(contentview)
-            
-        }
-        
         
         backgroundImage.snp.makeConstraints { make in
-            make.bottom.equalTo(contentview.snp.bottom)
-            make.top.equalTo(contentview.snp.top)
-            make.left.equalTo(contentview.snp.left)
-            make.right.equalTo(contentview.snp.right)
+            make.bottom.equalTo(view.snp.bottom)
+            make.top.equalTo(view.snp.top)
+            make.left.equalTo(view.snp.left)
+            make.right.equalTo(view.snp.right)
         }
 
         chartView.snp.makeConstraints { make in
-            make.center.equalTo(contentview)
-            make.left.equalTo(contentview)
-            make.right.equalTo(contentview)
+            make.top.equalTo(userNameField.snp.bottom).offset(35)
+            make.left.equalTo(view)
+            make.right.equalTo(view)
             make.height.equalTo(300)
         }
 
         userImage.snp.makeConstraints { make in
-            make.top.equalTo(contentview).offset(60)
-            make.centerX.equalTo(contentview.snp.centerX)
+            make.top.equalTo(view).offset(60)
+            make.centerX.equalTo(view.snp.centerX)
             make.size.equalTo(CGSize(width: 80, height: 80))
         }
 
@@ -241,7 +223,8 @@ extension UserScreenViewController {
         yAxis.labelFont = .systemFont(ofSize: 12, weight: .light)
         yAxis.labelCount = 6
         yAxis.axisMinimum = 0
-        yAxis.axisMaximum = 10
+        let data = userScreenVM.menthalCount.values.max()
+        yAxis.axisMaximum = data ?? 1
         yAxis.drawLabelsEnabled = false
     }
     
@@ -256,7 +239,7 @@ extension UserScreenViewController {
         buttonsStack.distribution =         .fill
         
      
-        //chartView.contentMode =             .scaleAspectFit
+        chartView.contentMode =             .scaleAspectFill
         chartView.backgroundColor =         .clear
         
         userImage.image =                   UIImage(named: "back 1")
