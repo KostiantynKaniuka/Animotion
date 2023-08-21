@@ -14,18 +14,15 @@ final class UserScreenViewModel {
     
     var bag = Set<AnyCancellable>()
     
-    var menthalCount: [String: Double] = [
-        "Happy": 3,
-        "Good": 12,
-        "Satisfied": 4,
-        "Anxious": 15,
-        "Angry": 3,
-        "Sad": 13
-    ]
+    
+    func parseRadar(id: String, completion: @escaping ([String: Int]) -> Void) {
+        FireAPIManager.shared.getRadarData(id: id) { data in
+            completion(data)
+        }
+    }
     
     
-    
-    func setChartColor(data: [String: Double] ) -> UIColor {
+    func setChartColor(data: [String: Int] ) -> UIColor {
         if let maxKey = data.max(by: { $0.value < $1.value })?.key {
             menthalState = MethalState.fromString("\(maxKey)")!
         } else {

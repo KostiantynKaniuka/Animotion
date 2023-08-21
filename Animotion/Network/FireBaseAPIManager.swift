@@ -10,8 +10,6 @@ import FirebaseCore
 import FirebaseDatabase
 
 class FireAPIManager {
-    fileprivate var graphIndex: Int = 0 //Graph database indexing do not modify
-    
     static let shared = FireAPIManager()
     private var ref: DatabaseReference!
     
@@ -42,12 +40,32 @@ class FireAPIManager {
         let dateRef = dataRef.child("date")
         
         dataIndex.setValue(["Index" : graphData.index])
-        valueRef.setValue(["\(graphIndex)" : graphData.value])
-        dateRef.setValue(["\(graphIndex)" : graphData.date])
+        valueRef.setValue(["\(0)" : graphData.value])
+        dateRef.setValue(["\(0)" : graphData.date])
     }
     
     
     //MARK: - GET
+    
+    func getRadarData(id:String, completion: @escaping ([String: Int]) -> Void) {
+        let db = configureFB()
+        let radarRef = db.child("users").child("\(id)").child("radarData")
+        
+        radarRef.getData { error, data in
+            if let error = error as? NSError{
+                print("fail to parse radar", error.localizedDescription)
+                return
+            }
+
+            if let data = data?.value as? [String:Int] {
+                print(data)
+                completion(data)
+            }
+        }
+    }
+    
+    
+    
     
     //MARK: - Carousel data
     func getCarouselDataFromdb(completion:  @escaping ([CarouselData]) -> Void ) {

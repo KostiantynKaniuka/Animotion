@@ -30,7 +30,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     private let userScreenVM =          UserScreenViewModel()
     
     private let menthalState = ["Happy","Good","Anxious","Sad","Angry","Satisfied"]
-    private var radarData = [String: Double]()
+    private var radarData = [String: Int]()
     
     private var alertMessage: AlertMessage = .error
     weak var logoutDelegate: LogoutDelegate?
@@ -38,11 +38,21 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
+    
         logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
         chartView.delegate = self
         setRadarData()
         setUpRadar()
         chartView.animate(xAxisDuration: 1.4, yAxisDuration: 1.4, easingOption: .easeOutBack)
+        editButton.tapPublisher
+            .sink { _ in
+                guard let userID = Auth.auth().currentUser?.uid else {return}
+                print("id", userID)
+                FireAPIManager.shared.getRadarData(id: userID) { data in
+                    print(data)
+                }
+            }
+            .store(in: &userScreenVM.bag)
     }
     
     override func viewDidLayoutSubviews() {
@@ -58,34 +68,39 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     }
     
     private func setRadarData() {
-        radarData = userScreenVM.menthalCount
-     
-        let radarEntries = [RadarChartDataEntry(value: radarData["Happy"] ?? 0),
-                            RadarChartDataEntry(value: radarData["Good"] ?? 0),
-                            RadarChartDataEntry(value: radarData["Anxious"] ?? 0),
-                            RadarChartDataEntry(value: radarData["Sad"] ?? 0),
-                            RadarChartDataEntry(value: radarData["Angry"] ?? 0),
-                            RadarChartDataEntry(value: radarData["Satisfied"] ?? 0)
-         ]
+        guard let id = Auth.auth().currentUser?.uid else {return}
+        userScreenVM.parseRadar(id: id) { [unowned self] data in
+            self.radarData = data
+            
+            let radarEntries = [RadarChartDataEntry(value: Double(self.radarData["Happy"] ?? 0)),
+                                RadarChartDataEntry(value: Double(self.radarData["Good"] ?? 0)),
+                                RadarChartDataEntry(value: Double(self.radarData["Anxious"] ?? 0)),
+                                RadarChartDataEntry(value: Double(self.radarData["Sad"] ?? 0)),
+                                RadarChartDataEntry(value: Double(self.radarData["Angry"] ?? 0)),
+                                RadarChartDataEntry(value: Double(self.radarData["Satisfied"] ?? 0))
+            ]
+            
+            let set1 = RadarChartDataSet(entries: radarEntries, label: "Menthal State")
+            set1.setColor(UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1))
+            set1.fillColor = self.userScreenVM.setChartColor(data: self.radarData)
+            set1.drawFilledEnabled = true
+            set1.fillAlpha = 0.7
+            set1.lineWidth = 1
+            set1.drawHighlightCircleEnabled = true
+            set1.setDrawHighlightIndicators(false)
+            let data: RadarChartData = [set1]
+            data.setValueFont(.systemFont(ofSize: 8, weight: .light))
+            data.setDrawValues(false)
+            data.setValueTextColor(.white)
+            self.chartView.data = data
+            let yAxis = chartView.yAxis
+            let maxValue = radarData.values.max()
+            yAxis.axisMaximum = Double(maxValue ?? 0)
+        }
         
-        let set1 = RadarChartDataSet(entries: radarEntries, label: "Menthal State")
-        set1.setColor(UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1))
-        set1.fillColor = userScreenVM.setChartColor(data: radarData)
-        set1.drawFilledEnabled = true
-        set1.fillAlpha = 0.7
-        set1.lineWidth = 1
-        set1.drawHighlightCircleEnabled = true
-        set1.setDrawHighlightIndicators(false)
-        
-     
-        
-        let data: RadarChartData = [set1]
-        data.setValueFont(.systemFont(ofSize: 8, weight: .light))
-        data.setDrawValues(false)
-        data.setValueTextColor(.white)
-        
-        chartView.data = data
     }
+    
+    
     
     private func deleteButtonTapped() {
         let user = Auth.auth().currentUser
@@ -223,8 +238,8 @@ extension UserScreenViewController {
         yAxis.labelFont = .systemFont(ofSize: 12, weight: .light)
         yAxis.labelCount = 6
         yAxis.axisMinimum = 0
-        let data = userScreenVM.menthalCount.values.max()
-        yAxis.axisMaximum = data ?? 1
+        
+      
         yAxis.drawLabelsEnabled = false
     }
     
