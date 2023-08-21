@@ -23,6 +23,7 @@ class FireAPIManager {
     
     
     //MARK: - ADD
+    
     //MARK: - Adding user to db
     func addingUserToFirebase(user: MyUser) {
         let db = configureFB()
@@ -34,19 +35,20 @@ class FireAPIManager {
     func addGraphData(id:String, graphData: GraphData) {
         let db = configureFB()
         let graphRef = db.child("graphData")
-        let userRef = graphRef.child("graphdataFor\(id)")
+        let userRef = graphRef.child("\(id)")
         let dataRef = userRef.child("data")
         let dataIndex = dataRef.child("dataIndex")
         let valueRef = dataRef.child("value")
         let dateRef = dataRef.child("date")
         
-        dataIndex.setValue(graphData.index)
+        dataIndex.setValue(["Index" : graphData.index])
         valueRef.setValue(["\(graphIndex)" : graphData.value])
         dateRef.setValue(["\(graphIndex)" : graphData.date])
     }
     
     
     //MARK: - GET
+    
     //MARK: - Carousel data
     func getCarouselDataFromdb(completion:  @escaping ([CarouselData]) -> Void ) {
         let db = configureFB()
@@ -96,6 +98,23 @@ class FireAPIManager {
         })
     }
     
+    func getDataIndex(id: String, completion: @escaping (Int) -> Void) {
+        let db = configureFB()
+        let indexRef = db.child("graphData").child("\(id)").child("data").child("dataIndex").child("Index")
+        
+        indexRef.getData { error, index in
+            if let error = error {
+                print("Error fetching graph data: \(error)")
+                return
+            }
+            
+            if let index = index?.value as? Int {
+                print(index)
+                completion(index)
+            }
+        }
+    }
+    
     func checkUserIndb(_ id: String, completion: @escaping (Bool) -> Void) {
         let db = configureFB()
         db.child("users").child(id).observeSingleEvent(of: .value) { snapshot in
@@ -111,8 +130,8 @@ class FireAPIManager {
     
     func getUserGraphData(_ id: String, completion: @escaping (([Int],[Double])) -> Void){
         let db = configureFB()
-        let valueRef = db.child("graphData").child("graphdataFor\(id)").child("data").child("value")
-        let dateRef = db.child("graphData").child("graphdataFor\(id)").child("data").child("date")
+        let valueRef = db.child("graphData").child("\(id)").child("data").child("value")
+        let dateRef = db.child("graphData").child("\(id)").child("data").child("date")
         var valuesArray = [Double]()
         var keysArray = [Int]()
         
@@ -200,15 +219,16 @@ class FireAPIManager {
     func updateGraphData(id: String, graphData: GraphData, completion: @escaping () -> Void) {
         let db = configureFB()
         let graphRef = db.child("graphData")
-        let userRef = graphRef.child("graphdataFor\(id)")
+        let userRef = graphRef.child("\(id)")
         let dataRef = userRef.child("data")
+        let indexRef = dataRef.child("dataIndex")
         let valueRef = dataRef.child("value")
         let dateRef = dataRef.child("date")
         
-        valueRef.updateChildValues(["\(graphIndex)" : graphData.value])
-        dateRef.updateChildValues(["\(graphIndex)" : graphData.date])
-        
-        graphIndex += 1
+        indexRef.updateChildValues(["Index": graphData.index])
+        valueRef.updateChildValues(["\(graphData.index)" : graphData.value])
+        dateRef.updateChildValues(["\(graphData.index)" : graphData.date])
+
         completion()
     }
 }

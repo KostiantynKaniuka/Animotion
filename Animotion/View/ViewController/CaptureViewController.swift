@@ -56,17 +56,10 @@ final class CaptureViewController: UIViewController {
                 guard let self = self else {return}
                 guard let user = Auth.auth().currentUser else {return}
                 let id = user.uid
-                let dateConverter = DateConvertor()
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
-                let currentDate = dateFormatter.string(from: Date())
-                let formatedDate = dateFormatter.date(from: currentDate)
-                let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
-                let moodData = self.captureVM.moodData
-                let userGraph = GraphData(index: 0, date: doubleDate, value: moodData)
-
-                FireAPIManager.shared.updateGraphData(id: id, graphData: userGraph) {
-                    self.graphDelegate?.refetchData()
+                self.captureVM.sendUserChoice(id: id) { data in
+                    FireAPIManager.shared.updateGraphData(id: id, graphData: data) {
+                        self.graphDelegate?.refetchData()
+                    }
                 }
             }
             .store(in: &captureVM.bag)

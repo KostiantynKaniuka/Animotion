@@ -19,12 +19,12 @@ final class ChartViewModel {
         FireAPIManager.shared.getUserGraphData(id) { (keys, values) in
             print("data",keys, values)
             var tupleArray = [(Int,Double)]()
-            let count = (keys.count + values.count) / 2
-            if count % 2 != 0 {
-                print("❌ Some key-value lost")
-               return
-            }
-            
+            let count = keys.count
+                   if count != values.count {
+                       print("❌ Some key-value pairs are missing or mismatched")
+                       return
+                   }
+        
             for i in 0...count - 1 {
                 tupleArray.append((keys[i], values[i]))
             }

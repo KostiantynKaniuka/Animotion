@@ -13,6 +13,7 @@ final class CaptureMoodViewModel {
     static let menthalStatePickerData = ["Happy","Good","Satisfied","Anxious","Angry","Sad"]
     var moodData: Int = 1
     var methalData: String = "Happy"
+    
     var bag = Set<AnyCancellable>()
     
     var menthalCount: [String: Int] = [
@@ -24,5 +25,21 @@ final class CaptureMoodViewModel {
         "Sad": 0
     ]
     
-    
+    func sendUserChoice(id: String, completion: @escaping (GraphData) -> Void ) {
+        let dateConverter = DateConvertor()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+        let currentDate = dateFormatter.string(from: Date())
+        let formatedDate = dateFormatter.date(from: currentDate)
+        let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
+        let moodData = self.moodData
+        let dataIndex = 1
+        FireAPIManager.shared.getDataIndex(id: id) { index in
+           let newIndex = index + dataIndex
+            print(newIndex)
+            let userGraph = GraphData(index: newIndex, date: doubleDate, value: moodData)
+            completion(userGraph)
+        }
+    }
+
 }
