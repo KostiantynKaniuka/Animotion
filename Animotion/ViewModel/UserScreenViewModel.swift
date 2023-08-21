@@ -10,6 +10,7 @@ import Combine
 import FirebaseAuth
 
 final class UserScreenViewModel {
+    
     var bag = Set<AnyCancellable>()
     
     func showAlert(title: String, message: String,
