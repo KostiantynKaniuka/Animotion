@@ -63,7 +63,7 @@ final class CaptureViewController: UIViewController {
                 let formatedDate = dateFormatter.date(from: currentDate)
                 let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
                 let moodData = self.captureVM.moodData
-                let userGraph = GraphData(date: doubleDate, value: moodData)
+                let userGraph = GraphData(index: 0, date: doubleDate, value: moodData)
 
                 FireAPIManager.shared.updateGraphData(id: id, graphData: userGraph) {
                     self.graphDelegate?.refetchData()

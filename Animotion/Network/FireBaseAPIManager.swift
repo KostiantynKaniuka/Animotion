@@ -36,12 +36,13 @@ class FireAPIManager {
         let graphRef = db.child("graphData")
         let userRef = graphRef.child("graphdataFor\(id)")
         let dataRef = userRef.child("data")
+        let dataIndex = dataRef.child("dataIndex")
         let valueRef = dataRef.child("value")
         let dateRef = dataRef.child("date")
+        
+        dataIndex.setValue(graphData.index)
         valueRef.setValue(["\(graphIndex)" : graphData.value])
         dateRef.setValue(["\(graphIndex)" : graphData.date])
-        
-        graphIndex += 1
     }
     
     

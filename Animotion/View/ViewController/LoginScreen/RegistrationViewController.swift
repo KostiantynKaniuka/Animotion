@@ -106,7 +106,7 @@ final class RegistrationViewController: UIViewController {
                                     "Sad": 0
                                 ]
                                 let user = MyUser(id: id, name: "Name", radarData: radarData)
-                                let userGraph = GraphData(date: doubleDate, value: 5)
+                                let userGraph = GraphData(index: 0, date: doubleDate, value: 5)
                                 
                                 FireAPIManager.shared.addingUserToFirebase(user: user)
                                 
