@@ -38,10 +38,12 @@ class FireAPIManager {
         let dataIndex = dataRef.child("dataIndex")
         let valueRef = dataRef.child("value")
         let dateRef = dataRef.child("date")
+        let reasonRef = dataRef.child("reason")
         
         dataIndex.setValue(["Index" : graphData.index])
         valueRef.setValue(["\(0)" : graphData.value])
         dateRef.setValue(["\(0)" : graphData.date])
+        reasonRef.setValue(["\(0)": "Staring point"])
     }
     
     
@@ -144,13 +146,31 @@ class FireAPIManager {
         }
     }
     
+    func getReasonsFromDb(id: String, completion: @escaping ([String: String]) -> Void) {
+        let db = configureFB()
+        let valueRef = db.child("graphData").child("\(id)").child("data").child("reason")
+        
+        valueRef.getData { error, reasons in
+            if let error = error as? NSError {
+                print(error.localizedDescription)
+                return
+            }
+            
+            if let data = reasons?.value as? [String: String] {
+                completion(data)
+                print("reasons➡️", data)
+            }
+              
+        }
+    }
+    
     func getUserGraphData(_ id: String, completion: @escaping (([Int],[Double])) -> Void){
         let db = configureFB()
         let valueRef = db.child("graphData").child("\(id)").child("data").child("value")
         let dateRef = db.child("graphData").child("\(id)").child("data").child("date")
         var valuesArray = [Double]()
         var keysArray = [Int]()
-        
+       
         dateRef.getData { error, values in
             if let error = error {
                 print("Error fetching graph data: \(error)")
@@ -173,6 +193,8 @@ class FireAPIManager {
                 print(keysArray, valuesArray)
                 completion((keysArray, valuesArray))
             }
+            
+         
         }
     }
 
@@ -239,12 +261,17 @@ class FireAPIManager {
         let indexRef = dataRef.child("dataIndex")
         let valueRef = dataRef.child("value")
         let dateRef = dataRef.child("date")
+        let reasonRef = dataRef.child("reason")
         let userRadarRef = db.child("users").child("\(id)").child("radarData")
     
         
         indexRef.updateChildValues(["Index": graphData.index])
         valueRef.updateChildValues(["\(graphData.index)" : graphData.value])
         dateRef.updateChildValues(["\(graphData.index)" : graphData.date])
+        if graphData.reason != nil || graphData.reason != " " {
+            reasonRef.updateChildValues(["\(graphData.index)": graphData.reason ?? ""])
+        }
+        
         userRadarRef.updateChildValues(radarData)
 
         completion()

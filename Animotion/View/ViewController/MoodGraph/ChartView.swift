@@ -34,7 +34,8 @@ final class ChartView: UIViewController {
         return chartView
     }()
     
-   private var data = [ChartDataEntry]()
+    private var data = [ChartDataEntry]()
+    private var reasonsDict = [Int: String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +46,6 @@ final class ChartView: UIViewController {
             make.size.equalToSuperview()
         }
         
-       
         lineChartView.delegate = self
         setUpAppearance()
         fetchGraphData()
@@ -53,8 +53,9 @@ final class ChartView: UIViewController {
     
     private func setChartData() {
         let set1 = LineChartDataSet(entries: data, label: "Mood Chart")
+        print(set1.count)
         set1.mode = .cubicBezier
-        set1.drawCirclesEnabled = false
+        set1.drawCirclesEnabled = true
         set1.lineWidth = 3
         set1.setColor(.white)
         set1.fill = ColorFill(color: .white)
@@ -63,14 +64,14 @@ final class ChartView: UIViewController {
         set1.drawHorizontalHighlightIndicatorEnabled = false
         let data = LineChartData(dataSet: set1)
         data.setDrawValues(false)
+        
         lineChartView.data = data
     }
     
-    
     private func fetchGraphData() {
-        chartVM.getUserGraphData {
-            DispatchQueue.main.async {  [weak self] in
-                guard let self = self else { return }
+        chartVM.getUserGraphData { [weak self]  in
+            guard let self = self else {return}
+            DispatchQueue.main.async { [self] in
                 self.data = []
                 self.data = self.chartVM.chartData
                 self.setChartData()
@@ -81,7 +82,9 @@ final class ChartView: UIViewController {
 
 extension ChartView: ChartViewDelegate {
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-        print(entry)
+        print(entry.data ?? "nodata")
+        var marker = MarkerView()
+        chartView.marker = entry.data as! any Marker
     }
 }
 

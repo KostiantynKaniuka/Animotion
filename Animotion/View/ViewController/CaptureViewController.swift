@@ -54,16 +54,22 @@ final class CaptureViewController: UIViewController {
         applyUISettings()
         submitButtonTapped()
         cancelButtonTapped()
+        textFieldPublisher()
     }
-    
     
     private func parseUserRadar() {
         guard let id = Auth.auth().currentUser?.uid else {return}
         captureVM.parseRadar(id: id) { [weak self] data in
             self?.captureVM.menthaldata = data
         }
-        
-        
+    }
+    
+    private func textFieldPublisher() {
+        reasonTextField.textPublisher
+            .sink { [weak self] text in
+                self?.captureVM.reasonText.value = text ?? ""
+            }
+            .store(in: &captureVM.bag)
     }
     
     private func submitButtonTapped() {
@@ -166,7 +172,6 @@ extension CaptureViewController: UITextFieldDelegate {
         textField.resignFirstResponder() 
         return true
     }
-
 }
 
 //MARK: - Layout

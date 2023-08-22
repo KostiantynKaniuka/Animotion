@@ -12,15 +12,18 @@ final class CaptureMoodViewModel: RadarParsable {
    
     
     static let moodPickerData = [1,2,3,4,5,6,7,8,9,10]
-    static let menthalStatePickerData = ["Happy","Good","Satisfied","Anxious","Angry","Sad"]
+    static let menthalStatePickerData = ["Happy",
+                                         "Good",
+                                         "Satisfied",
+                                         "Anxious",
+                                         "Angry",
+                                         "Sad"]
     var moodData: Int = 1
     var PickerChoice: String = "Happy"
     var userMenthalString = ""
-    
+    var reasonText = CurrentValueSubject<String, Never>("")
     var bag = Set<AnyCancellable>()
-    
     var menthaldata = [String: Int]()
-    
     
     func parseRadar(id: String, completion: @escaping ([String : Int]) -> Void) {
         FireAPIManager.shared.getRadarData(id: id) { data in
@@ -47,7 +50,7 @@ final class CaptureMoodViewModel: RadarParsable {
             guard let self = self else {return}
            let newIndex = index + dataIndex
             print(newIndex)
-            let userGraph = GraphData(index: newIndex, date: doubleDate, value: moodData)
+            let userGraph = GraphData(index: newIndex, date: doubleDate, value: moodData, reason: self.reasonText.value)
         
             
             completion(userGraph, self.menthaldata)

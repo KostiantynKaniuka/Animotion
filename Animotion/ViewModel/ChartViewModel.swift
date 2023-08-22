@@ -11,29 +11,49 @@ import FirebaseAuth
 
 final class ChartViewModel {
     var chartData = [ChartDataEntry]()
+    var reasonDictionary = [Int: String]()
     
     func getUserGraphData(comletion: @escaping () -> Void) {
         guard let user = Auth.auth().currentUser else {return}
         chartData = []
+        reasonDictionary = [:]
         let id = user.uid
-        FireAPIManager.shared.getUserGraphData(id) { (keys, values) in
-            print("data",keys, values)
-            var tupleArray = [(Int,Double)]()
-            let count = keys.count
-                   if count != values.count {
-                       print("❌ Some key-value pairs are missing or mismatched")
-                       return
-                   }
         
-            for i in 0...count - 1 {
-                tupleArray.append((keys[i], values[i]))
+        FireAPIManager.shared.getReasonsFromDb(id: id) { [weak self]  data in
+            guard let self = self else {return}
+            
+            for (key, value) in data {
+                if let intKey = Int(key) {
+                    self.reasonDictionary[intKey] = value
+                }
             }
-            tupleArray.forEach( { (key,value) in
-                let chartEntry = ChartDataEntry(x: value, y: Double(key))
-                self.chartData.append(chartEntry)
-            })
-            print(self.chartData)
-            comletion()
+            
+            FireAPIManager.shared.getUserGraphData(id) { (keys, values) in
+                print("data",keys, values)
+                var tupleArray = [(Int,Double)]()
+                let count = keys.count
+                if count != values.count {
+                    print("❌ Some key-value pairs are missing or mismatched")
+                    return
+                }
+                
+                for i in 0...count - 1 {
+                    tupleArray.append((keys[i], values[i]))
+                    if self.reasonDictionary[i] == nil {
+                        self.reasonDictionary[i] = "nodata"
+                    }
+                }
+                
+                for i in 0...count - 1 {
+                    let chartEntry = ChartDataEntry(x: tupleArray[i].1,
+                                                    y: Double(tupleArray[i].0),
+                                                    data: self.reasonDictionary[i])
+                    self.chartData.append(chartEntry)
+                }
+                
+                print(self.chartData)
+                comletion()
+            }
         }
     }
 }
