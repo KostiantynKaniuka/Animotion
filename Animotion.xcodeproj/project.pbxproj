@@ -42,6 +42,7 @@
 		E7BD05F62A8BE17900BB1D07 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BD05F52A8BE17900BB1D07 /* ChartView.swift */; };
 		E7D457A62A8504BB006D59F1 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D457A52A8504BB006D59F1 /* TabBarViewController.swift */; };
 		E7D457A82A853141006D59F1 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D457A72A853141006D59F1 /* CaptureViewController.swift */; };
+		E7D6B8ED2A9514DD0004A57E /* ChartMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D6B8EC2A9514DD0004A57E /* ChartMarker.swift */; };
 		E7DAAFCA2A5C11270009D7B9 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFC92A5C11270009D7B9 /* Button.swift */; };
 		E7DAAFCC2A5C39480009D7B9 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFCB2A5C39480009D7B9 /* Navigation.swift */; };
 		E7DAAFCF2A5C47DC0009D7B9 /* UserScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFCE2A5C47DC0009D7B9 /* UserScreenViewController.swift */; };
@@ -109,6 +110,7 @@
 		E7BD05F52A8BE17900BB1D07 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		E7D457A52A8504BB006D59F1 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		E7D457A72A853141006D59F1 /* CaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
+		E7D6B8EC2A9514DD0004A57E /* ChartMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartMarker.swift; sourceTree = "<group>"; };
 		E7DAAFC92A5C11270009D7B9 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		E7DAAFCB2A5C39480009D7B9 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		E7DAAFCE2A5C47DC0009D7B9 /* UserScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScreenViewController.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				E7BD05F52A8BE17900BB1D07 /* ChartView.swift */,
+				E7D6B8EC2A9514DD0004A57E /* ChartMarker.swift */,
 			);
 			path = MoodGraph;
 			sourceTree = "<group>";
@@ -564,6 +567,7 @@
 				E7E6FEA62A69539900431641 /* AlertMessage.swift in Sources */,
 				E7DAAFCA2A5C11270009D7B9 /* Button.swift in Sources */,
 				E7EFA0E62A20FC3700544275 /* SideMenuViewController.swift in Sources */,
+				E7D6B8ED2A9514DD0004A57E /* ChartMarker.swift in Sources */,
 				E73A00012A2DFCBE00AA421F /* CarouselCollectionVievModel.swift in Sources */,
 				E73293C62A66B234007CF68F /* CustomLabel.swift in Sources */,
 				E70360582A8CFFC700FEAD1A /* ChartViewModel.swift in Sources */,

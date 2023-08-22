@@ -40,7 +40,7 @@ final class ChartViewModel {
                 for i in 0...count - 1 {
                     tupleArray.append((keys[i], values[i]))
                     if self.reasonDictionary[i] == nil {
-                        self.reasonDictionary[i] = "nodata"
+                        self.reasonDictionary[i] = "Reason is not mentioned"
                     }
                 }
                 
