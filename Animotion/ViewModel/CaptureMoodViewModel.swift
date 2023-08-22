@@ -10,7 +10,6 @@ import Combine
 
 final class CaptureMoodViewModel: RadarParsable {
    
-    
     static let moodPickerData = [1,2,3,4,5,6,7,8,9,10]
     static let menthalStatePickerData = ["Happy",
                                          "Good",
@@ -31,7 +30,6 @@ final class CaptureMoodViewModel: RadarParsable {
         }
     }
 
-    
     func sendUserChoice(id: String, completion: @escaping (GraphData, [String: Int]) -> Void ) {
         //graph logic start here
         let dateConverter = DateConvertor()
@@ -50,11 +48,13 @@ final class CaptureMoodViewModel: RadarParsable {
             guard let self = self else {return}
            let newIndex = index + dataIndex
             print(newIndex)
-            let userGraph = GraphData(index: newIndex, date: doubleDate, value: moodData, reason: self.reasonText.value)
-        
-            
-            completion(userGraph, self.menthaldata)
+            if self.reasonText.value != "" && self.reasonText.value != " " {
+                let userGraph = GraphData(index: newIndex, date: doubleDate, value: moodData, reason: self.reasonText.value)
+                completion(userGraph, self.menthaldata)
+            } else {
+                let userGraph = GraphData(index: newIndex, date: doubleDate, value: moodData, reason: nil)
+                completion(userGraph, self.menthaldata)
+                }
+            }
         }
-    }
-
 }

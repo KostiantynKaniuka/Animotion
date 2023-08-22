@@ -268,7 +268,7 @@ class FireAPIManager {
         indexRef.updateChildValues(["Index": graphData.index])
         valueRef.updateChildValues(["\(graphData.index)" : graphData.value])
         dateRef.updateChildValues(["\(graphData.index)" : graphData.date])
-        if graphData.reason != nil || graphData.reason != " " {
+        if graphData.reason != nil {
             reasonRef.updateChildValues(["\(graphData.index)": graphData.reason ?? ""])
         }
         
