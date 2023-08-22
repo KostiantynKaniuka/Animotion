@@ -12,7 +12,11 @@ import Combine
 import CombineCocoa
 
 protocol GraphDataDelegate: AnyObject {
-    func refetchData()
+    func refetchGraphData()
+}
+
+protocol RadarDataDelegate: AnyObject {
+    func refetchRadarData()
 }
 
 final class CaptureViewController: UIViewController {
@@ -35,6 +39,7 @@ final class CaptureViewController: UIViewController {
     private var captureVM = CaptureMoodViewModel()
 
     weak var graphDelegate: GraphDataDelegate?
+    weak var radarDelegate: RadarDataDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,8 +74,9 @@ final class CaptureViewController: UIViewController {
                 let id = user.uid
                 
                 self.captureVM.sendUserChoice(id: id) { graph, radar in
-                    FireAPIManager.shared.updateGraphData(id: id, graphData: graph, radarData: radar) {
-                        self.graphDelegate?.refetchData()
+                    FireAPIManager.shared.updateUserChartsData(id: id, graphData: graph, radarData: radar) {
+                        self.graphDelegate?.refetchGraphData()
+                        self.radarDelegate?.refetchRadarData()
                     }
                 }
             }

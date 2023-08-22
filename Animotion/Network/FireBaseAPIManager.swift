@@ -65,8 +65,6 @@ class FireAPIManager {
     }
     
     
-    
-    
     //MARK: - Carousel data
     func getCarouselDataFromdb(completion:  @escaping ([CarouselData]) -> Void ) {
         let db = configureFB()
@@ -234,7 +232,7 @@ class FireAPIManager {
     
     //MARK: - UPDATE
     
-    func updateGraphData(id: String, graphData: GraphData, radarData: [String: Int] ,completion: @escaping () -> Void) {
+    func updateUserChartsData(id: String, graphData: GraphData, radarData: [String: Int] ,completion: @escaping () -> Void) {
         let db = configureFB()
         let userGraphRef = db.child("graphData").child("\(id)")
         let dataRef = userGraphRef.child("data")

@@ -96,7 +96,7 @@ extension ChartView {
 }
 
 extension ChartView: GraphDataDelegate {
-    func refetchData() {
+    func refetchGraphData() {
      fetchGraphData()
     }
 }

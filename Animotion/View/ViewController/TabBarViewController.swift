@@ -17,6 +17,7 @@ final class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         captureVC.graphDelegate = mainVC.chartView
+        captureVC.radarDelegate = userVC
    setTabBar()
     }
     

@@ -44,15 +44,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
         setRadarData()
         setUpRadar()
         chartView.animate(xAxisDuration: 1.4, yAxisDuration: 1.4, easingOption: .easeOutBack)
-        editButton.tapPublisher
-            .sink { _ in
-                guard let userID = Auth.auth().currentUser?.uid else {return}
-                print("id", userID)
-                FireAPIManager.shared.getRadarData(id: userID) { data in
-                    print(data)
-                }
-            }
-            .store(in: &userScreenVM.bag)
+    
     }
     
     override func viewDidLayoutSubviews() {
@@ -143,6 +135,14 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
 extension UserScreenViewController: AxisValueFormatter {
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         return menthalState[Int(value) % menthalState.count]
+    }
+}
+
+extension UserScreenViewController: RadarDataDelegate {
+    func refetchRadarData() {
+        DispatchQueue.main.async { [weak self] in
+            self?.setRadarData()
+        }
     }
 }
 
