@@ -8,24 +8,29 @@
 import Foundation
 import Combine
 
-final class CaptureMoodViewModel {
+final class CaptureMoodViewModel: RadarParsable {
+   
+    
     static let moodPickerData = [1,2,3,4,5,6,7,8,9,10]
     static let menthalStatePickerData = ["Happy","Good","Satisfied","Anxious","Angry","Sad"]
     var moodData: Int = 1
-    var methalData: String = "Happy"
+    var PickerChoice: String = "Happy"
+    var userMenthalString = ""
     
     var bag = Set<AnyCancellable>()
     
-    var menthalCount: [String: Int] = [
-        "Happy": 0,
-        "Good": 0,
-        "Satisfied": 0,
-        "Anxious": 0,
-        "Angry": 0,
-        "Sad": 0
-    ]
+    var menthaldata = [String: Int]()
     
-    func sendUserChoice(id: String, completion: @escaping (GraphData) -> Void ) {
+    
+    func parseRadar(id: String, completion: @escaping ([String : Int]) -> Void) {
+        FireAPIManager.shared.getRadarData(id: id) { data in
+            completion(data)
+        }
+    }
+
+    
+    func sendUserChoice(id: String, completion: @escaping (GraphData, [String: Int]) -> Void ) {
+        //graph logic start here
         let dateConverter = DateConvertor()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
@@ -34,11 +39,18 @@ final class CaptureMoodViewModel {
         let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
         let moodData = self.moodData
         let dataIndex = 1
-        FireAPIManager.shared.getDataIndex(id: id) { index in
+        // radar logic {
+        let userChoicekey = self.PickerChoice
+        self.menthaldata[userChoicekey]! += 1
+            //}
+        FireAPIManager.shared.getDataIndex(id: id) { [weak self] index in
+            guard let self = self else {return}
            let newIndex = index + dataIndex
             print(newIndex)
             let userGraph = GraphData(index: newIndex, date: doubleDate, value: moodData)
-            completion(userGraph)
+        
+            
+            completion(userGraph, self.menthaldata)
         }
     }
 

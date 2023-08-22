@@ -33,6 +33,7 @@ final class CaptureViewController: UIViewController {
     private let submitButton = SubmitButton()
     private let cancelButton = CancelCaptureButton()
     private var captureVM = CaptureMoodViewModel()
+
     weak var graphDelegate: GraphDataDelegate?
     
     override func viewDidLoad() {
@@ -43,12 +44,22 @@ final class CaptureViewController: UIViewController {
         moodPickerView.delegate = self
         moodPickerView.dataSource = self
         reasonTextField.delegate = self
+        parseUserRadar()
         setUpLayout()
         applyUISettings()
-       submitButtonTapped()
+        submitButtonTapped()
         cancelButtonTapped()
     }
     
+    
+    private func parseUserRadar() {
+        guard let id = Auth.auth().currentUser?.uid else {return}
+        captureVM.parseRadar(id: id) { [weak self] data in
+            self?.captureVM.menthaldata = data
+        }
+        
+        
+    }
     
     private func submitButtonTapped() {
         submitButton.tapPublisher
@@ -56,8 +67,9 @@ final class CaptureViewController: UIViewController {
                 guard let self = self else {return}
                 guard let user = Auth.auth().currentUser else {return}
                 let id = user.uid
-                self.captureVM.sendUserChoice(id: id) { data in
-                    FireAPIManager.shared.updateGraphData(id: id, graphData: data) {
+                
+                self.captureVM.sendUserChoice(id: id) { graph, radar in
+                    FireAPIManager.shared.updateGraphData(id: id, graphData: graph, radarData: radar) {
                         self.graphDelegate?.refetchData()
                     }
                 }
@@ -103,6 +115,7 @@ extension CaptureViewController: UIPickerViewDataSource {
         
         if pickerView == mentalStatePickerView {
            title = NSAttributedString(string: CaptureMoodViewModel.menthalStatePickerData[row], attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+            captureVM.userMenthalString = title.string
         }
         return title
     }
@@ -117,10 +130,10 @@ extension CaptureViewController: UIPickerViewDelegate {
             captureVM.moodData = CaptureMoodViewModel.moodPickerData[row]
         }
         if pickerView == mentalStatePickerView {
-            captureVM.methalData = CaptureMoodViewModel.menthalStatePickerData[row]
+            captureVM.PickerChoice = CaptureMoodViewModel.menthalStatePickerData[row]
         }
         print(captureVM.moodData)
-        print(captureVM.methalData)
+        print(captureVM.PickerChoice)
     }
     
 }

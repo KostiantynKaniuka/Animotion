@@ -97,10 +97,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
             let maxValue = radarData.values.max()
             yAxis.axisMaximum = Double(maxValue ?? 0)
         }
-        
     }
-    
-    
     
     private func deleteButtonTapped() {
         let user = Auth.auth().currentUser
@@ -130,11 +127,11 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     
     @objc private func logOutButtonTapped() {
         do {
-               try Auth.auth().signOut()
-               logoutDelegate?.didLogout()
-           } catch {
-               print("Unexpected error occurred while signing out: \(error)")
-           }
+            try Auth.auth().signOut()
+            logoutDelegate?.didLogout()
+        } catch {
+            print("Unexpected error occurred while signing out: \(error)")
+        }
     }
     
     deinit {

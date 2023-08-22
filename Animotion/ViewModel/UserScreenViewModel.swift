@@ -9,19 +9,21 @@ import UIKit
 import Combine
 import FirebaseAuth
 
-final class UserScreenViewModel {
+protocol RadarParsable: AnyObject {
+    func parseRadar(id: String, completion: @escaping ([String: Int]) -> Void)
+}
+
+final class UserScreenViewModel: RadarParsable {
     var menthalState: MethalState = .satisfied
     
     var bag = Set<AnyCancellable>()
-    
     
     func parseRadar(id: String, completion: @escaping ([String: Int]) -> Void) {
         FireAPIManager.shared.getRadarData(id: id) { data in
             completion(data)
         }
     }
-    
-    
+
     func setChartColor(data: [String: Int] ) -> UIColor {
         if let maxKey = data.max(by: { $0.value < $1.value })?.key {
             menthalState = MethalState.fromString("\(maxKey)")!

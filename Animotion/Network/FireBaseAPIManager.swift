@@ -234,18 +234,20 @@ class FireAPIManager {
     
     //MARK: - UPDATE
     
-    func updateGraphData(id: String, graphData: GraphData, completion: @escaping () -> Void) {
+    func updateGraphData(id: String, graphData: GraphData, radarData: [String: Int] ,completion: @escaping () -> Void) {
         let db = configureFB()
-        let graphRef = db.child("graphData")
-        let userRef = graphRef.child("\(id)")
-        let dataRef = userRef.child("data")
+        let userGraphRef = db.child("graphData").child("\(id)")
+        let dataRef = userGraphRef.child("data")
         let indexRef = dataRef.child("dataIndex")
         let valueRef = dataRef.child("value")
         let dateRef = dataRef.child("date")
+        let userRadarRef = db.child("users").child("\(id)").child("radarData")
+    
         
         indexRef.updateChildValues(["Index": graphData.index])
         valueRef.updateChildValues(["\(graphData.index)" : graphData.value])
         dateRef.updateChildValues(["\(graphData.index)" : graphData.date])
+        userRadarRef.updateChildValues(radarData)
 
         completion()
     }
