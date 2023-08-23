@@ -22,13 +22,25 @@ final class TimerViewModel {
         return String(format: "%02i:%02i",  minutes, seconds)
     }
     
-    func saveTimerDates() {
+    func saveTimerDates(completion: @escaping () -> Void) {
         UserDefaults.standard.set(startDate, forKey: "savedStartDate")
         UserDefaults.standard.set(endDate, forKey: "savedEndDate")
+        if let endDate = endDate {
+            let currentTime = Date()
+            let remainingTimeInterval = endDate.timeIntervalSince(currentTime)
+            let remainingTime = max(0, Int(remainingTimeInterval)) // Ensure non-negative value
+            seconds = remainingTime
+            if remainingTime > 0 {
+                isTimerRunning = true
+                completion()
+            } else {
+                isTimerRunning = false
+            }
+        }
     }
     
     
-    func loadSavedTimerDates(completion: @escaping () -> Void) {
+    func loadSavedTimerDates(completion: @escaping (Bool) -> Void) {
         startDate = UserDefaults.standard.value(forKey: "savedStartDate") as? Date
         endDate = UserDefaults.standard.value(forKey: "savedEndDate") as? Date
         
@@ -39,10 +51,11 @@ final class TimerViewModel {
             
             if remainingTime > 0 {
                 isTimerRunning = true
-                completion()
+                completion(isTimerRunning)
                 
             } else {
                 isTimerRunning = false
+                completion(isTimerRunning)
             }
         }
     }

@@ -13,12 +13,14 @@ final class TabBarViewController: UITabBarController {
     var captureVC = CaptureViewController()
     var mainVC = MainViewController()
     
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         captureVC.graphDelegate = mainVC.chartView
         captureVC.radarDelegate = userVC
-   setTabBar()
+        mainVC.submitDelegate = captureVC
+        captureVC.timerDelegate = mainVC
+        setTabBar()
     }
     
     func setTabBar() {
@@ -26,7 +28,7 @@ final class TabBarViewController: UITabBarController {
         let user = self.createNav(with: "User", and: UIImage(systemName: "person.circle"), vc: userVC )
         let capture = self.createNav(with: "Capture", and:  UIImage(systemName: "camera.filters"), vc: captureVC)
         self.setViewControllers([home, capture, user], animated: false)
-    
+        
         setUpTabBarColors()
     }
     

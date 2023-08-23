@@ -22,22 +22,22 @@ final class CaptureMoodViewModel: RadarParsable {
     var reasonText = CurrentValueSubject<String, Never>("")
     var bag = Set<AnyCancellable>()
     var menthaldata = [String: Int]()
-    var buttonEnabled = CurrentValueSubject<Bool, Never>(true)
-     
-     var isButtonEnabled: AnyPublisher<Bool, Never> {
-         return buttonEnabled
-             .map { state in
-                 return state
-             }
-             .eraseToAnyPublisher()
-     }
+    var buttonEnabled = CurrentValueSubject<Bool, Never>(false)
+    
+    var isButtonEnabled: AnyPublisher<Bool, Never> {
+        return buttonEnabled
+            .map { state in
+                return state
+            }
+            .eraseToAnyPublisher()
+    }
     
     func parseRadar(id: String, completion: @escaping ([String : Int]) -> Void) {
         FireAPIManager.shared.getRadarData(id: id) { data in
             completion(data)
         }
     }
-
+    
     func sendUserChoice(id: String, completion: @escaping (GraphData, [String: Int]) -> Void ) {
         //graph logic start here
         let dateConverter = DateConvertor()
@@ -51,10 +51,10 @@ final class CaptureMoodViewModel: RadarParsable {
         // radar logic {
         let userChoicekey = self.PickerChoice
         self.menthaldata[userChoicekey]! += 1
-            //}
+        //}
         FireAPIManager.shared.getDataIndex(id: id) { [weak self] index in
             guard let self = self else {return}
-           let newIndex = index + dataIndex
+            let newIndex = index + dataIndex
             print(newIndex)
             if self.reasonText.value != "" && self.reasonText.value != " " {
                 let userGraph = GraphData(index: newIndex, date: doubleDate, value: moodData, reason: self.reasonText.value)
@@ -62,7 +62,7 @@ final class CaptureMoodViewModel: RadarParsable {
             } else {
                 let userGraph = GraphData(index: newIndex, date: doubleDate, value: moodData, reason: nil)
                 completion(userGraph, self.menthaldata)
-                }
             }
         }
+    }
 }

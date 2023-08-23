@@ -11,6 +11,10 @@ import CombineCocoa
 import SideMenu
 import SnapKit
 
+protocol TiggerTimerDelegate: AnyObject {
+    func triggerTimer()
+}
+
 final class MainViewController: UIViewController {
     @IBOutlet weak var dreamButton: UIButton!
     @IBOutlet weak var timerLabel: UILabel!
@@ -19,20 +23,15 @@ final class MainViewController: UIViewController {
     let chartView = ChartView()
     lazy var menu = SideMenuNavigationController(rootViewController: sideMenu)
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    weak var submitDelegate: SubmitButtonDelegate? // delegate to togle submit button state(CaptureViewController)
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         sideMenu.linkDelegate = self
-        let dispatchGroup = DispatchGroup()
-        dispatchGroup.enter()
-        timerVM.loadSavedTimerDates {
-            dispatchGroup.leave()
+        checkTimerState { [weak self] in
+            self?.updateRemainingTime()
         }
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            self?.startTimer()
-        }
-        updateRemainingTime()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -46,15 +45,17 @@ final class MainViewController: UIViewController {
     
     //MARK: - Timer Logic
     
-    func runTimer() {
-        timerVM.timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
+    private func runTimer() {
+        timerVM.timer = Timer.scheduledTimer(timeInterval: 1, target: self,selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
         timerVM.isTimerRunning = true
     }
     
-    @objc func updateTimer() {
+    @objc private func updateTimer() {
         if timerVM.seconds < 1 {
+            print("➡️",timerVM.seconds)
             timerVM.timer.invalidate()
             timerVM.isTimerRunning = false
+            submitDelegate?.toggleState()
             //Send alert to indicate "time's up!"
         } else {
             timerVM.seconds -= 1
@@ -62,7 +63,7 @@ final class MainViewController: UIViewController {
         }
     }
     
-    func updateRemainingTime() {
+    private func updateRemainingTime() {
         guard let endDate = timerVM.endDate else {
             return
         }
@@ -78,21 +79,35 @@ final class MainViewController: UIViewController {
         }
     }
     
-    func startTimer() {
+    private func startTimer() {
         timerVM.startDate = Date()
-        timerVM.endDate = Calendar.current.date(byAdding: .minute, value: 30, to: timerVM.startDate!)
-        
+        timerVM.endDate = Calendar.current.date(byAdding: .minute, value: 1, to: timerVM.startDate!)
         runTimer()
+    }
+    
+    private func checkTimerState(completion: @escaping () -> Void) {
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        timerVM.loadSavedTimerDates { [weak self] isRunning in
+            if isRunning == true {
+                dispatchGroup.leave()
+            } else {
+                self?.submitDelegate?.toggleState()
+            }
+            
+        }
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.startTimer()
+            
+        }
+        completion()
     }
     
     @IBAction func dreamButtonTapped(_ sender: UIButton) {
         present(menu, animated: true, completion: nil)
-        //timer triggering
-        startTimer()
-        timerVM.saveTimerDates()
     }
 }
-
 
 extension MainViewController: VideoLinkDelegate {
     
@@ -116,6 +131,15 @@ extension MainViewController {
             make.height.equalTo(CGFloat(400))
             make.left.right.equalToSuperview().inset(16)
             make.center.equalToSuperview()
+        }
+    }
+}
+
+extension MainViewController: TiggerTimerDelegate {
+    func triggerTimer() {
+        startTimer()
+        timerVM.saveTimerDates { [weak self] in
+            self?.updateRemainingTime()
         }
     }
 }

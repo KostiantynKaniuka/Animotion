@@ -19,6 +19,10 @@ protocol RadarDataDelegate: AnyObject {
     func refetchRadarData()
 }
 
+protocol SubmitButtonDelegate: AnyObject {
+    func toggleState()
+}
+
 final class CaptureViewController: UIViewController {
     
     private let scrollView = UIScrollView()
@@ -40,6 +44,7 @@ final class CaptureViewController: UIViewController {
   
     weak var graphDelegate: GraphDataDelegate?
     weak var radarDelegate: RadarDataDelegate?
+    weak var timerDelegate: TiggerTimerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +60,7 @@ final class CaptureViewController: UIViewController {
         submitButtonTapped()
         cancelButtonTapped()
         textFieldPublisher()
+        buttonState()
     }
     
     private func parseUserRadar() {
@@ -65,7 +71,10 @@ final class CaptureViewController: UIViewController {
     }
     
     private func buttonState() {
-    
+        captureVM.isButtonEnabled
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.isEnabled, on: submitButton)
+            .store(in: &captureVM.bag)
         
     }
     
@@ -86,6 +95,8 @@ final class CaptureViewController: UIViewController {
                 
                 self.captureVM.sendUserChoice(id: id) { graph, radar in
                     FireAPIManager.shared.updateUserChartsData(id: id, graphData: graph, radarData: radar) {
+                        self.captureVM.buttonEnabled.value = false
+                        self.timerDelegate?.triggerTimer()
                         self.graphDelegate?.refetchGraphData()
                         self.radarDelegate?.refetchRadarData()
                     }
@@ -176,6 +187,12 @@ extension CaptureViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder() 
         return true
+    }
+}
+
+extension CaptureViewController: SubmitButtonDelegate {
+    func toggleState() {
+        captureVM.buttonEnabled.value = true
     }
 }
 
