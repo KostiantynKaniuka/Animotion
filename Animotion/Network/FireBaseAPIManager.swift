@@ -30,7 +30,7 @@ class FireAPIManager {
         userRef.setValue(user.toDictionary())
         }
     
-    func addGraphData(id:String, graphData: GraphData) {
+    func addGraphData(id:String, graphData:GraphData) {
         let db = configureFB()
         let graphRef = db.child("graphData")
         let userRef = graphRef.child("\(id)")
@@ -45,7 +45,6 @@ class FireAPIManager {
         dateRef.setValue(["\(0)" : graphData.date])
         reasonRef.setValue(["\(0)": "Staring point"])
     }
-    
     
     //MARK: - GET
     

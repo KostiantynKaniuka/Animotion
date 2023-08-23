@@ -13,10 +13,8 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var dreamButton: UIButton!
     private let sideMenu = SideMenuViewController()
     let chartView = ChartView()
-    //private let carouselView = CarouselCollectionView(layout: UICollectionViewFlowLayout())
     lazy var menu = SideMenuNavigationController(rootViewController: sideMenu)
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
-    // private lazy var pageView = carouselView.dots
     
     
     //MARK: - Lifecycle
