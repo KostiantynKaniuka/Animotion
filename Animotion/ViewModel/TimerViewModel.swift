@@ -38,10 +38,11 @@ final class TimerViewModel {
             seconds = remainingTime
             
             if remainingTime > 0 {
+                isTimerRunning = true
                 completion()
-             
+                
             } else {
-                // Timer has ended, handle accordingly
+                isTimerRunning = false
             }
         }
     }

@@ -19,23 +19,20 @@ final class MainViewController: UIViewController {
     let chartView = ChartView()
     lazy var menu = SideMenuNavigationController(rootViewController: sideMenu)
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
- 
+    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         sideMenu.linkDelegate = self
         let dispatchGroup = DispatchGroup()
-        
         dispatchGroup.enter()
         timerVM.loadSavedTimerDates {
             dispatchGroup.leave()
         }
-       
-        dispatchGroup.notify(queue: .main) { [self] in
-            if self.timerVM.isTimerRunning == false {
-                startTimer()
-            }
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.startTimer()
         }
+        updateRemainingTime()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -47,19 +44,22 @@ final class MainViewController: UIViewController {
         setUpConstraints()
     }
     
+    //MARK: - Timer Logic
     
     func runTimer() {
         timerVM.timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
+        timerVM.isTimerRunning = true
     }
     
     @objc func updateTimer() {
         if timerVM.seconds < 1 {
             timerVM.timer.invalidate()
-              //Send alert to indicate "time's up!"
-         } else {
-             timerVM.seconds -= 1
-             timerLabel.text = timerVM.timeString(time: TimeInterval(timerVM.seconds))
-         }
+            timerVM.isTimerRunning = false
+            //Send alert to indicate "time's up!"
+        } else {
+            timerVM.seconds -= 1
+            timerLabel.text = timerVM.timeString(time: TimeInterval(timerVM.seconds))
+        }
     }
     
     func updateRemainingTime() {
@@ -84,25 +84,27 @@ final class MainViewController: UIViewController {
         
         runTimer()
     }
-
+    
     @IBAction func dreamButtonTapped(_ sender: UIButton) {
         present(menu, animated: true, completion: nil)
+        //timer triggering
+        startTimer()
         timerVM.saveTimerDates()
     }
 }
-    
+
 
 extension MainViewController: VideoLinkDelegate {
     
     func sendTheLink(_ link: String, title: String, location: String) {
-       let videoPlayer = VideoPlayer()
-            videoPlayer.videoTitle = title
+        let videoPlayer = VideoPlayer()
+        videoPlayer.videoTitle = title
         videoPlayer.link = "https://www.pexels.com/pl-pl/download/video/16757506/"
-            videoPlayer.videoSubtitle = location
+        videoPlayer.videoSubtitle = location
         sideMenu.dismiss(animated: true)
         videoPlayer.modalPresentationStyle = .fullScreen
         navigationController?.present(videoPlayer, animated: true)
-        }
+    }
 }
 
 extension MainViewController {
@@ -114,6 +116,6 @@ extension MainViewController {
             make.height.equalTo(CGFloat(400))
             make.left.right.equalToSuperview().inset(16)
             make.center.equalToSuperview()
-            }
         }
     }
+}

@@ -378,7 +378,7 @@ extension LoginViewController {
         //applebutton.frame.size = CGSize(width: 300, height: 400)
         
         
-        logoImage.image = UIImage(named: "AppIcon")
+        logoImage.image = UIImage(named: "Icon2")
         logoImage.layer.cornerRadius = 20
         logoImage.layer.masksToBounds = false
         logoImage.clipsToBounds = true

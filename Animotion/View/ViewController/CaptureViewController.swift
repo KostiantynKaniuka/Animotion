@@ -37,7 +37,7 @@ final class CaptureViewController: UIViewController {
     private let submitButton = SubmitButton()
     private let cancelButton = CancelCaptureButton()
     private var captureVM = CaptureMoodViewModel()
-
+  
     weak var graphDelegate: GraphDataDelegate?
     weak var radarDelegate: RadarDataDelegate?
     
@@ -62,6 +62,11 @@ final class CaptureViewController: UIViewController {
         captureVM.parseRadar(id: id) { [weak self] data in
             self?.captureVM.menthaldata = data
         }
+    }
+    
+    private func buttonState() {
+    
+        
     }
     
     private func textFieldPublisher() {

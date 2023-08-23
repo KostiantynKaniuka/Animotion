@@ -9,7 +9,6 @@ import Foundation
 import Combine
 
 final class CaptureMoodViewModel: RadarParsable {
-   
     static let moodPickerData = [1,2,3,4,5,6,7,8,9,10]
     static let menthalStatePickerData = ["Happy",
                                          "Good",
@@ -23,6 +22,15 @@ final class CaptureMoodViewModel: RadarParsable {
     var reasonText = CurrentValueSubject<String, Never>("")
     var bag = Set<AnyCancellable>()
     var menthaldata = [String: Int]()
+    var buttonEnabled = CurrentValueSubject<Bool, Never>(true)
+     
+     var isButtonEnabled: AnyPublisher<Bool, Never> {
+         return buttonEnabled
+             .map { state in
+                 return state
+             }
+             .eraseToAnyPublisher()
+     }
     
     func parseRadar(id: String, completion: @escaping ([String : Int]) -> Void) {
         FireAPIManager.shared.getRadarData(id: id) { data in
