@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="Animotion" customModuleProvider="target">
             <connections>
                 <outlet property="dreamButton" destination="C4w-k8-6x6" id="sKS-OO-lcA"/>
+                <outlet property="timerLabel" destination="47q-Z4-UX3" id="Gff-18-Ggq"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -43,13 +44,25 @@
                         <action selector="dreamButtonTapped:" destination="-1" eventType="touchUpInside" id="IH1-TG-4Ku"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47q-Z4-UX3">
+                    <rect key="frame" x="153" y="87" width="224" height="75"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="75" id="F7t-3Q-y1p"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="70"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="0.6270436672185431" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="highlightedColor" red="0.75406885150000003" green="0.75408679249999999" blue="0.75407713649999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="0.76862752440000004" green="0.76862752440000004" blue="0.76862752440000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <constraints>
                 <constraint firstItem="C4w-k8-6x6" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="28" id="9JS-gH-B7U"/>
                 <constraint firstItem="kBu-l3-gNe" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="DFf-Zk-YHI"/>
+                <constraint firstItem="47q-Z4-UX3" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="28" id="JoK-7e-gF1"/>
                 <constraint firstItem="kBu-l3-gNe" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="N6j-ZX-MHZ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="47q-Z4-UX3" secondAttribute="trailing" constant="16" id="ScU-lf-Z6v"/>
+                <constraint firstItem="47q-Z4-UX3" firstAttribute="leading" secondItem="C4w-k8-6x6" secondAttribute="trailing" constant="42" id="f5D-o2-2K0"/>
                 <constraint firstItem="C4w-k8-6x6" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="36" id="hNi-1Y-GE0"/>
                 <constraint firstItem="kBu-l3-gNe" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="uH5-WE-Yag"/>
                 <constraint firstAttribute="bottom" secondItem="kBu-l3-gNe" secondAttribute="bottom" id="yIE-Rg-1fJ"/>
