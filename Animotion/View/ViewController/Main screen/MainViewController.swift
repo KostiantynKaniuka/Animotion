@@ -28,6 +28,10 @@ final class MainViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+//        UserDefaults.standard.removeObject(forKey: "savedStartDate")
+//        UserDefaults.standard.removeObject(forKey: "savedEndDate")
+//        // Call synchronize to ensure changes are immediately saved
+//        UserDefaults.standard.synchronize()
         sideMenu.linkDelegate = self
         checkTimerState { [weak self] in
             self?.updateRemainingTime()

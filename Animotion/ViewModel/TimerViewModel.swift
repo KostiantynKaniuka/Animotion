@@ -57,6 +57,8 @@ final class TimerViewModel {
                 isTimerRunning = false
                 completion(isTimerRunning)
             }
+        } else {
+            completion(false)
         }
     }
 }
