@@ -26,7 +26,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     private let editButton =            EditAccountButton()
     private let deleteAccountButton =   DeleteAccountButton()
     private let buttonsStack =          UIStackView()
-    
+    private let plusButton =            UIButton()
     private let userScreenVM =          UserScreenViewModel()
     
     private let menthalState = ["Happy","Good","Anxious","Sad","Angry","Satisfied"]
@@ -38,26 +38,60 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
-    
-        logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
+        userImage.image = UIImage(named: "back 1")
+        plusButton.isHidden = true
+        userNameField.isEditable = false
         chartView.delegate = self
         setRadarData()
         setUpRadar()
         chartView.animate(xAxisDuration: 1.4, yAxisDuration: 1.4, easingOption: .easeOutBack)
-    
+        editButtonPressed()
+        plussButtonTapped()
+        deleteButtonTapped()
+        logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setupAppearance()
         setupConstaints()
-        deleteButtonTapped()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        
+      
     }
+    
+    
+    func pickImage() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
+        imagePicker.delegate = self
+       
+        self.present(imagePicker, animated: true)
+    }
+
+    private func plussButtonTapped() {
+        plusButton.tapPublisher
+            .sink { [weak self] _ in
+                guard let self = self else {return}
+                self.pickImage()
+            }
+            .store(in: &userScreenVM.bag)
+    }
+  
+    private func editButtonPressed() {
+        editButton.tapPublisher
+            .sink { [weak self] _ in
+                guard let self = self else {return}
+                self.plusButton.isHidden = false
+                self.userNameField.isEditable = true
+            }
+            .store(in: &userScreenVM.bag)
+    }
+    
+    
     
     private func setRadarData() {
         guard let id = Auth.auth().currentUser?.uid else {return}
@@ -146,18 +180,31 @@ extension UserScreenViewController: RadarDataDelegate {
     }
 }
 
+extension UserScreenViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let selectedImage = info[.editedImage] as? UIImage else { return }
+        userImage.image = selectedImage
+        plusButton.isHidden = true
+        self.dismiss(animated: true)
+    }}
+
 //MARK: - layout
 extension UserScreenViewController {
     
     private func setupConstaints() {
         view.add(subviews: backgroundImage,
                  userImage,
+                 plusButton,
                  userNameField,
                  chartView,
                  buttonsStack,
                  editButton,
                  privacyPolicy
         )
+        
+        
+       // userImage.addSubview(plusButton)
+   
         
 
         buttonsStack.addArrangedSubview(logOutButton)
@@ -169,7 +216,7 @@ extension UserScreenViewController {
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
         }
-
+        
         chartView.snp.makeConstraints { make in
             make.top.equalTo(userNameField.snp.bottom).offset(35)
             make.left.equalTo(view)
@@ -182,7 +229,14 @@ extension UserScreenViewController {
             make.centerX.equalTo(view.snp.centerX)
             make.size.equalTo(CGSize(width: 80, height: 80))
         }
-
+        
+        plusButton.snp.makeConstraints { make in
+            make.top.equalTo(view).offset(60)
+            make.centerX.equalTo(view.snp.centerX)
+            make.size.equalTo(CGSize(width: 80, height: 80))
+            //make.size.equalToSuperview()
+        }
+ 
         userNameField.snp.makeConstraints { make in
             make.top.equalTo(userImage.snp.bottom).offset(8)
             make.centerX.equalTo(userImage.snp.centerX)
@@ -253,14 +307,13 @@ extension UserScreenViewController {
      
         chartView.contentMode =             .scaleAspectFill
         chartView.backgroundColor =         .clear
-        
-        userImage.image =                   UIImage(named: "back 1")
         userImage.frame.size =              CGSize(width: 80, height: 80)
         userImage.layer.borderWidth =       1
         userImage.layer.borderColor =       UIColor.white.cgColor
         userImage.layer.cornerRadius =      userImage.frame.size.width / 2
         userImage.layer.masksToBounds =     false
         userImage.clipsToBounds =           true
+        userImage.isUserInteractionEnabled = true
         
         userNameField.text =                "User name"
         userNameField.font =                .systemFont(ofSize: 17)
@@ -268,8 +321,15 @@ extension UserScreenViewController {
         userNameField.textColor =           .white
         userNameField.textContainer
             .maximumNumberOfLines =         1
-        userNameField.isEditable =          true
         userNameField.backgroundColor =     .clear
         backgroundImage.image =             UIImage(named: "backtest")
+        
+       
+        plusButton.setImage(UIImage(systemName: "plus"), for: .normal)
+        plusButton.contentHorizontalAlignment = .center
+        plusButton.contentVerticalAlignment = .center
+        let scaleFactor: CGFloat = 2.0 // Adjust this value to increase the size
+        plusButton.transform = CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
+        plusButton.tintColor = .white
     }
 }
