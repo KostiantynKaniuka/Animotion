@@ -18,6 +18,7 @@ final class SideMenuViewController: UIViewController {
     private let profileLabel = UILabel()
     private let topView = UIView()
     private let viewModel = SideMenuViewModel()
+
     private var ukraineSection = [UkraineSection]()
     private var safeSpaceSection = [SafeSpace]()
     private var dataSource = [Section]()
@@ -40,6 +41,7 @@ final class SideMenuViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setImage()
         menuTableView.tableHeaderView = nil
         menuTableView.delegate = self
         menuTableView.dataSource = self
@@ -54,7 +56,14 @@ final class SideMenuViewController: UIViewController {
         super.viewWillLayoutSubviews()
      setupUi()
     }
+    
+    private func setImage() {
+        let imageManager = ImageManager()
+        profileImage.image =  imageManager.loadImageFromApp() ?? UIImage(named: "icon2")
+    }
 }
+
+
 
 //MARK: - TableView Delegate
 extension SideMenuViewController: UITableViewDelegate {
@@ -180,7 +189,6 @@ extension SideMenuViewController {
         profileLabel.translatesAutoresizingMaskIntoConstraints = false
         menuTableView.translatesAutoresizingMaskIntoConstraints = false
         profileImage.translatesAutoresizingMaskIntoConstraints = false
-        profileImage.image = UIImage(named: "back 1")
         topView.translatesAutoresizingMaskIntoConstraints = false
         topView.frame.size = CGSize(width: 300, height: 100)
         

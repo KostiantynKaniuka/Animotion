@@ -11,6 +11,7 @@ import Combine
 import CombineCocoa
 import DGCharts
 import FirebaseAuth
+import PhotosUI
 
 protocol LogoutDelegate: AnyObject {
     func didLogout()
@@ -28,6 +29,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     private let buttonsStack =          UIStackView()
     private let plusButton =            UIButton()
     private let userScreenVM =          UserScreenViewModel()
+    private let imageManager = ImageManager()
     
     private let menthalState = ["Happy","Good","Anxious","Sad","Angry","Satisfied"]
     private var radarData = [String: Int]()
@@ -38,7 +40,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
-        userImage.image = UIImage(named: "back 1")
+        setProfileImage()
         plusButton.isHidden = true
         userNameField.isEditable = false
         chartView.delegate = self
@@ -59,17 +61,78 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-      
+        
+    }
+    
+    private func setProfileImage() {
+        let imageManager = ImageManager()
+        userImage.image = imageManager.loadImageFromApp() ?? UIImage(systemName: "person.crop.circle.fill")
     }
     
     
-    func pickImage() {
-        let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.allowsEditing = true
-        imagePicker.delegate = self
-       
-        self.present(imagePicker, animated: true)
+    private func pickImage() {
+        let photos = PHPhotoLibrary.authorizationStatus()
+        switch photos {
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization({status in
+                switch status {
+                case .notDetermined:
+                    return
+                case .restricted:
+                    return
+                case .denied:
+                    return
+                case .authorized:
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else {return}
+                        let imagePicker = UIImagePickerController()
+                        imagePicker.sourceType = .photoLibrary
+                        imagePicker.allowsEditing = true
+                        imagePicker.delegate = self
+                        
+                        self.present(imagePicker, animated: true)
+                    }
+                case .limited:
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else {return}
+                        let imagePicker = UIImagePickerController()
+                        imagePicker.sourceType = .photoLibrary
+                        imagePicker.allowsEditing = true
+                        imagePicker.delegate = self
+                        
+                        self.present(imagePicker, animated: true)
+                    }
+                @unknown default:
+                    return
+                }
+            })
+        case .restricted:
+            return
+        case .denied:
+            return
+        case .authorized:
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else {return}
+                let imagePicker = UIImagePickerController()
+                imagePicker.sourceType = .photoLibrary
+                imagePicker.allowsEditing = true
+                imagePicker.delegate = self
+                
+                self.present(imagePicker, animated: true)
+            }
+        case .limited:
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else {return}
+                let imagePicker = UIImagePickerController()
+                imagePicker.sourceType = .photoLibrary
+                imagePicker.allowsEditing = true
+                imagePicker.delegate = self
+                
+                self.present(imagePicker, animated: true)
+            }
+        @unknown default:
+            return
+        }
     }
 
     private func plussButtonTapped() {
@@ -184,6 +247,9 @@ extension UserScreenViewController: UIImagePickerControllerDelegate, UINavigatio
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.editedImage] as? UIImage else { return }
         userImage.image = selectedImage
+        let imageManager = ImageManager()
+        imageManager.saveImageToApp(image: selectedImage)
+       // UIImageWriteToSavedPhotosAlbum(selectedImage, nil, nil, nil)
         plusButton.isHidden = true
         self.dismiss(animated: true)
     }}
@@ -236,7 +302,7 @@ extension UserScreenViewController {
             
             plusButton.snp.makeConstraints { make in
                 make.top.equalTo(view).offset(40)
-                make.centerX.equalTo(view.snp.centerX)
+                make.centerX.equalTo(view.snp.centerX).offset(userImage.frame.width - 8)
                 make.size.equalTo(CGSize(width: 70, height: 70))
             }
             
@@ -249,7 +315,7 @@ extension UserScreenViewController {
             
             plusButton.snp.makeConstraints { make in
                 make.top.equalTo(view).offset(80)
-                make.centerX.equalTo(view.snp.centerX)
+                make.centerX.equalTo(view.snp.centerX).offset(userImage.frame.width - 8)
                 make.size.equalTo(CGSize(width: 100, height: 100))
             }
         }
@@ -341,6 +407,7 @@ extension UserScreenViewController {
         userImage.layer.masksToBounds =     false
         userImage.clipsToBounds =           true
         userImage.isUserInteractionEnabled = true
+        userImage.tintColor = .white
         
         userNameField.text =                "User name"
         userNameField.font =                .systemFont(ofSize: 17)
