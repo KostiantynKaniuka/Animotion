@@ -201,40 +201,60 @@ extension UserScreenViewController {
                  editButton
         )
         
-        
-       // userImage.addSubview(plusButton)
-   
-        
-
         buttonsStack.addArrangedSubview(logOutButton)
         buttonsStack.addArrangedSubview(deleteAccountButton)
-        
-        backgroundImage.snp.makeConstraints { make in
-            make.bottom.equalTo(view.snp.bottom)
-            make.top.equalTo(view.snp.top)
-            make.left.equalTo(view.snp.left)
-            make.right.equalTo(view.snp.right)
+ 
+        if UIScreen.main.bounds.size.height < 812 {
+            backgroundImage.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.top.bottom.equalToSuperview()
+                make.left.right.equalToSuperview().inset(-8)
+            }
+        } else {
+            backgroundImage.snp.makeConstraints { make in
+                make.top.bottom.right.left.equalToSuperview()
+            }
         }
         
         chartView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalTo(view)
             make.right.equalTo(view)
-            make.height.equalTo(300)
+            if UIScreen.main.bounds.size.height < 812{
+                make.height.equalTo(250)
+            } else {
+                make.height.equalTo(300)
+            }
         }
 
-        userImage.snp.makeConstraints { make in
-            make.top.equalTo(view).offset(80)
-            make.centerX.equalTo(view.snp.centerX)
-            make.size.equalTo(CGSize(width: 100, height: 100))
+        if UIScreen.main.bounds.size.height < 812 {
+            userImage.snp.makeConstraints { make in
+                make.top.equalTo(view).offset(40)
+                make.centerX.equalTo(view.snp.centerX)
+                make.size.equalTo(CGSize(width: 70, height: 70))
+            }
+            
+            plusButton.snp.makeConstraints { make in
+                make.top.equalTo(view).offset(40)
+                make.centerX.equalTo(view.snp.centerX)
+                make.size.equalTo(CGSize(width: 70, height: 70))
+            }
+            
+        } else {
+            userImage.snp.makeConstraints { make in
+                make.top.equalTo(view).offset(80)
+                make.centerX.equalTo(view.snp.centerX)
+                make.size.equalTo(CGSize(width: 100, height: 100))
+            }
+            
+            plusButton.snp.makeConstraints { make in
+                make.top.equalTo(view).offset(80)
+                make.centerX.equalTo(view.snp.centerX)
+                make.size.equalTo(CGSize(width: 100, height: 100))
+            }
         }
         
-        plusButton.snp.makeConstraints { make in
-            make.top.equalTo(view).offset(80)
-            make.centerX.equalTo(view.snp.centerX)
-            make.size.equalTo(CGSize(width: 100, height: 100))
-            //make.size.equalToSuperview()
-        }
+   
  
         userNameField.snp.makeConstraints { make in
             make.top.equalTo(userImage.snp.bottom).offset(8)
@@ -250,10 +270,18 @@ extension UserScreenViewController {
             make.size.equalTo(CGSize(width: 100, height: 40))
         }
 
-        buttonsStack.snp.makeConstraints { make in
-            make.centerX.equalTo(chartView)
-            make.bottom.equalTo(view.safeAreaInsets.bottom).offset(-150)
-        }
+        if UIScreen.main.bounds.size.height < 812 {
+            buttonsStack.snp.makeConstraints { make in
+                make.centerX.equalTo(chartView)
+                make.bottom.equalTo(view.safeAreaInsets.bottom).offset(-100)
+            }
+            
+        } else {
+            buttonsStack.snp.makeConstraints { make in
+                make.centerX.equalTo(chartView)
+                make.bottom.equalTo(view.safeAreaInsets.bottom).offset(-150)
+            }
+            }
 
         editButton.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 100, height: 40))
@@ -301,7 +329,12 @@ extension UserScreenViewController {
      
         chartView.contentMode =             .scaleAspectFill
         chartView.backgroundColor =         .clear
-        userImage.frame.size =              CGSize(width: 100, height: 100)
+        
+        if UIScreen.main.bounds.size.height < 812 {
+            userImage.frame.size =              CGSize(width: 70, height: 70)
+        } else {
+            userImage.frame.size =              CGSize(width: 100, height: 100)
+        }
         userImage.layer.borderWidth =       1
         userImage.layer.borderColor =       UIColor.white.cgColor
         userImage.layer.cornerRadius =      userImage.frame.size.width / 2

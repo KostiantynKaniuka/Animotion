@@ -43,7 +43,7 @@ class FireAPIManager {
         dataIndex.setValue(["Index" : graphData.index])
         valueRef.setValue(["\(0)" : graphData.value])
         dateRef.setValue(["\(0)" : graphData.date])
-        reasonRef.setValue(["\(0)": "Staring point"])
+        reasonRef.setValue(["\(0)": graphData.reason ?? "starting point"])
     }
     
     //MARK: - GET
@@ -145,15 +145,11 @@ class FireAPIManager {
         }
     }
     
-
-    
     func getReasonsFromDb(id: String, completion: @escaping ([String: String]) -> Void) {
         let db = configureFB()
             let valueRef = db.child("graphData").child(id).child("data").child("reason")
-               
-            // Print the URL you're fetching from
             print("Fetching data from:", valueRef.url)
-               
+
             valueRef.getData { error, dataSnapshot in
                 if let error = error {
                     print("Error fetching data for ID:", id)
@@ -161,24 +157,25 @@ class FireAPIManager {
                     completion(["1": "error"])
                     return
                 }
-                
+
                 guard let reasonSnap = dataSnapshot, let reasonArray = reasonSnap.value as? [Any] else {
                     print("Data could not be cast as [Any]")
                     print("Raw data:", dataSnapshot?.value ?? "nil")
                     completion(["1": "error"])
                     return
                 }
-                
+
                 var reasonDictionary: [String: String] = [:]
                 for (index, reasonValue) in reasonArray.enumerated() {
                     if let reason = reasonValue as? String {
                         reasonDictionary[String(index)] = reason
                     }
                 }
-                
-                print("Reasons➡️", reasonDictionary)
+
+                print("➡️ Reasons", reasonDictionary)
                 completion(reasonDictionary)
             }
+
         }
     
     

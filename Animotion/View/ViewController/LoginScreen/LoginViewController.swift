@@ -356,13 +356,18 @@ extension LoginViewController {
             make.size.equalTo(CGSize(width: 300, height: 40))
         }
         
-        backgroundImage.snp.makeConstraints { make in
-            make.bottom.equalTo(view.snp.bottom)
-            make.top.equalTo(view.snp.top)
-            make.left.equalTo(view.snp.left)
-            make.right.equalTo(view.snp.right)
+        if UIScreen.main.bounds.size.height < 812 {
+            backgroundImage.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.top.bottom.equalToSuperview()
+                make.left.right.equalToSuperview().inset(-8)
+            }
+        } else {
+            backgroundImage.snp.makeConstraints { make in
+                make.top.bottom.right.left.equalToSuperview()
+            }
         }
-        
+    
         logoImage.snp.makeConstraints { make in
             
             if UIScreen.main.bounds.size.height >= 812 { // iPhone X and newer models

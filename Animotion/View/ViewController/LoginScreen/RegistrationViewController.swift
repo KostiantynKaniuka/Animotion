@@ -274,11 +274,16 @@ extension RegistrationViewController {
         textFieldStack.addArrangedSubview(repeatPasswordTextField)
         textFieldStack.addArrangedSubview(buttonsStackView)
         
-        backgroundImage.snp.makeConstraints { make in
-            make.bottom.equalTo(view.snp.bottom)
-            make.top.equalTo(view.snp.top)
-            make.left.equalTo(view.snp.left)
-            make.right.equalTo(view.snp.right)
+        if UIScreen.main.bounds.size.height < 812 {
+            backgroundImage.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.top.bottom.equalToSuperview()
+                make.left.right.equalToSuperview().inset(-8)
+            }
+        } else {
+            backgroundImage.snp.makeConstraints { make in
+                make.top.bottom.right.left.equalToSuperview()
+            }
         }
         
         textFieldStack.snp.makeConstraints { make in

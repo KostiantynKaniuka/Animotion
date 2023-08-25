@@ -19,6 +19,7 @@ protocol TiggerTimerDelegate: AnyObject {
 final class MainViewController: UIViewController {
     @IBOutlet weak var dreamButton: UIButton!
     @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var backgroundImage: UIImageView!
     private let sideMenu = SideMenuViewController()
     private let timerVM = TimerViewModel()
     let chartView = ChartView()
@@ -111,7 +112,6 @@ final class MainViewController: UIViewController {
     
     @IBAction func dreamButtonTapped(_ sender: UIButton) {
         present(menu, animated: true, completion: nil)
-        let id = (Auth.auth().currentUser?.uid)!
     }
 }
 
@@ -143,7 +143,13 @@ extension MainViewController {
                 make.left.right.equalToSuperview().inset(16)
                 make.centerY.equalToSuperview().offset(32)
             }
-            
+            if UIScreen.main.bounds.size.height < 812 {
+                backgroundImage.snp.makeConstraints { make in
+                    make.center.equalToSuperview()
+                    make.top.bottom.equalToSuperview()
+                    make.left.right.equalToSuperview().inset(-8)
+                }
+            }
         }
     }
 }

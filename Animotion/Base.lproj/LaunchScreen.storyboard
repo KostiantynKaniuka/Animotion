@@ -33,10 +33,14 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="ojj-Vn-nV0" secondAttribute="bottom" id="E8I-hE-vvD"/>
                             <constraint firstItem="9o6-gf-o8z" firstAttribute="centerX" secondItem="ojj-Vn-nV0" secondAttribute="centerX" id="FUZ-nJ-S41"/>
+                            <constraint firstItem="ojj-Vn-nV0" firstAttribute="trailing" secondItem="d7A-x0-yio" secondAttribute="trailing" constant="-8" id="STK-2W-HvG"/>
+                            <constraint firstAttribute="trailing" secondItem="ojj-Vn-nV0" secondAttribute="trailing" constant="8" id="VkO-aS-7Uv"/>
                             <constraint firstItem="9o6-gf-o8z" firstAttribute="centerY" secondItem="ojj-Vn-nV0" secondAttribute="centerY" id="Zeh-C7-HmY"/>
+                            <constraint firstItem="ojj-Vn-nV0" firstAttribute="trailing" secondItem="d7A-x0-yio" secondAttribute="trailing" constant="8" id="cPX-8A-N2K"/>
                             <constraint firstItem="ojj-Vn-nV0" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="cnY-MG-GTV"/>
                             <constraint firstAttribute="trailing" secondItem="ojj-Vn-nV0" secondAttribute="trailing" id="pSf-Ea-tGk"/>
                             <constraint firstItem="ojj-Vn-nV0" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="v4f-Hy-394"/>
+                            <constraint firstItem="ojj-Vn-nV0" firstAttribute="trailing" secondItem="d7A-x0-yio" secondAttribute="trailing" constant="-8" id="wVY-Jr-2qf"/>
                         </constraints>
                     </view>
                 </viewController>
