@@ -141,7 +141,39 @@ final class LoginViewController: UIViewController {
                 let user = Auth.auth().currentUser
                 guard let currentUser = user else {return}
                 if currentUser.isEmailVerified {
-                    self.loginDelegate?.didLogin()
+                    guard let user = user else {return}
+                    FireAPIManager.shared.checkUserIndb(user.uid) { isExist in
+                        if isExist {
+                            self.loginDelegate?.didLogin()
+                        } else {
+                            //MARK: - CREATING USER IN DB
+                            let dateConverter = DateConvertor()
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+                            let currentDate = dateFormatter.string(from: Date())
+                            let formatedDate = dateFormatter.date(from: currentDate)
+                            let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
+                            let radarData = [
+                                "Happy": 0,
+                                "Good": 0,
+                                "Satisfied": 0,
+                                "Anxious": 0,
+                                "Angry": 0,
+                                "Sad": 0
+                            ]
+                            let user = MyUser(id: user.uid, name: "Name", radarData: radarData)
+                            let userGraph = GraphData(index: 0, date: doubleDate, value: 5, reason: "starting point")
+                            FireAPIManager.shared.addingUserToFirebase(user: user)
+                            FireAPIManager.shared.addGraphData(id: user.id, graphData: userGraph)
+                            print(user)
+                            print("➡️ user added")
+                            self.loginDelegate?.didLogin()
+                        }
+                    }
+                   
+                    
+                    
+                   
                 }
                 else {
                     self.loginVM.showAlert(message: "Please verify your email", vc: self)

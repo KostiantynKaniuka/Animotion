@@ -145,23 +145,42 @@ class FireAPIManager {
         }
     }
     
+
+    
     func getReasonsFromDb(id: String, completion: @escaping ([String: String]) -> Void) {
         let db = configureFB()
-        let valueRef = db.child("graphData").child("\(id)").child("data").child("reason")
-        
-        valueRef.getData { error, reasons in
-            if let error = error as? NSError {
-                print(error.localizedDescription)
-                return
+            let valueRef = db.child("graphData").child(id).child("data").child("reason")
+               
+            // Print the URL you're fetching from
+            print("Fetching data from:", valueRef.url)
+               
+            valueRef.getData { error, dataSnapshot in
+                if let error = error {
+                    print("Error fetching data for ID:", id)
+                    print("Error:", error.localizedDescription)
+                    completion(["1": "error"])
+                    return
+                }
+                
+                guard let reasonSnap = dataSnapshot, let reasonArray = reasonSnap.value as? [Any] else {
+                    print("Data could not be cast as [Any]")
+                    print("Raw data:", dataSnapshot?.value ?? "nil")
+                    completion(["1": "error"])
+                    return
+                }
+                
+                var reasonDictionary: [String: String] = [:]
+                for (index, reasonValue) in reasonArray.enumerated() {
+                    if let reason = reasonValue as? String {
+                        reasonDictionary[String(index)] = reason
+                    }
+                }
+                
+                print("Reasons➡️", reasonDictionary)
+                completion(reasonDictionary)
             }
-            
-            if let data = reasons?.value as? [String: String] {
-                completion(data)
-                print("reasons➡️", data)
-            }
-              
         }
-    }
+    
     
     func getUserGraphData(_ id: String, completion: @escaping (([Int],[Double])) -> Void){
         let db = configureFB()
@@ -263,7 +282,6 @@ class FireAPIManager {
         let reasonRef = dataRef.child("reason")
         let userRadarRef = db.child("users").child("\(id)").child("radarData")
     
-        
         indexRef.updateChildValues(["Index": graphData.index])
         valueRef.updateChildValues(["\(graphData.index)" : graphData.value])
         dateRef.updateChildValues(["\(graphData.index)" : graphData.date])

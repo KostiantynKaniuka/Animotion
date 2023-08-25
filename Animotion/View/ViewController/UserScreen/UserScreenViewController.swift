@@ -198,8 +198,7 @@ extension UserScreenViewController {
                  userNameField,
                  chartView,
                  buttonsStack,
-                 editButton,
-                 privacyPolicy
+                 editButton
         )
         
         
@@ -218,22 +217,22 @@ extension UserScreenViewController {
         }
         
         chartView.snp.makeConstraints { make in
-            make.top.equalTo(userNameField.snp.bottom).offset(35)
+            make.centerY.equalToSuperview()
             make.left.equalTo(view)
             make.right.equalTo(view)
             make.height.equalTo(300)
         }
 
         userImage.snp.makeConstraints { make in
-            make.top.equalTo(view).offset(60)
+            make.top.equalTo(view).offset(80)
             make.centerX.equalTo(view.snp.centerX)
-            make.size.equalTo(CGSize(width: 80, height: 80))
+            make.size.equalTo(CGSize(width: 100, height: 100))
         }
         
         plusButton.snp.makeConstraints { make in
-            make.top.equalTo(view).offset(60)
+            make.top.equalTo(view).offset(80)
             make.centerX.equalTo(view.snp.centerX)
-            make.size.equalTo(CGSize(width: 80, height: 80))
+            make.size.equalTo(CGSize(width: 100, height: 100))
             //make.size.equalToSuperview()
         }
  
@@ -253,18 +252,13 @@ extension UserScreenViewController {
 
         buttonsStack.snp.makeConstraints { make in
             make.centerX.equalTo(chartView)
-            make.top.equalTo(chartView.snp.bottom).offset(60)
+            make.bottom.equalTo(view.safeAreaInsets.bottom).offset(-150)
         }
 
         editButton.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 100, height: 40))
             make.top.equalTo(buttonsStack.snp.bottom).offset(8)
             make.centerX.equalTo(chartView)
-        }
-
-        privacyPolicy.snp.makeConstraints { make in
-            make.top.equalTo(editButton.snp.bottom).offset(16)
-            make.centerX.equalTo(buttonsStack)
         }
     }
     
@@ -307,7 +301,7 @@ extension UserScreenViewController {
      
         chartView.contentMode =             .scaleAspectFill
         chartView.backgroundColor =         .clear
-        userImage.frame.size =              CGSize(width: 80, height: 80)
+        userImage.frame.size =              CGSize(width: 100, height: 100)
         userImage.layer.borderWidth =       1
         userImage.layer.borderColor =       UIColor.white.cgColor
         userImage.layer.cornerRadius =      userImage.frame.size.width / 2

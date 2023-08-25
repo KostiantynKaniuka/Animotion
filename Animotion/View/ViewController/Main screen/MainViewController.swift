@@ -10,6 +10,7 @@ import Combine
 import CombineCocoa
 import SideMenu
 import SnapKit
+import FirebaseAuth
 
 protocol TiggerTimerDelegate: AnyObject {
     func triggerTimer()
@@ -110,6 +111,7 @@ final class MainViewController: UIViewController {
     
     @IBAction func dreamButtonTapped(_ sender: UIButton) {
         present(menu, animated: true, completion: nil)
+        let id = (Auth.auth().currentUser?.uid)!
     }
 }
 
@@ -132,9 +134,16 @@ extension MainViewController {
         view.backgroundColor = UIColor(red: 178/255, green: 236/255, blue: 197/255, alpha: 1)
         view.addSubview(chartView.view)
         chartView.view.snp.makeConstraints { make in
-            make.height.equalTo(CGFloat(400))
-            make.left.right.equalToSuperview().inset(16)
-            make.center.equalToSuperview()
+            if UIScreen.main.bounds.size.height >= 812 {
+                make.height.equalTo(CGFloat(400))
+                make.left.right.equalToSuperview().inset(16)
+                make.centerY.equalToSuperview()
+            } else {
+                make.height.equalTo(CGFloat(350))
+                make.left.right.equalToSuperview().inset(16)
+                make.centerY.equalToSuperview().offset(32)
+            }
+            
         }
     }
 }

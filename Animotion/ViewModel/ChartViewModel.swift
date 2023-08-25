@@ -18,6 +18,7 @@ final class ChartViewModel {
         chartData = []
         reasonDictionary = [:]
         let id = user.uid
+        print("➡️", id)
         
         FireAPIManager.shared.getReasonsFromDb(id: id) { [weak self]  data in
             guard let self = self else {return}
@@ -27,7 +28,7 @@ final class ChartViewModel {
                     self.reasonDictionary[intKey] = value
                 }
             }
-            
+        }
             FireAPIManager.shared.getUserGraphData(id) { (keys, values) in
                 print("data",keys, values)
                 var tupleArray = [(Int,Double)]()
@@ -51,9 +52,9 @@ final class ChartViewModel {
                     self.chartData.append(chartEntry)
                 }
                 
-                print(self.chartData)
+                print("➡️ data", self.chartData)
                 comletion()
             }
-        }
+        
     }
 }
