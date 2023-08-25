@@ -162,7 +162,7 @@ final class LoginViewController: UIViewController {
                                 "Sad": 0
                             ]
                             let user = MyUser(id: user.uid, name: "Name", radarData: radarData)
-                            let userGraph = GraphData(index: 0, date: doubleDate, value: 5, reason: "starting point")
+                            let userGraph = GraphData(index: 0, date: doubleDate, value: 5, reason: "Starting point")
                             FireAPIManager.shared.addingUserToFirebase(user: user)
                             FireAPIManager.shared.addGraphData(id: user.id, graphData: userGraph)
                             print(user)

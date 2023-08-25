@@ -82,4 +82,6 @@ final class UserScreenViewModel: RadarParsable {
             return "unknown error: \(error.localizedDescription)"
         }
     }
+    
+    
 }

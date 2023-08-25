@@ -38,12 +38,12 @@ class FireAPIManager {
         let dataIndex = dataRef.child("dataIndex")
         let valueRef = dataRef.child("value")
         let dateRef = dataRef.child("date")
-        let reasonRef = dataRef.child("reason")
+        let reasonRef = userRef.child("reasons")
         
         dataIndex.setValue(["Index" : graphData.index])
         valueRef.setValue(["\(0)" : graphData.value])
         dateRef.setValue(["\(0)" : graphData.date])
-        reasonRef.setValue(["\(0)": graphData.reason ?? "starting point"])
+        reasonRef.setValue(["\(0)": graphData.reason])
     }
     
     //MARK: - GET
@@ -147,7 +147,7 @@ class FireAPIManager {
     
     func getReasonsFromDb(id: String, completion: @escaping ([String: String]) -> Void) {
         let db = configureFB()
-            let valueRef = db.child("graphData").child(id).child("data").child("reason")
+            let valueRef = db.child("graphData").child(id).child("reasons")
             print("Fetching data from:", valueRef.url)
 
             valueRef.getData { error, dataSnapshot in
@@ -276,18 +276,17 @@ class FireAPIManager {
         let indexRef = dataRef.child("dataIndex")
         let valueRef = dataRef.child("value")
         let dateRef = dataRef.child("date")
-        let reasonRef = dataRef.child("reason")
+        let reasonRef = userGraphRef.child("reasons")
         let userRadarRef = db.child("users").child("\(id)").child("radarData")
-    
+        
         indexRef.updateChildValues(["Index": graphData.index])
         valueRef.updateChildValues(["\(graphData.index)" : graphData.value])
         dateRef.updateChildValues(["\(graphData.index)" : graphData.date])
-        if graphData.reason != nil {
-            reasonRef.updateChildValues(["\(graphData.index)": graphData.reason ?? ""])
+        if graphData.reason != "" {
+            reasonRef.updateChildValues(["\(graphData.index)": graphData.reason])
         }
-        
         userRadarRef.updateChildValues(radarData)
-
+        
         completion()
     }
 }

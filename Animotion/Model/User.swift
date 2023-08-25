@@ -18,7 +18,7 @@ struct GraphData: Encodable {
     let index: Int
     let date: Double
     let value: Int
-    let reason: String?
+    let reason: String
 }
 
 extension MyUser {

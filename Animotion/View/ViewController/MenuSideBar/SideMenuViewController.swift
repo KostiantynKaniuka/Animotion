@@ -41,7 +41,7 @@ final class SideMenuViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setImage()
+       
         menuTableView.tableHeaderView = nil
         menuTableView.delegate = self
         menuTableView.dataSource = self
@@ -55,11 +55,23 @@ final class SideMenuViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
      setupUi()
+        setImage()
     }
     
     private func setImage() {
         let imageManager = ImageManager()
-        profileImage.image =  imageManager.loadImageFromApp() ?? UIImage(named: "icon2")
+        guard let image = imageManager.loadImageFromApp() else {
+            profileImage.image = UIImage(systemName: "person.circle")
+            return
+        }
+        profileImage.image =  image
+        profileImage.tintColor = .white
+        
+        profileImage.layer.borderWidth = 1
+        profileImage.layer.borderColor = UIColor.white.cgColor
+        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
+        profileImage.clipsToBounds = true
+        
     }
 }
 
@@ -197,17 +209,14 @@ extension SideMenuViewController {
         borderLayer.frame = CGRect(x: 0, y: 150, width: topView.bounds.width, height: 2)
             topView.layer.addSublayer(borderLayer)
         profileImage.frame.size = CGSize(width: 50, height: 50)
-        
-        profileImage.layer.borderWidth = 1
-        profileImage.layer.borderColor = UIColor.white.cgColor
-        
+        profileImage.tintColor = .lightGray
+       
         view.addSubview(topView)
         topView.addSubview(profileImage)
         topView.addSubview(profileLabel)
         view.addSubview(menuTableView)
 
-        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
-        profileImage.clipsToBounds = true
+      
         
         
         NSLayoutConstraint.activate([

@@ -60,7 +60,7 @@ final class CaptureMoodViewModel: RadarParsable {
                 let userGraph = GraphData(index: newIndex, date: doubleDate, value: moodData, reason: self.reasonText.value)
                 completion(userGraph, self.menthaldata)
             } else {
-                let userGraph = GraphData(index: newIndex, date: doubleDate, value: moodData, reason: nil)
+                let userGraph = GraphData(index: newIndex, date: doubleDate, value: moodData, reason: "")
                 completion(userGraph, self.menthaldata)
             }
         }
