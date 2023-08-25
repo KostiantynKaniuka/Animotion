@@ -790,6 +790,7 @@
 				DEVELOPMENT_TEAM = 882F2W2464;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Animotion/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Animotion will save your photo at your device ";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -820,6 +821,7 @@
 				DEVELOPMENT_TEAM = 882F2W2464;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Animotion/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Animotion will save your photo at your device ";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
