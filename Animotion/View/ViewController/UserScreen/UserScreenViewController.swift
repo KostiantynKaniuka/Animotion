@@ -45,7 +45,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
         userNameField.isEditable = false
         chartView.delegate = self
         
-        setUpRadar()
+        setRadarData()
         chartView.animate(xAxisDuration: 1.4, yAxisDuration: 1.4, easingOption: .easeOutBack)
         editButtonPressed()
         plussButtonTapped()
@@ -62,87 +62,10 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        setUpRadar()
-    }
-    
-    private func setProfileImage() {
-        let imageManager = ImageManager()
         
-        guard let image = imageManager.loadImageFromApp() else {
-            userImage.image = UIImage(systemName: "person.circle")
-            userImage.layer.borderColor = UIColor.appBackground.cgColor
-            return
-        }
-        userImage.image = image
-        userImage.layer.borderColor = UIColor.white.cgColor
-        userImage.layer.cornerRadius =      userImage.frame.size.width / 2
     }
     
     
-    private func pickImage() {
-        let photos = PHPhotoLibrary.authorizationStatus()
-        switch photos {
-        case .notDetermined:
-            PHPhotoLibrary.requestAuthorization({status in
-                switch status {
-                case .notDetermined:
-                    return
-                case .restricted:
-                    return
-                case .denied:
-                    return
-                case .authorized:
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else {return}
-                        let imagePicker = UIImagePickerController()
-                        imagePicker.sourceType = .photoLibrary
-                        imagePicker.allowsEditing = true
-                        imagePicker.delegate = self
-                        
-                        self.present(imagePicker, animated: true)
-                    }
-                case .limited:
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else {return}
-                        let imagePicker = UIImagePickerController()
-                        imagePicker.sourceType = .photoLibrary
-                        imagePicker.allowsEditing = true
-                        imagePicker.delegate = self
-                        
-                        self.present(imagePicker, animated: true)
-                    }
-                @unknown default:
-                    return
-                }
-            })
-        case .restricted:
-            return
-        case .denied:
-            return
-        case .authorized:
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else {return}
-                let imagePicker = UIImagePickerController()
-                imagePicker.sourceType = .photoLibrary
-                imagePicker.allowsEditing = true
-                imagePicker.delegate = self
-                
-                self.present(imagePicker, animated: true)
-            }
-        case .limited:
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else {return}
-                let imagePicker = UIImagePickerController()
-                imagePicker.sourceType = .photoLibrary
-                imagePicker.allowsEditing = true
-                imagePicker.delegate = self
-                
-                self.present(imagePicker, animated: true)
-            }
-        @unknown default:
-            return
-        }
-    }
     
     private func plussButtonTapped() {
         plusButton.tapPublisher
@@ -163,8 +86,6 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
             .store(in: &userScreenVM.bag)
     }
     
-    
-    
     private func setRadarData() {
         radarData = [:]
         radarEntries = []
@@ -174,15 +95,19 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
             self.radarData = data
             
             self.radarEntries = [RadarChartDataEntry(value: Double(self.radarData["Happy"] ?? 0)),
-                                RadarChartDataEntry(value: Double(self.radarData["Good"] ?? 0)),
-                                RadarChartDataEntry(value: Double(self.radarData["Anxious"] ?? 0)),
-                                RadarChartDataEntry(value: Double(self.radarData["Sad"] ?? 0)),
-                                RadarChartDataEntry(value: Double(self.radarData["Angry"] ?? 0)),
-                                RadarChartDataEntry(value: Double(self.radarData["Satisfied"] ?? 0))
+                                 RadarChartDataEntry(value: Double(self.radarData["Good"] ?? 0)),
+                                 RadarChartDataEntry(value: Double(self.radarData["Anxious"] ?? 0)),
+                                 RadarChartDataEntry(value: Double(self.radarData["Sad"] ?? 0)),
+                                 RadarChartDataEntry(value: Double(self.radarData["Angry"] ?? 0)),
+                                 RadarChartDataEntry(value: Double(self.radarData["Satisfied"] ?? 0))
             ]
             
+            if (data.reduce(0){ $0 + $1.value } == 0) {
+                return
+            } // radar data bug 🤯
+            
             let set1 = RadarChartDataSet(entries: self.radarEntries, label: "Menthal State")
-            set1.setColor(UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1))
+            set1.setColor(self.userScreenVM.setChartColor(data: self.radarData))
             set1.fillColor = self.userScreenVM.setChartColor(data: self.radarData)
             set1.drawFilledEnabled = true
             set1.fillAlpha = 0.7
@@ -196,8 +121,10 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
             self.chartView.data = data
             let yAxis = self.chartView.yAxis
             let maxValue = self.radarData.values.max()
-            yAxis.axisMaximum = Double(maxValue ?? 0)
+            yAxis.axisMaximum = Double(maxValue ?? 0) + 1 // Adjust as needed
+            
         }
+        setUpRadar()
     }
     
     private func deleteButtonTapped() {
@@ -247,13 +174,15 @@ extension UserScreenViewController: AxisValueFormatter {
     }
 }
 
+//MARK: - RADAR REFETCH
 extension UserScreenViewController: RadarDataDelegate {
     func refetchRadarData() {
         DispatchQueue.main.async { [weak self] in
-        self?.setRadarData()
+            self?.setRadarData()
         }
     }
 }
+
 
 extension UserScreenViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -371,7 +300,6 @@ extension UserScreenViewController {
     }
     
     private func setUpRadar() {
-        
         chartView.chartDescription.enabled = false
         chartView.webLineWidth = 1
         chartView.innerWebLineWidth = 1
@@ -435,5 +363,87 @@ extension UserScreenViewController {
         let scaleFactor: CGFloat = 2.0 // Adjust this value to increase the size
         plusButton.transform = CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
         plusButton.tintColor = .white
+    }
+}
+
+extension UserScreenViewController {
+    
+    private func setProfileImage() {
+        let imageManager = ImageManager()
+        
+        guard let image = imageManager.loadImageFromApp() else {
+            userImage.image = UIImage(systemName: "person.circle")
+            userImage.layer.borderColor = UIColor.appBackground.cgColor
+            return
+        }
+        userImage.image = image
+        userImage.layer.borderColor = UIColor.white.cgColor
+        userImage.layer.cornerRadius =      userImage.frame.size.width / 2
+    }
+    
+    
+    private func pickImage() {
+        let photos = PHPhotoLibrary.authorizationStatus()
+        switch photos {
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization({status in
+                switch status {
+                case .notDetermined:
+                    return
+                case .restricted:
+                    return
+                case .denied:
+                    return
+                case .authorized:
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else {return}
+                        let imagePicker = UIImagePickerController()
+                        imagePicker.sourceType = .photoLibrary
+                        imagePicker.allowsEditing = true
+                        imagePicker.delegate = self
+                        
+                        self.present(imagePicker, animated: true)
+                    }
+                case .limited:
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else {return}
+                        let imagePicker = UIImagePickerController()
+                        imagePicker.sourceType = .photoLibrary
+                        imagePicker.allowsEditing = true
+                        imagePicker.delegate = self
+                        
+                        self.present(imagePicker, animated: true)
+                    }
+                @unknown default:
+                    return
+                }
+            })
+        case .restricted:
+            return
+        case .denied:
+            return
+        case .authorized:
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else {return}
+                let imagePicker = UIImagePickerController()
+                imagePicker.sourceType = .photoLibrary
+                imagePicker.allowsEditing = true
+                imagePicker.delegate = self
+                
+                self.present(imagePicker, animated: true)
+            }
+        case .limited:
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else {return}
+                let imagePicker = UIImagePickerController()
+                imagePicker.sourceType = .photoLibrary
+                imagePicker.allowsEditing = true
+                imagePicker.delegate = self
+                
+                self.present(imagePicker, animated: true)
+            }
+        @unknown default:
+            return
+        }
     }
 }
