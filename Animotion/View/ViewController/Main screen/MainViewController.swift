@@ -114,18 +114,19 @@ final class MainViewController: UIViewController {
     @IBAction func dreamButtonTapped(_ sender: UIButton) {
         //  present(menu, animated: true, completion: nil)
         guard let id = Auth.auth().currentUser?.uid else {return}
-        FireAPIManager.shared.getReasons(id: "bKCDOlG1qYSyTFMWqD72LyPL7kC3") { result in
-            switch result {
-            case .success(let userReasons):
-                // Access user reasons using user IDs
-                print("userReasns➡️", userReasons)
-                
-            case .failure(let error):
-                print("Error:", error)
-            }
-        }
-        
-    }
+        //        FireAPIManager.shared.getReasons(id: "bKCDOlG1qYSyTFMWqD72LyPL7kC3") { result in
+        //            switch result {
+        //            case .success(let userReasons):
+        //                // Access user reasons using user IDs
+        //                print("userReasns➡️", userReasons)
+        //
+        //            case .failure(let error):
+        //                print("Error:", error)
+        //            }
+        //        }
+        FireAPIManager.shared.addReason(id: "bKCDOlG1qYSyTFMWqD72LyPL7kC3", newReason: "ok") { result in
+            print(result)
+        }}
     
 }
 
