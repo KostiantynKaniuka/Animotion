@@ -31,6 +31,10 @@ extension MyUser {
         ]
     }
 }
+
+struct UserReasons: Codable {
+    var record: [String: [String: String]]
+}
     
 extension Encodable {
     var toDictionnary: [String : Any]? {

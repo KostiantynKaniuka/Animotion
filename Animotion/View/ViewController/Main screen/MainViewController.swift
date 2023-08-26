@@ -27,13 +27,14 @@ final class MainViewController: UIViewController {
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     weak var submitDelegate: SubmitButtonDelegate? // delegate to togle submit button state(CaptureViewController)
     
+    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        UserDefaults.standard.removeObject(forKey: "savedStartDate")
-//        UserDefaults.standard.removeObject(forKey: "savedEndDate")
-//        // Call synchronize to ensure changes are immediately saved
-//        UserDefaults.standard.synchronize()
+        //        UserDefaults.standard.removeObject(forKey: "savedStartDate")
+        //        UserDefaults.standard.removeObject(forKey: "savedEndDate")
+        //        // Call synchronize to ensure changes are immediately saved
+        //        UserDefaults.standard.synchronize()
         sideMenu.linkDelegate = self
         checkTimerState { [weak self] in
             self?.updateRemainingTime()
@@ -111,8 +112,21 @@ final class MainViewController: UIViewController {
     }
     
     @IBAction func dreamButtonTapped(_ sender: UIButton) {
-        present(menu, animated: true, completion: nil)
+        //  present(menu, animated: true, completion: nil)
+        guard let id = Auth.auth().currentUser?.uid else {return}
+        FireAPIManager.shared.getReasons(id: "bKCDOlG1qYSyTFMWqD72LyPL7kC3") { result in
+            switch result {
+            case .success(let userReasons):
+                // Access user reasons using user IDs
+                print("userReasns➡️", userReasons)
+                
+            case .failure(let error):
+                print("Error:", error)
+            }
+        }
+        
     }
+    
 }
 
 extension MainViewController: VideoLinkDelegate {

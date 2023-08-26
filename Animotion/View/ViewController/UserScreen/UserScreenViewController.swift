@@ -44,7 +44,6 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
         plusButton.isHidden = true
         userNameField.isEditable = false
         chartView.delegate = self
-        
         setRadarData()
         chartView.animate(xAxisDuration: 1.4, yAxisDuration: 1.4, easingOption: .easeOutBack)
         editButtonPressed()
@@ -64,8 +63,6 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
         super.viewDidLayoutSubviews()
         
     }
-    
-    
     
     private func plussButtonTapped() {
         plusButton.tapPublisher
@@ -94,12 +91,13 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
             guard let self = self else {return}
             self.radarData = data
             
-            self.radarEntries = [RadarChartDataEntry(value: Double(self.radarData["Happy"] ?? 0)),
-                                 RadarChartDataEntry(value: Double(self.radarData["Good"] ?? 0)),
-                                 RadarChartDataEntry(value: Double(self.radarData["Anxious"] ?? 0)),
-                                 RadarChartDataEntry(value: Double(self.radarData["Sad"] ?? 0)),
-                                 RadarChartDataEntry(value: Double(self.radarData["Angry"] ?? 0)),
-                                 RadarChartDataEntry(value: Double(self.radarData["Satisfied"] ?? 0))
+            self.radarEntries = [
+                RadarChartDataEntry(value: Double(self.radarData["Happy"] ?? 0)),
+                RadarChartDataEntry(value: Double(self.radarData["Good"] ?? 0)),
+                RadarChartDataEntry(value: Double(self.radarData["Anxious"] ?? 0)),
+                RadarChartDataEntry(value: Double(self.radarData["Sad"] ?? 0)),
+                RadarChartDataEntry(value: Double(self.radarData["Angry"] ?? 0)),
+                RadarChartDataEntry(value: Double(self.radarData["Satisfied"] ?? 0))
             ]
             
             if (data.reduce(0){ $0 + $1.value } == 0) {
@@ -195,7 +193,8 @@ extension UserScreenViewController: UIImagePickerControllerDelegate, UINavigatio
         // UIImageWriteToSavedPhotosAlbum(selectedImage, nil, nil, nil)
         plusButton.isHidden = true
         self.dismiss(animated: true)
-    }}
+    }
+}
 
 //MARK: - layout
 extension UserScreenViewController {
@@ -262,8 +261,6 @@ extension UserScreenViewController {
                 make.size.equalTo(CGSize(width: 100, height: 100))
             }
         }
-        
-        
         
         userNameField.snp.makeConstraints { make in
             make.top.equalTo(userImage.snp.bottom).offset(8)
@@ -332,7 +329,6 @@ extension UserScreenViewController {
         buttonsStack.axis =                 .horizontal
         buttonsStack.distribution =         .fill
         
-        
         chartView.contentMode =             .scaleAspectFill
         chartView.backgroundColor =         .clear
         
@@ -355,7 +351,6 @@ extension UserScreenViewController {
             .maximumNumberOfLines =         1
         userNameField.backgroundColor =     .clear
         backgroundImage.image =             UIImage(named: "backtest")
-        
         
         plusButton.setImage(UIImage(systemName: "plus"), for: .normal)
         plusButton.contentHorizontalAlignment = .center
