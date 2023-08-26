@@ -18,6 +18,7 @@ final class SideMenuViewController: UIViewController {
     private let profileLabel = UILabel()
     private let topView = UIView()
     private let viewModel = SideMenuViewModel()
+
     private var ukraineSection = [UkraineSection]()
     private var safeSpaceSection = [SafeSpace]()
     private var dataSource = [Section]()
@@ -40,6 +41,7 @@ final class SideMenuViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         menuTableView.tableHeaderView = nil
         menuTableView.delegate = self
         menuTableView.dataSource = self
@@ -53,8 +55,27 @@ final class SideMenuViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
      setupUi()
+        setImage()
+    }
+    
+    private func setImage() {
+        let imageManager = ImageManager()
+        guard let image = imageManager.loadImageFromApp() else {
+            profileImage.image = UIImage(systemName: "person.circle")
+            return
+        }
+        profileImage.image =  image
+        profileImage.tintColor = .white
+        
+        profileImage.layer.borderWidth = 1
+        profileImage.layer.borderColor = UIColor.white.cgColor
+        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
+        profileImage.clipsToBounds = true
+        
     }
 }
+
+
 
 //MARK: - TableView Delegate
 extension SideMenuViewController: UITableViewDelegate {
@@ -180,7 +201,6 @@ extension SideMenuViewController {
         profileLabel.translatesAutoresizingMaskIntoConstraints = false
         menuTableView.translatesAutoresizingMaskIntoConstraints = false
         profileImage.translatesAutoresizingMaskIntoConstraints = false
-        profileImage.image = UIImage(named: "back 1")
         topView.translatesAutoresizingMaskIntoConstraints = false
         topView.frame.size = CGSize(width: 300, height: 100)
         
@@ -189,17 +209,14 @@ extension SideMenuViewController {
         borderLayer.frame = CGRect(x: 0, y: 150, width: topView.bounds.width, height: 2)
             topView.layer.addSublayer(borderLayer)
         profileImage.frame.size = CGSize(width: 50, height: 50)
-        
-        profileImage.layer.borderWidth = 1
-        profileImage.layer.borderColor = UIColor.white.cgColor
-        
+        profileImage.tintColor = .lightGray
+       
         view.addSubview(topView)
         topView.addSubview(profileImage)
         topView.addSubview(profileLabel)
         view.addSubview(menuTableView)
 
-        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
-        profileImage.clipsToBounds = true
+      
         
         
         NSLayoutConstraint.activate([

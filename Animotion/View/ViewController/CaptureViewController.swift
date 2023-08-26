@@ -231,8 +231,16 @@ extension CaptureViewController {
             make.height.equalTo(self.scrollView)
         }
         
-        backgroundImage.snp.makeConstraints { make in
-            make.top.bottom.right.left.equalToSuperview()
+        if UIScreen.main.bounds.size.height < 812 {
+            backgroundImage.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.top.bottom.equalToSuperview()
+                make.left.right.equalToSuperview().inset(-8)
+            }
+        } else {
+            backgroundImage.snp.makeConstraints { make in
+                make.top.bottom.right.left.equalToSuperview()
+            }
         }
         
         pickersSection.snp.makeConstraints { make in

@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="Animotion" customModuleProvider="target">
             <connections>
+                <outlet property="backgroundImage" destination="kBu-l3-gNe" id="5nO-C1-Iqb"/>
                 <outlet property="dreamButton" destination="C4w-k8-6x6" id="sKS-OO-lcA"/>
                 <outlet property="timerLabel" destination="47q-Z4-UX3" id="Gff-18-Ggq"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

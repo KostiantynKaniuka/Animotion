@@ -21,6 +21,7 @@
 		E74DFF082A6995C80057093F /* AuthStateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74DFF072A6995C80057093F /* AuthStateViewModel.swift */; };
 		E75B6E7C2A200587001BCB6D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B6E7A2A200587001BCB6D /* MainViewController.swift */; };
 		E75B6E7D2A200587001BCB6D /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E75B6E7B2A200587001BCB6D /* MainViewController.xib */; };
+		E7658DF92A98E70100DAC87F /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7658DF82A98E70100DAC87F /* ImageManager.swift */; };
 		E7693B3A2A293382003C5D3F /* CarouselCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7693B392A293382003C5D3F /* CarouselCollectionView.swift */; };
 		E7693B3D2A293B29003C5D3F /* CarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7693B3C2A293B29003C5D3F /* CarouselCollectionViewCell.swift */; };
 		E76AE0B22A1FFF1A00102F15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76AE0B12A1FFF1A00102F15 /* AppDelegate.swift */; };
@@ -90,6 +91,7 @@
 		E74DFF072A6995C80057093F /* AuthStateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStateViewModel.swift; sourceTree = "<group>"; };
 		E75B6E7A2A200587001BCB6D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E75B6E7B2A200587001BCB6D /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		E7658DF82A98E70100DAC87F /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		E7693B392A293382003C5D3F /* CarouselCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionView.swift; sourceTree = "<group>"; };
 		E7693B3C2A293B29003C5D3F /* CarouselCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionViewCell.swift; sourceTree = "<group>"; };
 		E76AE0AE2A1FFF1A00102F15 /* Animotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Animotion.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -202,6 +204,14 @@
 			path = InitialViewController;
 			sourceTree = "<group>";
 		};
+		E7658DF72A98E6F200DAC87F /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				E7658DF82A98E70100DAC87F /* ImageManager.swift */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
 		E7693B3B2A293B06003C5D3F /* СaroucelView */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,6 +245,7 @@
 		E76AE0B02A1FFF1A00102F15 /* Animotion */ = {
 			isa = PBXGroup;
 			children = (
+				E7658DF72A98E6F200DAC87F /* utils */,
 				E7A4E0552A729B5C00577C44 /* Animotion.entitlements */,
 				E76AE0B12A1FFF1A00102F15 /* AppDelegate.swift */,
 				E7D87B8B2A3B0EEE00BECCBE /* Helpers */,
@@ -611,6 +622,7 @@
 				E7DAAFCF2A5C47DC0009D7B9 /* UserScreenViewController.swift in Sources */,
 				E73A00052A2E26CF00AA421F /* DotsView.swift in Sources */,
 				E76AE0B42A1FFF1A00102F15 /* SceneDelegate.swift in Sources */,
+				E7658DF92A98E70100DAC87F /* ImageManager.swift in Sources */,
 				E796AB632A5C05EE0052A1F1 /* Layout.swift in Sources */,
 				E7920F472A668DA1002B988F /* RegistrationViewController.swift in Sources */,
 				E7BD05F42A8BE12F00BB1D07 /* DateValueFormatter.swift in Sources */,
@@ -810,7 +822,9 @@
 				DEVELOPMENT_TEAM = 882F2W2464;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Animotion/Info.plist;
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Animotion will save your photo at your device ";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Animotion will save the photo to the local directory.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -841,7 +855,9 @@
 				DEVELOPMENT_TEAM = 882F2W2464;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Animotion/Info.plist;
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Animotion will save your photo at your device ";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Animotion will save the photo to the local directory.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

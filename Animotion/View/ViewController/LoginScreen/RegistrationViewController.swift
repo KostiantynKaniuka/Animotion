@@ -87,32 +87,6 @@ final class RegistrationViewController: UIViewController {
                                 self.registrationVM.showAlert(title: self.alertMessage.title,
                                                               message: message, vc: self)
                                 Auth.auth().currentUser?.delete()
-                            } else {
-                                guard let id = authResult?.user.uid else {return}
-                                
-                                //MARK: - CREATING USER IN DB
-                                let dateConverter = DateConvertor()
-                                let dateFormatter = DateFormatter()
-                                dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
-                                let currentDate = dateFormatter.string(from: Date())
-                                let formatedDate = dateFormatter.date(from: currentDate)
-                                let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
-                                let radarData = [
-                                    "Happy": 0,
-                                    "Good": 0,
-                                    "Satisfied": 0,
-                                    "Anxious": 0,
-                                    "Angry": 0,
-                                    "Sad": 0
-                                ]
-                                let user = MyUser(id: id, name: "Name", radarData: radarData)
-                                let userGraph = GraphData(index: 0, date: doubleDate, value: 5, reason: "")
-                                
-                                FireAPIManager.shared.addingUserToFirebase(user: user)
-                                
-                                FireAPIManager.shared.addGraphData(id: id, graphData: userGraph)
-                                print(user)
-                                print("➡️ user added")
                             }
                         }
                     }
@@ -300,11 +274,16 @@ extension RegistrationViewController {
         textFieldStack.addArrangedSubview(repeatPasswordTextField)
         textFieldStack.addArrangedSubview(buttonsStackView)
         
-        backgroundImage.snp.makeConstraints { make in
-            make.bottom.equalTo(view.snp.bottom)
-            make.top.equalTo(view.snp.top)
-            make.left.equalTo(view.snp.left)
-            make.right.equalTo(view.snp.right)
+        if UIScreen.main.bounds.size.height < 812 {
+            backgroundImage.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.top.bottom.equalToSuperview()
+                make.left.right.equalToSuperview().inset(-8)
+            }
+        } else {
+            backgroundImage.snp.makeConstraints { make in
+                make.top.bottom.right.left.equalToSuperview()
+            }
         }
         
         textFieldStack.snp.makeConstraints { make in

@@ -71,14 +71,19 @@ extension InitialViewController {
         }
     
         logoImage.snp.makeConstraints { make in
-           
-              if UIScreen.main.bounds.size.height >= 812 { // iPhone X and newer models
-                  make.top.equalTo(view.snp.top).offset(120)
-              } else { // iPhone 8 and older models
-                  make.top.equalTo(view.snp.top).offset(50)
-              }
-            make.centerX.equalTo(view.snp.centerX)
+            make.center.equalToSuperview()
             make.size.equalTo(CGSize(width: 150, height: 150))
+        }
+        if UIScreen.main.bounds.size.height < 812 {
+            backgroundImage.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.top.bottom.equalToSuperview()
+                make.left.right.equalToSuperview().inset(-8)
+            }
+        } else {
+            backgroundImage.snp.makeConstraints { make in
+                make.top.bottom.right.left.equalToSuperview()
+            }
         }
         
     }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 final class TimerViewModel {
     var startDate: Date?
@@ -23,8 +24,9 @@ final class TimerViewModel {
     }
     
     func saveTimerDates(completion: @escaping () -> Void) {
-        UserDefaults.standard.set(startDate, forKey: "savedStartDate")
-        UserDefaults.standard.set(endDate, forKey: "savedEndDate")
+        guard let id = Auth.auth().currentUser?.uid else {return}
+        UserDefaults.standard.set(startDate, forKey: "\(id)savedStartDate")
+        UserDefaults.standard.set(endDate, forKey: "\(id)savedEndDate")
         if let endDate = endDate {
             let currentTime = Date()
             let remainingTimeInterval = endDate.timeIntervalSince(currentTime)
@@ -41,8 +43,9 @@ final class TimerViewModel {
     
     
     func loadSavedTimerDates(completion: @escaping (Bool) -> Void) {
-        startDate = UserDefaults.standard.value(forKey: "savedStartDate") as? Date
-        endDate = UserDefaults.standard.value(forKey: "savedEndDate") as? Date
+        guard let id = Auth.auth().currentUser?.uid else {return}
+        startDate = UserDefaults.standard.value(forKey: "\(id)savedStartDate") as? Date
+        endDate = UserDefaults.standard.value(forKey: "\(id)savedEndDate") as? Date
         
         if let endDate = endDate {
             let currentTime = Date()

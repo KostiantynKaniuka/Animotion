@@ -10,6 +10,7 @@ import Combine
 import CombineCocoa
 import SideMenu
 import SnapKit
+import FirebaseAuth
 
 protocol TiggerTimerDelegate: AnyObject {
     func triggerTimer()
@@ -18,6 +19,7 @@ protocol TiggerTimerDelegate: AnyObject {
 final class MainViewController: UIViewController {
     @IBOutlet weak var dreamButton: UIButton!
     @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var backgroundImage: UIImageView!
     private let sideMenu = SideMenuViewController()
     private let timerVM = TimerViewModel()
     let chartView = ChartView()
@@ -25,13 +27,14 @@ final class MainViewController: UIViewController {
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     weak var submitDelegate: SubmitButtonDelegate? // delegate to togle submit button state(CaptureViewController)
     
+    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        UserDefaults.standard.removeObject(forKey: "savedStartDate")
-//        UserDefaults.standard.removeObject(forKey: "savedEndDate")
-//        // Call synchronize to ensure changes are immediately saved
-//        UserDefaults.standard.synchronize()
+        //        UserDefaults.standard.removeObject(forKey: "savedStartDate")
+        //        UserDefaults.standard.removeObject(forKey: "savedEndDate")
+        //        // Call synchronize to ensure changes are immediately saved
+        //        UserDefaults.standard.synchronize()
         sideMenu.linkDelegate = self
         checkTimerState { [weak self] in
             self?.updateRemainingTime()
@@ -109,8 +112,21 @@ final class MainViewController: UIViewController {
     }
     
     @IBAction func dreamButtonTapped(_ sender: UIButton) {
-        present(menu, animated: true, completion: nil)
+        //  present(menu, animated: true, completion: nil)
+        guard let id = Auth.auth().currentUser?.uid else {return}
+        FireAPIManager.shared.getReasons(id: "bKCDOlG1qYSyTFMWqD72LyPL7kC3") { result in
+            switch result {
+            case .success(let userReasons):
+                // Access user reasons using user IDs
+                print("userReasns➡️", userReasons)
+                
+            case .failure(let error):
+                print("Error:", error)
+            }
+        }
+        
     }
+    
 }
 
 extension MainViewController: VideoLinkDelegate {
@@ -132,9 +148,22 @@ extension MainViewController {
         view.backgroundColor = UIColor(red: 178/255, green: 236/255, blue: 197/255, alpha: 1)
         view.addSubview(chartView.view)
         chartView.view.snp.makeConstraints { make in
-            make.height.equalTo(CGFloat(400))
-            make.left.right.equalToSuperview().inset(16)
-            make.center.equalToSuperview()
+            if UIScreen.main.bounds.size.height >= 812 {
+                make.height.equalTo(CGFloat(400))
+                make.left.right.equalToSuperview().inset(16)
+                make.centerY.equalToSuperview()
+            } else {
+                make.height.equalTo(CGFloat(350))
+                make.left.right.equalToSuperview().inset(16)
+                make.centerY.equalToSuperview().offset(32)
+            }
+            if UIScreen.main.bounds.size.height < 812 {
+                backgroundImage.snp.makeConstraints { make in
+                    make.center.equalToSuperview()
+                    make.top.bottom.equalToSuperview()
+                    make.left.right.equalToSuperview().inset(-8)
+                }
+            }
         }
     }
 }
