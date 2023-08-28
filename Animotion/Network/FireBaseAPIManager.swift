@@ -29,9 +29,9 @@ class FireAPIManager {
         let usersRef = db.child("users")
         let userRef = usersRef.child("\(user.id)")
         userRef.setValue(user.toDictionary())
-        }
+    }
     
-    func addGraphData(id:String, graphData:GraphData) {
+    func addGraphData(id:String, graphData:GraphData, reason: String) {
         let db = configureFB()
         let graphRef = db.child("graphData")
         let userRef = graphRef.child("\(id)")
@@ -44,7 +44,7 @@ class FireAPIManager {
         dataIndex.setValue(["Index" : graphData.index])
         valueRef.setValue(["\(0)" : graphData.value])
         dateRef.setValue(["\(0)" : graphData.date])
-        reasonRef.setValue(["\(0)": graphData.reason])
+        reasonRef.setValue(["\(0)": "Starting point"])
     }
     
     //MARK: - GET
@@ -58,7 +58,7 @@ class FireAPIManager {
                 print("fail to parse radar", error.localizedDescription)
                 return
             }
-
+            
             if let data = data?.value as? [String:Int] {
                 print(data)
                 completion(data)
@@ -72,32 +72,32 @@ class FireAPIManager {
         let db = configureFB()
         db.child("CarouselData").getData(completion: { error, snapshot in
             guard error == nil else {
-               print(error!.localizedDescription)
-               return;
-             }
+                print(error!.localizedDescription)
+                return;
+            }
             var carouselData: [CarouselData] = []
-                    
+            
             if let value = snapshot?.value as? [String: Any] {
-                        for (_, data) in value {
-                            if let dataDict = data as? [String: String] {
-                                let imageUrl = dataDict["imageUrl"] ?? ""
-                                let descriptionText = dataDict["descriptionText"] ?? ""
-                                let linkToBlog = dataDict["linkToBlog"] ?? ""
-                                
-                                let carouselItem = CarouselData(imageUrl: imageUrl, descriptionText: descriptionText, linkToBlog: linkToBlog)
-                                carouselData.append(carouselItem)
-                                print("➡️", carouselData.count)
-                            }
-                        }
+                for (_, data) in value {
+                    if let dataDict = data as? [String: String] {
+                        let imageUrl = dataDict["imageUrl"] ?? ""
+                        let descriptionText = dataDict["descriptionText"] ?? ""
+                        let linkToBlog = dataDict["linkToBlog"] ?? ""
+                        
+                        let carouselItem = CarouselData(imageUrl: imageUrl, descriptionText: descriptionText, linkToBlog: linkToBlog)
+                        carouselData.append(carouselItem)
+                        print("➡️", carouselData.count)
                     }
-                    
-                    completion(carouselData)
+                }
+            }
+            
+            completion(carouselData)
         })
     }
-
+    
     func getUserFromDB(_ id: String, completion: @escaping (MyUser?) -> Void) {
         let db = configureFB()
-      
+        
         db.child("users").child(id).getData(completion: { error, user in
             guard error == nil else {
                 print(error?.localizedDescription ?? "❌ oops no user")
@@ -106,13 +106,13 @@ class FireAPIManager {
             }
             var userData: MyUser?
             
-                 if let dataDict = user?.value as? [String: Any] {
-                     let id = dataDict["id"] as? String ?? ""
-                     let name = dataDict["name"] as? String ?? ""
-                     let radarData = dataDict["radarData"] as? [String: Int] ?? [:]
-                     userData = MyUser(id: id, name: name, radarData: radarData)
-                 }
-           completion(userData)
+            if let dataDict = user?.value as? [String: Any] {
+                let id = dataDict["id"] as? String ?? ""
+                let name = dataDict["name"] as? String ?? ""
+                let radarData = dataDict["radarData"] as? [String: Int] ?? [:]
+                userData = MyUser(id: id, name: name, radarData: radarData)
+            }
+            completion(userData)
         })
     }
     
@@ -239,41 +239,41 @@ class FireAPIManager {
             }
         }.resume()
     }
-       
-
+    
+    
     
     func getReasonsFromDb(id: String, completion: @escaping ([String: String]) -> Void) {
         let db = configureFB()
-            let valueRef = db.child("graphData").child(id).child("reasons")
-            print("Fetching data from:", valueRef.url)
-
-            valueRef.getData { error, dataSnapshot in
-                if let error = error {
-                    print("Error fetching data for ID:", id)
-                    print("Error:", error.localizedDescription)
-                    completion(["1": "error"])
-                    return
-                }
-
-                guard let reasonSnap = dataSnapshot, let reasonArray = reasonSnap.value as? [Any] else {
-                    print("Data could not be cast as [Any]")
-                    print("Raw data:", dataSnapshot?.value ?? "nil")
-                    completion(["1": "error"])
-                    return
-                }
-
-                var reasonDictionary: [String: String] = [:]
-                for (index, reasonValue) in reasonArray.enumerated() {
-                    if let reason = reasonValue as? String {
-                        reasonDictionary[String(index)] = reason
-                    }
-                }
-
-                print("➡️ Reasons", reasonDictionary)
-                completion(reasonDictionary)
+        let valueRef = db.child("graphData").child(id).child("reasons")
+        print("Fetching data from:", valueRef.url)
+        
+        valueRef.getData { error, dataSnapshot in
+            if let error = error {
+                print("Error fetching data for ID:", id)
+                print("Error:", error.localizedDescription)
+                completion(["1": "error"])
+                return
             }
-
+            
+            guard let reasonSnap = dataSnapshot, let reasonArray = reasonSnap.value as? [Any] else {
+                print("Data could not be cast as [Any]")
+                print("Raw data:", dataSnapshot?.value ?? "nil")
+                completion(["1": "error"])
+                return
+            }
+            
+            var reasonDictionary: [String: String] = [:]
+            for (index, reasonValue) in reasonArray.enumerated() {
+                if let reason = reasonValue as? String {
+                    reasonDictionary[String(index)] = reason
+                }
+            }
+            
+            print("➡️ Reasons", reasonDictionary)
+            completion(reasonDictionary)
         }
+        
+    }
     
     
     func getUserGraphData(_ id: String, completion: @escaping (([Int],[Double])) -> Void){
@@ -282,7 +282,7 @@ class FireAPIManager {
         let dateRef = db.child("graphData").child("\(id)").child("data").child("date")
         var valuesArray = [Double]()
         var keysArray = [Int]()
-       
+        
         dateRef.getData { error, values in
             if let error = error {
                 print("Error fetching graph data: \(error)")
@@ -306,34 +306,34 @@ class FireAPIManager {
                 completion((keysArray, valuesArray))
             }
             
-         
+            
         }
     }
-
+    
     //MARK: - Get Ukraine Data
     func getUkraineMenuData(completion: @escaping ([UkraineSection]) -> Void) {
         let db = configureFB()
         db.child("Ukraine").getData(completion: { error, snapshot in
             guard error == nil else {
-               print(error!.localizedDescription)
-               return;
-             }
+                print(error!.localizedDescription)
+                return;
+            }
             var sideMenuData: [UkraineSection] = []
-                    
+            
             if let value = snapshot?.value as? [String: Any] {
-                        for (_, data) in value {
-                            if let dataDict = data as? [String: Any] {
-                                let image = dataDict["image"]  as? String ?? ""
-                                let location = dataDict["location"] as? String ?? ""
-                                let name = dataDict["name"] as? String ?? ""
-                                let videolink = dataDict["videoLink"] as? String ?? ""
-                                let sidemenuItem = UkraineSection(image: image, location: location, name: name, videoLink: videolink)
-                                sideMenuData.append(sidemenuItem)
-                                print("➡️", sideMenuData.count)
-                            }
-                        }
+                for (_, data) in value {
+                    if let dataDict = data as? [String: Any] {
+                        let image = dataDict["image"]  as? String ?? ""
+                        let location = dataDict["location"] as? String ?? ""
+                        let name = dataDict["name"] as? String ?? ""
+                        let videolink = dataDict["videoLink"] as? String ?? ""
+                        let sidemenuItem = UkraineSection(image: image, location: location, name: name, videoLink: videolink)
+                        sideMenuData.append(sidemenuItem)
+                        print("➡️", sideMenuData.count)
                     }
-                    completion(sideMenuData)
+                }
+            }
+            completion(sideMenuData)
         })
     }
     
@@ -342,31 +342,31 @@ class FireAPIManager {
         let db = configureFB()
         db.child("sidemenu").getData(completion: { error, snapshot in
             guard error == nil else {
-               print(error!.localizedDescription)
-               return;
-             }
+                print(error!.localizedDescription)
+                return;
+            }
             var sideMenuData: [SafeSpace] = []
-                    
+            
             if let value = snapshot?.value as? [String: Any] {
-                        for (_, data) in value {
-                            if let dataDict = data as? [String: Any] {
-                                let image = dataDict["image"]  as? String ?? ""
-                                let name = dataDict["name"] as? String ?? ""
-                                let videolink = dataDict["videoLink"] as? String ?? ""
-        
-                                let sidemenuItem = SafeSpace(image: image, name: name, videoLink: videolink)
-                                sideMenuData.append(sidemenuItem)
-                                print("➡️", sideMenuData.count)
-                            }
-                        }
+                for (_, data) in value {
+                    if let dataDict = data as? [String: Any] {
+                        let image = dataDict["image"]  as? String ?? ""
+                        let name = dataDict["name"] as? String ?? ""
+                        let videolink = dataDict["videoLink"] as? String ?? ""
+                        
+                        let sidemenuItem = SafeSpace(image: image, name: name, videoLink: videolink)
+                        sideMenuData.append(sidemenuItem)
+                        print("➡️", sideMenuData.count)
                     }
-                    completion(sideMenuData)
+                }
+            }
+            completion(sideMenuData)
         })
     }
     
     //MARK: - UPDATE
     
-    func updateUserChartsData(id: String, graphData: GraphData, radarData: [String: Int] ,completion: @escaping () -> Void) {
+    func updateUserChartsData(id: String, reason: String, graphData: GraphData, radarData: [String: Int] ,completion: @escaping () -> Void) {
         let db = configureFB()
         let userGraphRef = db.child("graphData").child("\(id)")
         let dataRef = userGraphRef.child("data")
@@ -379,11 +379,21 @@ class FireAPIManager {
         indexRef.updateChildValues(["Index": graphData.index])
         valueRef.updateChildValues(["\(graphData.index)" : graphData.value])
         dateRef.updateChildValues(["\(graphData.index)" : graphData.date])
-        if graphData.reason != "" {
-            reasonRef.updateChildValues(["\(graphData.index)": graphData.reason])
+        if reason != "" {
+            reasonRef.updateChildValues(["\(graphData.index)": reason])
         }
         userRadarRef.updateChildValues(radarData)
         
+        completion()
+    }
+    
+    
+    //MARK: - DELETE
+    
+    func deleteAccountData(id: String, completion: @escaping () -> Void) {
+        let db = configureFB()
+        db.child("graphData").child("\(id)").removeValue()
+        db.child("users").child("\(id)").removeValue()
         completion()
     }
 }

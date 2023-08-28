@@ -20,6 +20,7 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var dreamButton: UIButton!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var backgroundImage: UIImageView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     private let sideMenu = SideMenuViewController()
     private let timerVM = TimerViewModel()
     let chartView = ChartView()
@@ -35,6 +36,7 @@ final class MainViewController: UIViewController {
         //        UserDefaults.standard.removeObject(forKey: "savedEndDate")
         //        // Call synchronize to ensure changes are immediately saved
         //        UserDefaults.standard.synchronize()
+        chartView.loaderDelegate = self
         sideMenu.linkDelegate = self
         checkTimerState { [weak self] in
             self?.updateRemainingTime()
@@ -112,21 +114,8 @@ final class MainViewController: UIViewController {
     }
     
     @IBAction func dreamButtonTapped(_ sender: UIButton) {
-        //  present(menu, animated: true, completion: nil)
-        guard let id = Auth.auth().currentUser?.uid else {return}
-        //        FireAPIManager.shared.getReasons(id: "bKCDOlG1qYSyTFMWqD72LyPL7kC3") { result in
-        //            switch result {
-        //            case .success(let userReasons):
-        //                // Access user reasons using user IDs
-        //                print("userReasns➡️", userReasons)
-        //
-        //            case .failure(let error):
-        //                print("Error:", error)
-        //            }
-        //        }
-        FireAPIManager.shared.addReason(id: "bKCDOlG1qYSyTFMWqD72LyPL7kC3", newReason: "ok") { result in
-            print(result)
-        }}
+          present(menu, animated: true, completion: nil)
+       }
     
 }
 
@@ -175,5 +164,11 @@ extension MainViewController: TiggerTimerDelegate {
         timerVM.saveTimerDates { [weak self] in
             self?.updateRemainingTime()
         }
+    }
+}
+
+extension MainViewController: ChartLoaderDelegate {
+    func finishLoading() {
+        loadingIndicator.stopAnimating()
     }
 }

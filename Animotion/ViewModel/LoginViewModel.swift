@@ -124,11 +124,11 @@ extension LoginViewModel {
                                 "Sad": 0
                             ]
                             let user = MyUser(id: id, name: "Name", radarData: radarData)
-                            let userGraph = GraphData(index: 0, date: doubleDate, value: 5, reason: "Starting point")
+                            let userGraph = GraphData(index: 0, date: doubleDate, value: 5)
                             
                             FireAPIManager.shared.addingUserToFirebase(user: user)
                             
-                            FireAPIManager.shared.addGraphData(id: id, graphData: userGraph)
+                            FireAPIManager.shared.addGraphData(id: id, graphData: userGraph, reason: "Starting point")
                             print(user)
                             print("➡️ user added")
                             print(authResult.user)
@@ -205,11 +205,11 @@ extension LoginViewModel {
                             "Sad": 0
                         ]
                         let user = MyUser(id: id, name: "Name", radarData: radarData)
-                        let userGraph = GraphData(index: 0, date: doubleDate, value: 5, reason: "Starting point")
+                        let userGraph = GraphData(index: 0, date: doubleDate, value: 5)
                         
                         FireAPIManager.shared.addingUserToFirebase(user: user)
                         
-                        FireAPIManager.shared.addGraphData(id: id, graphData: userGraph)
+                        FireAPIManager.shared.addGraphData(id: id, graphData: userGraph, reason: "Starting point")
                         print(user)
                         print("➡️ user added")
                         print(authResult.user)

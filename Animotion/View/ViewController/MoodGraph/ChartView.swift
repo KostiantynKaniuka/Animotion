@@ -9,8 +9,13 @@ import UIKit
 import SnapKit
 import DGCharts
 
+protocol ChartLoaderDelegate: AnyObject {
+    func finishLoading()
+}
+
 final class ChartView: UIViewController {
     private let chartVM = ChartViewModel()
+    weak var loaderDelegate: ChartLoaderDelegate?
     
     lazy var lineChartView: LineChartView = {
         let chartView = LineChartView()
@@ -78,6 +83,7 @@ final class ChartView: UIViewController {
                 self.data = []
                 self.data = self.chartVM.chartData
                 self.setChartData()
+                self.loaderDelegate?.finishLoading()
             }
         }
     }

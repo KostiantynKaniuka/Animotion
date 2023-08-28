@@ -56,13 +56,8 @@ final class CaptureMoodViewModel: RadarParsable {
             guard let self = self else {return}
             let newIndex = index + dataIndex
             print(newIndex)
-            if self.reasonText.value != "" && self.reasonText.value != " " {
-                let userGraph = GraphData(index: newIndex, date: doubleDate, value: moodData, reason: self.reasonText.value)
+                let userGraph = GraphData(index: newIndex, date: doubleDate, value: moodData)
                 completion(userGraph, self.menthaldata)
-            } else {
-                let userGraph = GraphData(index: newIndex, date: doubleDate, value: moodData, reason: "")
-                completion(userGraph, self.menthaldata)
-            }
         }
     }
 }

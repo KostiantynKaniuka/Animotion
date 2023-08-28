@@ -94,7 +94,7 @@ final class CaptureViewController: UIViewController {
                 let id = user.uid
                 
                 self.captureVM.sendUserChoice(id: id) { graph, radar in
-                    FireAPIManager.shared.updateUserChartsData(id: id, graphData: graph, radarData: radar) {
+                    FireAPIManager.shared.updateUserChartsData(id: id, reason: self.captureVM.reasonText.value, graphData: graph, radarData: radar) {
                         self.captureVM.buttonEnabled.value = false
                         self.timerDelegate?.triggerTimer()
                         self.graphDelegate?.refetchGraphData()

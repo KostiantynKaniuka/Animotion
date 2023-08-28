@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import SnapKit
 
 protocol VideoLinkDelegate: AnyObject {
     func sendTheLink(_ link: String, title: String, location: String)
@@ -17,6 +18,7 @@ final class SideMenuViewController: UIViewController {
     private let profileImage = UIImageView()
     private let profileLabel = UILabel()
     private let topView = UIView()
+    private let loadingIndicator = UIActivityIndicatorView()
     private let viewModel = SideMenuViewModel()
 
     private var ukraineSection = [UkraineSection]()
@@ -47,7 +49,9 @@ final class SideMenuViewController: UIViewController {
         menuTableView.dataSource = self
         viewModel.ukraineDelegate = self
         viewModel.safeSpaceDelegate = self
-        viewModel.getUkraineSideMenuData()
+        viewModel.getUkraineSideMenuData { [weak self] in
+            self?.loadingIndicator.stopAnimating()
+        }
         viewModel.getSafeSpaceSideMenuData()
         menuTableView.register(UINib(nibName: "SideMenuCellTableViewCell", bundle: nil), forCellReuseIdentifier: SideMenuCellTableViewCell.sideMenuReuseId)
     }
@@ -186,6 +190,12 @@ extension SideMenuViewController {
     private func setupUi() {
         view.backgroundColor = .systemGray
         
+        loadingIndicator.style = .large
+        loadingIndicator.frame.size = CGSize(width: 100, height: 80)
+        loadingIndicator.color = .white
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.startAnimating()
+
         menuTableView.backgroundColor = .menuBacgtoundColor
         menuTableView.separatorStyle = .none
         menuTableView.showsVerticalScrollIndicator = false
@@ -215,9 +225,13 @@ extension SideMenuViewController {
         topView.addSubview(profileImage)
         topView.addSubview(profileLabel)
         view.addSubview(menuTableView)
+        menuTableView.addSubview(loadingIndicator)
 
       
         
+        loadingIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
         
         NSLayoutConstraint.activate([
             profileImage.centerYAnchor.constraint(equalTo: topView.centerYAnchor),

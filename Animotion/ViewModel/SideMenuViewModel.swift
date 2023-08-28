@@ -16,13 +16,15 @@ protocol SafeSpaceDataDelegate: AnyObject {
 }
 
 final class SideMenuViewModel {
+    
     weak var ukraineDelegate: UkraineMenuDataDelegate?
     weak var safeSpaceDelegate: SafeSpaceDataDelegate?
     
-    func getUkraineSideMenuData() {
+    func getUkraineSideMenuData(completion: @escaping () -> Void) {
         FireAPIManager.shared.getUkraineMenuData { [weak self] result in
             DispatchQueue.main.async {
                 self?.ukraineDelegate?.ukraineSideMenuDataLoaded(data: result)
+                completion()
             }
         }
     }

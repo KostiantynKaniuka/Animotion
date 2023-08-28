@@ -43,7 +43,7 @@ final class UserScreenViewModel: RadarParsable {
         case .angry:
             return .red
         case .satisfied:
-            return .lightGray
+            return .gray
         }
     }
     

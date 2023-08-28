@@ -28,6 +28,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     private let deleteAccountButton =   DeleteAccountButton()
     private let buttonsStack =          UIStackView()
     private let plusButton =            UIButton()
+    private let loadingIndicator =      UIActivityIndicatorView()
     private let userScreenVM =          UserScreenViewModel()
     private let imageManager = ImageManager()
     
@@ -120,13 +121,14 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
             let yAxis = self.chartView.yAxis
             let maxValue = self.radarData.values.max()
             yAxis.axisMaximum = Double(maxValue ?? 0) + 1 // Adjust as needed
-            
+            self.loadingIndicator.stopAnimating()
         }
         setUpRadar()
     }
     
     private func deleteButtonTapped() {
         let user = Auth.auth().currentUser
+        guard let userId = user?.uid else {return}
         deleteAccountButton.tapPublisher
             .sink { [weak self] _ in
                 guard let self = self else {return}
@@ -135,15 +137,17 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
                                             message: self.alertMessage.body,
                                             vc: self,
                                             handler: ({ _ in
-                    user?.delete { error in
-                        if let error = error as NSError? {
-                            let message = self.userScreenVM.formateAuthError(error)
-                            self.userScreenVM.showAlert(title: self.alertMessage.title,
-                                                        message: message,
-                                                        vc: self)
-                        } else {
-                            self.logoutDelegate?.didLogout()
-                            print("😶‍🌫️ account deleted")
+                    FireAPIManager.shared.deleteAccountData(id: userId) {
+                        user?.delete { error in
+                            if let error = error as NSError? {
+                                let message = self.userScreenVM.formateAuthError(error)
+                                self.userScreenVM.showAlert(title: self.alertMessage.title,
+                                                            message: message,
+                                                            vc: self)
+                            } else {
+                                    self.logoutDelegate?.didLogout()
+                                    print("😶‍🌫️ account deleted")
+                            }
                         }
                     }
                 }), cancelhadler: UIAlertAction())
@@ -201,6 +205,7 @@ extension UserScreenViewController {
     
     private func setupConstaints() {
         view.add(subviews: backgroundImage,
+                 loadingIndicator,
                  userImage,
                  plusButton,
                  userNameField,
@@ -222,6 +227,10 @@ extension UserScreenViewController {
             backgroundImage.snp.makeConstraints { make in
                 make.top.bottom.right.left.equalToSuperview()
             }
+        }
+        
+        loadingIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
         
         chartView.snp.makeConstraints { make in
@@ -320,6 +329,13 @@ extension UserScreenViewController {
     }
     
     private func setupAppearance() {
+        
+        loadingIndicator.style = .large
+        loadingIndicator.frame.size = CGSize(width: 100, height: 80)
+        loadingIndicator.color = .white
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.startAnimating()
+        
         privacyPolicy.text =                "Privacy policy"
         privacyPolicy.textColor =           .darkGray
         privacyPolicy.font =                .systemFont(ofSize: 12)
