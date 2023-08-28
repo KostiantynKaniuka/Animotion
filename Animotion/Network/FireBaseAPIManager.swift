@@ -366,6 +366,15 @@ class FireAPIManager {
     
     //MARK: - UPDATE
     
+    
+    func updateUserName(id: String, newName: String, completion: @escaping () -> Void) {
+        let db = configureFB()
+        let userNameRef = db.child("users").child("\(id)")
+
+        userNameRef.updateChildValues(["name": newName])
+        completion()
+    }
+    
     func updateUserChartsData(id: String, reason: String, graphData: GraphData, radarData: [String: Int] ,completion: @escaping () -> Void) {
         let db = configureFB()
         let userGraphRef = db.child("graphData").child("\(id)")

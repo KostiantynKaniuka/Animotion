@@ -15,7 +15,7 @@ protocol RadarParsable: AnyObject {
 
 final class UserScreenViewModel: RadarParsable {
     var menthalState: MethalState = .satisfied
-    
+    var username = CurrentValueSubject<String, Never>("user name")
     var bag = Set<AnyCancellable>()
     
     func parseRadar(id: String, completion: @escaping ([String: Int]) -> Void) {
@@ -23,7 +23,29 @@ final class UserScreenViewModel: RadarParsable {
             completion(data)
         }
     }
+    
+    func updateUserName(completion: @escaping () -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {return}
+        FireAPIManager.shared.updateUserName(id: userId, newName: username.value) {
+            completion()
+        }
+       
+    }
 
+    func parseUser(completion: @escaping () -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {return}
+        
+        FireAPIManager.shared.getUserFromDB(userId) { [weak self] user in
+            guard let myUser = user else {
+                print("fail to parse user")
+                return
+            }
+            let user = MyUser(id: myUser.id, name: myUser.name, radarData: myUser.radarData)
+            self?.username.value = user.name
+            completion()
+        }
+    }
+    
     func setChartColor(data: [String: Int] ) -> UIColor {
         if let maxKey = data.max(by: { $0.value < $1.value })?.key {
             menthalState = MethalState.fromString("\(maxKey)")!
