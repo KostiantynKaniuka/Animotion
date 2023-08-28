@@ -17,5 +17,6 @@ pod 'SnapKit', '~> 5.6.0'
 pod 'CombineCocoa'
 pod 'GoogleSignIn'
 pod 'DGCharts'
+pod 'AIFlatSwitch'
 inhibit_all_warnings!
 end

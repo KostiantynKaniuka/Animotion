@@ -11,9 +11,15 @@ import CombineCocoa
 import SideMenu
 import SnapKit
 import FirebaseAuth
+import DGCharts
+import AIFlatSwitch
 
 protocol TiggerTimerDelegate: AnyObject {
     func triggerTimer()
+}
+
+protocol ImportRadarDelegate: AnyObject {
+    func importRadar()
 }
 
 final class MainViewController: UIViewController {
@@ -21,11 +27,15 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    private let importButton = ImportGraphButton()
+    private let checkMarkImage = AIFlatSwitch()
     private let sideMenu = SideMenuViewController()
     private let timerVM = TimerViewModel()
+    weak var radarDelegate: ImportRadarDelegate?
     let chartView = ChartView()
     lazy var menu = SideMenuNavigationController(rootViewController: sideMenu)
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    private var bag = Set<AnyCancellable>()
     weak var submitDelegate: SubmitButtonDelegate? // delegate to togle submit button state(CaptureViewController)
     
     
@@ -36,11 +46,49 @@ final class MainViewController: UIViewController {
         //        UserDefaults.standard.removeObject(forKey: "savedEndDate")
         //        // Call synchronize to ensure changes are immediately saved
         //        UserDefaults.standard.synchronize()
+        setUpAppearance()
         chartView.loaderDelegate = self
         sideMenu.linkDelegate = self
+        saveGraphToGallary()
         checkTimerState { [weak self] in
             self?.updateRemainingTime()
         }
+        
+    }
+    
+ 
+    
+    private func saveGraphToGallary() {
+        importButton.tapPublisher
+            .sink { [weak self] _ in
+                guard let self = self else {return}
+                let senseBack = UIImpactFeedbackGenerator(style: .heavy)
+                self.checkMarkImage.isHidden = false
+                self.checkMarkImage.setSelected(true, animated: true)
+        
+                self.chartView.lineChartView.backgroundColor = .black
+                
+                self.checkMarkImage.selectionAnimationDidStart = { isSelected in
+                    print("New state: \(isSelected)")
+                }
+                self.checkMarkImage.selectionAnimationDidStop = { isSelected in
+                    self.checkMarkImage.isHidden = true
+                    senseBack.impactOccurred()
+                    print("State when animation stopped: \(isSelected)")
+                }
+                
+                if let chartImage = self.chartView.lineChartView.getChartImage(transparent: true) {
+                    // Save the captured image to the camera roll
+                    UIImageWriteToSavedPhotosAlbum(chartImage, nil, nil, nil)
+                    self.radarDelegate?.importRadar()
+                    self.chartView.lineChartView.backgroundColor = .clear
+                    let senseBack = UIImpactFeedbackGenerator(style: .heavy)
+                    senseBack.impactOccurred()
+                }
+                
+            }
+        
+            .store(in: &bag)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -134,9 +182,20 @@ extension MainViewController: VideoLinkDelegate {
 
 extension MainViewController {
     
+    private func setUpAppearance() {
+        checkMarkImage.lineWidth = 2.0
+        checkMarkImage.strokeColor = UIColor.white
+        checkMarkImage.trailStrokeColor = UIColor.lightGray
+        checkMarkImage.backgroundLayerColor = UIColor.lightGray
+        checkMarkImage.animatesOnTouch = false
+        checkMarkImage.isHidden = true
+    }
+    
     private func setUpConstraints() {
+        chartView.view.addSubview(checkMarkImage)
         view.backgroundColor = UIColor(red: 178/255, green: 236/255, blue: 197/255, alpha: 1)
         view.addSubview(chartView.view)
+        view.addSubview(importButton)
         chartView.view.snp.makeConstraints { make in
             if UIScreen.main.bounds.size.height >= 812 {
                 make.height.equalTo(CGFloat(400))
@@ -154,6 +213,16 @@ extension MainViewController {
                     make.left.right.equalToSuperview().inset(-8)
                 }
             }
+        }
+        checkMarkImage.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.size.equalTo(CGSize(width: 50, height: 50))
+        }
+        
+        
+        importButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(chartView.view.snp.bottom).offset(50)
         }
     }
 }

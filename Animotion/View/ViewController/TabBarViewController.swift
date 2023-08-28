@@ -23,6 +23,7 @@ final class TabBarViewController: UITabBarController {
     }
     
     private func applySetting() {
+        mainVC.radarDelegate = userVC
         captureVC.graphDelegate = mainVC.chartView
         captureVC.radarDelegate = userVC
         mainVC.submitDelegate = captureVC

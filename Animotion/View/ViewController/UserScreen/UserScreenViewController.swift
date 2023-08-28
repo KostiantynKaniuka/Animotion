@@ -148,7 +148,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
             self.chartView.data = data
             let yAxis = self.chartView.yAxis
             let maxValue = self.radarData.values.max()
-            yAxis.axisMaximum = Double(maxValue ?? 0) + 1 // Adjust as needed
+            yAxis.axisMaximum = Double(maxValue ?? 0) + 0.5
             self.loadingIndicator.stopAnimating()
         }
         setUpRadar()
@@ -240,6 +240,17 @@ extension UserScreenViewController: UITextViewDelegate {
         } else {
             return true
         }
+    }
+}
+
+extension UserScreenViewController: ImportRadarDelegate {
+    func importRadar() {
+        chartView.backgroundColor = .black
+        if let chartImage = self.chartView.getChartImage(transparent: true) {
+            
+            UIImageWriteToSavedPhotosAlbum(chartImage, nil, nil, nil)
+        }
+        chartView.backgroundColor = .clear
     }
 }
 

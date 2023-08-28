@@ -596,6 +596,7 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
+  - AIFlatSwitch (1.0.7)
   - AppAuth (1.6.2):
     - AppAuth/Core (= 1.6.2)
     - AppAuth/ExternalUserAgent (= 1.6.2)
@@ -780,6 +781,7 @@ PODS:
   - SnapKit (5.6.0)
 
 DEPENDENCIES:
+  - AIFlatSwitch
   - CombineCocoa
   - DGCharts
   - FirebaseAnalytics
@@ -794,6 +796,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - abseil
+    - AIFlatSwitch
     - AppAuth
     - BoringSSL-GRPC
     - CombineCocoa
@@ -823,6 +826,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
+  AIFlatSwitch: fd56a5e6ab8769f0b52cef815c4f071e83050352
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   CombineCocoa: e5210dbfb480ff251078929459ac17e750e7af1d
@@ -850,6 +854,6 @@ SPEC CHECKSUMS:
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: 0986d0764c2962aabed4076e4961ae45c1469386
+PODFILE CHECKSUM: d7e971aa2cf096b70a541de5a9dec8fb7bddef05
 
 COCOAPODS: 1.12.1
