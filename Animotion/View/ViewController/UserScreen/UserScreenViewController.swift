@@ -222,7 +222,6 @@ extension UserScreenViewController: UIImagePickerControllerDelegate, UINavigatio
         userImage.layer.cornerRadius =      userImage.frame.size.width / 2
         let imageManager = ImageManager()
         imageManager.saveImageToApp(image: selectedImage)
-        // UIImageWriteToSavedPhotosAlbum(selectedImage, nil, nil, nil)
         plusButton.isHidden = true
         self.dismiss(animated: true)
     }
@@ -245,7 +244,7 @@ extension UserScreenViewController: UITextViewDelegate {
 
 extension UserScreenViewController: ImportRadarDelegate {
     func importRadar() {
-        chartView.backgroundColor = .black
+        chartView.backgroundColor = .darkGray
         if let chartImage = self.chartView.getChartImage(transparent: true) {
             
             UIImageWriteToSavedPhotosAlbum(chartImage, nil, nil, nil)

@@ -66,7 +66,8 @@ final class MainViewController: UIViewController {
                 self.checkMarkImage.isHidden = false
                 self.checkMarkImage.setSelected(true, animated: true)
         
-                self.chartView.lineChartView.backgroundColor = .black
+                self.chartView.lineChartView.backgroundColor = .darkGray
+                self.chartView.lineChartView.layer.borderColor = UIColor.darkGray.cgColor
                 
                 self.checkMarkImage.selectionAnimationDidStart = { isSelected in
                     print("New state: \(isSelected)")
@@ -82,6 +83,7 @@ final class MainViewController: UIViewController {
                     UIImageWriteToSavedPhotosAlbum(chartImage, nil, nil, nil)
                     self.radarDelegate?.importRadar()
                     self.chartView.lineChartView.backgroundColor = .clear
+                    self.chartView.lineChartView.layer.borderColor = UIColor.white.cgColor
                     let senseBack = UIImpactFeedbackGenerator(style: .heavy)
                     senseBack.impactOccurred()
                 }

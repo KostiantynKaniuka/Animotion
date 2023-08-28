@@ -186,7 +186,7 @@ import UIKit
     /**
      Animation duration for the whole selection transition
      */
-    private let animationDuration: CFTimeInterval = 0.3
+    private let animationDuration: CFTimeInterval = 0.8
     /**
      Percentage where the checkmark tail ends
      */
