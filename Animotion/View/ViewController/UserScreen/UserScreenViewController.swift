@@ -29,6 +29,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     private let buttonsStack =          UIStackView()
     private let plusButton =            UIButton()
     private let loadingIndicator =      UIActivityIndicatorView()
+    private let imageLoadingIndicator =   UIActivityIndicatorView()
     private let userScreenVM =          UserScreenViewModel()
     private let imageManager = ImageManager()
     
@@ -106,6 +107,8 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
             }
             .store(in: &userScreenVM.bag)
     }
+    
+    
     
     private func setRadarData() {
         loadingIndicator.startAnimating()
@@ -245,6 +248,7 @@ extension UserScreenViewController {
     
     private func setupConstaints() {
         view.add(subviews: backgroundImage,
+                 imageLoadingIndicator,
                  loadingIndicator,
                  userImage,
                  plusButton,
@@ -271,6 +275,11 @@ extension UserScreenViewController {
         
         loadingIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
+        }
+        
+        imageLoadingIndicator.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(userNameField.snp.bottom).offset(16)
         }
         
         chartView.snp.makeConstraints { make in
@@ -369,11 +378,18 @@ extension UserScreenViewController {
     }
     
     private func setupAppearance() {
+        imageLoadingIndicator.style = .large
+        imageLoadingIndicator.frame.size = CGSize(width: 100, height: 80)
+        imageLoadingIndicator.color = .white
+        imageLoadingIndicator.hidesWhenStopped = true
+        
+        
         
         loadingIndicator.style = .large
         loadingIndicator.frame.size = CGSize(width: 100, height: 80)
         loadingIndicator.color = .white
         loadingIndicator.hidesWhenStopped = true
+        
        
         
         privacyPolicy.text =                "Privacy policy"
@@ -433,8 +449,10 @@ extension UserScreenViewController {
         userImage.layer.cornerRadius =      userImage.frame.size.width / 2
     }
     
-    
+    //MARK: - IMAGE PICKER
     private func pickImage() {
+        imageLoadingIndicator.startAnimating()
+      
         let photos = PHPhotoLibrary.authorizationStatus()
         switch photos {
         case .notDetermined:
@@ -453,7 +471,7 @@ extension UserScreenViewController {
                         imagePicker.sourceType = .photoLibrary
                         imagePicker.allowsEditing = true
                         imagePicker.delegate = self
-                        
+                        self.imageLoadingIndicator.stopAnimating()
                         self.present(imagePicker, animated: true)
                     }
                 case .limited:
@@ -464,6 +482,7 @@ extension UserScreenViewController {
                         imagePicker.allowsEditing = true
                         imagePicker.delegate = self
                         
+                        self.imageLoadingIndicator.stopAnimating()
                         self.present(imagePicker, animated: true)
                     }
                 @unknown default:
@@ -482,6 +501,7 @@ extension UserScreenViewController {
                 imagePicker.allowsEditing = true
                 imagePicker.delegate = self
                 
+                self.imageLoadingIndicator.stopAnimating()
                 self.present(imagePicker, animated: true)
             }
         case .limited:
@@ -492,6 +512,7 @@ extension UserScreenViewController {
                 imagePicker.allowsEditing = true
                 imagePicker.delegate = self
                 
+                self.imageLoadingIndicator.stopAnimating()
                 self.present(imagePicker, animated: true)
             }
         @unknown default:
