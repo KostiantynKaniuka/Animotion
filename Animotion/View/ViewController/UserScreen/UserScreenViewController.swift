@@ -29,6 +29,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     private let buttonsStack =          UIStackView()
     private let plusButton =            UIButton()
     private let loadingIndicator =      UIActivityIndicatorView()
+    private let imageLoadingIndicator =   UIActivityIndicatorView()
     private let userScreenVM =          UserScreenViewModel()
     private let imageManager = ImageManager()
     
@@ -45,6 +46,9 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
         plusButton.isHidden = true
         userNameField.isEditable = false
         chartView.delegate = self
+        userNameField.delegate = self
+        bindTextField()
+        applyUserInfo()
         setRadarData()
         chartView.animate(xAxisDuration: 1.4, yAxisDuration: 1.4, easingOption: .easeOutBack)
         editButtonPressed()
@@ -60,9 +64,28 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
         setProfileImage()
     }
     
+
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+    }
+    
+    private func applyUserInfo() {
+        userScreenVM.parseUser { [weak self] in
+            DispatchQueue.main.async {
+                self?.userNameField.text = self?.userScreenVM.username.value
+            }
+        }
+    }
+    
+    private func bindTextField () {
+        userNameField.textPublisher
+            .sink { [weak self] text in
+                guard let self = self else { return }
+                self.userScreenVM.username.value = text ?? "user name"
+            }
+            .store(in: &userScreenVM.bag)
     }
     
     private func plussButtonTapped() {
@@ -80,11 +103,15 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
                 guard let self = self else {return}
                 self.plusButton.isHidden = false
                 self.userNameField.isEditable = true
+                self.userNameField.becomeFirstResponder()
             }
             .store(in: &userScreenVM.bag)
     }
     
+    
+    
     private func setRadarData() {
+        loadingIndicator.startAnimating()
         radarData = [:]
         radarEntries = []
         guard let id = Auth.auth().currentUser?.uid else {return}
@@ -102,6 +129,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
             ]
             
             if (data.reduce(0){ $0 + $1.value } == 0) {
+                self.loadingIndicator.stopAnimating()
                 return
             } // radar data bug 🤯
             
@@ -120,7 +148,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
             self.chartView.data = data
             let yAxis = self.chartView.yAxis
             let maxValue = self.radarData.values.max()
-            yAxis.axisMaximum = Double(maxValue ?? 0) + 1 // Adjust as needed
+            yAxis.axisMaximum = Double(maxValue ?? 0) + 0.5
             self.loadingIndicator.stopAnimating()
         }
         setUpRadar()
@@ -200,11 +228,38 @@ extension UserScreenViewController: UIImagePickerControllerDelegate, UINavigatio
     }
 }
 
+extension UserScreenViewController: UITextViewDelegate {
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            userScreenVM.updateUserName { [weak self] in
+                textView.resignFirstResponder()
+                self?.plusButton.isHidden = true
+            }
+            return false
+        } else {
+            return true
+        }
+    }
+}
+
+extension UserScreenViewController: ImportRadarDelegate {
+    func importRadar() {
+        chartView.backgroundColor = .black
+        if let chartImage = self.chartView.getChartImage(transparent: true) {
+            
+            UIImageWriteToSavedPhotosAlbum(chartImage, nil, nil, nil)
+        }
+        chartView.backgroundColor = .clear
+    }
+}
+
 //MARK: - layout
 extension UserScreenViewController {
     
     private func setupConstaints() {
         view.add(subviews: backgroundImage,
+                 imageLoadingIndicator,
                  loadingIndicator,
                  userImage,
                  plusButton,
@@ -231,6 +286,11 @@ extension UserScreenViewController {
         
         loadingIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
+        }
+        
+        imageLoadingIndicator.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(userNameField.snp.bottom).offset(16)
         }
         
         chartView.snp.makeConstraints { make in
@@ -329,12 +389,19 @@ extension UserScreenViewController {
     }
     
     private func setupAppearance() {
+        imageLoadingIndicator.style = .large
+        imageLoadingIndicator.frame.size = CGSize(width: 100, height: 80)
+        imageLoadingIndicator.color = .white
+        imageLoadingIndicator.hidesWhenStopped = true
+        
+        
         
         loadingIndicator.style = .large
         loadingIndicator.frame.size = CGSize(width: 100, height: 80)
         loadingIndicator.color = .white
         loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.startAnimating()
+        
+       
         
         privacyPolicy.text =                "Privacy policy"
         privacyPolicy.textColor =           .darkGray
@@ -359,13 +426,14 @@ extension UserScreenViewController {
         userImage.isUserInteractionEnabled = true
         userImage.tintColor = .white
         
-        userNameField.text =                "User name"
+        userNameField.text =                userScreenVM.username.value
         userNameField.font =                .systemFont(ofSize: 17)
         userNameField.textAlignment =       .center
         userNameField.textColor =           .white
         userNameField.textContainer
             .maximumNumberOfLines =         1
         userNameField.backgroundColor =     .clear
+        userNameField.returnKeyType = .done
         backgroundImage.image =             UIImage(named: "backtest")
         
         plusButton.setImage(UIImage(systemName: "plus"), for: .normal)
@@ -392,8 +460,10 @@ extension UserScreenViewController {
         userImage.layer.cornerRadius =      userImage.frame.size.width / 2
     }
     
-    
+    //MARK: - IMAGE PICKER
     private func pickImage() {
+        imageLoadingIndicator.startAnimating()
+      
         let photos = PHPhotoLibrary.authorizationStatus()
         switch photos {
         case .notDetermined:
@@ -412,7 +482,7 @@ extension UserScreenViewController {
                         imagePicker.sourceType = .photoLibrary
                         imagePicker.allowsEditing = true
                         imagePicker.delegate = self
-                        
+                        self.imageLoadingIndicator.stopAnimating()
                         self.present(imagePicker, animated: true)
                     }
                 case .limited:
@@ -423,6 +493,7 @@ extension UserScreenViewController {
                         imagePicker.allowsEditing = true
                         imagePicker.delegate = self
                         
+                        self.imageLoadingIndicator.stopAnimating()
                         self.present(imagePicker, animated: true)
                     }
                 @unknown default:
@@ -441,6 +512,7 @@ extension UserScreenViewController {
                 imagePicker.allowsEditing = true
                 imagePicker.delegate = self
                 
+                self.imageLoadingIndicator.stopAnimating()
                 self.present(imagePicker, animated: true)
             }
         case .limited:
@@ -451,6 +523,7 @@ extension UserScreenViewController {
                 imagePicker.allowsEditing = true
                 imagePicker.delegate = self
                 
+                self.imageLoadingIndicator.stopAnimating()
                 self.present(imagePicker, animated: true)
             }
         @unknown default:

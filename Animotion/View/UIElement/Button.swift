@@ -349,3 +349,30 @@ final class CancelCaptureButton: UIButton {
        
     }
 }
+
+final class ImportGraphButton: UIButton {
+    
+    override init(frame: CGRect) {
+        super.init(frame:frame)
+        buttonSettings()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func buttonSettings() {
+        let attributedText = NSMutableAttributedString(string: "Import Graph", attributes: [
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12),
+            NSAttributedString.Key.foregroundColor: UIColor.darkGray,
+            NSAttributedString.Key.kern: 1
+        ])
+        var logoutButtonConfiguration = UIButton.Configuration.gray()
+        logoutButtonConfiguration.baseBackgroundColor = .white
+        logoutButtonConfiguration.imagePadding = 8
+        self.configuration = logoutButtonConfiguration
+        self.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
+        self.tintColor = .darkGray
+        self.setAttributedTitle(attributedText, for: .normal)
+    }
+}

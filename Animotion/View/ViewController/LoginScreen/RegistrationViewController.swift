@@ -79,6 +79,28 @@ final class RegistrationViewController: UIViewController {
                     }
                     
                     if authResult != nil {
+                        guard let userID = Auth.auth().currentUser?.uid else {return}
+                        //MARK: - CREATING USER IN DB
+                        let dateConverter = DateConvertor()
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+                        let currentDate = dateFormatter.string(from: Date())
+                        let formatedDate = dateFormatter.date(from: currentDate)
+                        let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
+                        let radarData = [
+                            "Happy": 0,
+                            "Good": 0,
+                            "Satisfied": 0,
+                            "Anxious": 0,
+                            "Angry": 0,
+                            "Sad": 0
+                        ]
+                        let user = MyUser(id: userID, name: self.registrationVM.nameText.value, radarData: radarData)
+                        let userGraph = GraphData(index: 0, date: doubleDate, value: 5)
+                        FireAPIManager.shared.addingUserToFirebase(user: user)
+                        FireAPIManager.shared.addGraphData(id: user.id, graphData: userGraph, reason: "Starting point")
+                        print(user)
+                        print("➡️ user added")
                         
                         Auth.auth().currentUser?.sendEmailVerification { error in
                             if let error = error as NSError? {

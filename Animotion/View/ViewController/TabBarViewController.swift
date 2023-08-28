@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 final class TabBarViewController: UITabBarController {
     //var homeVC = MainViewController()
     var userVC = UserScreenViewController()
@@ -16,11 +17,16 @@ final class TabBarViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        applySetting()
+        captureVC.timerDelegate = mainVC
+        setTabBar()
+    }
+    
+    private func applySetting() {
+        mainVC.radarDelegate = userVC
         captureVC.graphDelegate = mainVC.chartView
         captureVC.radarDelegate = userVC
         mainVC.submitDelegate = captureVC
-        captureVC.timerDelegate = mainVC
-        setTabBar()
     }
     
     func setTabBar() {
