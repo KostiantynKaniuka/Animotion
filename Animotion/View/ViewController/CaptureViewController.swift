@@ -325,9 +325,13 @@ extension CaptureViewController {
         }
         
         privacyPolicyTextView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().inset(50)
             make.size.equalTo(CGSize(width: 100, height: 30))
+            make.centerX.equalToSuperview()
+            if UIScreen.main.bounds.size.height >= 812 { // iPhone X and newer models
+                make.bottom.equalToSuperview().inset(50)
+            } else { // iPhone 8 and older models
+                make.bottom.equalToSuperview().inset(20)
+            }
         }
     }
     
@@ -340,6 +344,7 @@ extension CaptureViewController {
         privacyPolicyTextView.textColor =           .darkGray
         privacyPolicyTextView.font =                .systemFont(ofSize: 12)
         privacyPolicyTextView.backgroundColor = .clear
+        privacyPolicyTextView.textAlignment = .center
         privacyPolicyTextView.isEditable = false
         
         moodDescriptionLabel.text = "Please rate your mood from 1 to 10 where: \n1 - Horrible, \n10 - Wonderful."

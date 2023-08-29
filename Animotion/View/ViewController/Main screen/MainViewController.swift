@@ -221,10 +221,13 @@ extension MainViewController {
             make.size.equalTo(CGSize(width: 50, height: 50))
         }
         
-        
         importButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(chartView.view.snp.bottom).offset(50)
+            if UIScreen.main.bounds.size.height >= 812 { // iPhone X and newer models
+                make.top.equalTo(chartView.view.snp.bottom).offset(50)
+            } else { // iPhone 8 and older models
+                make.top.equalTo(chartView.view.snp.bottom).offset(25)
+            }
         }
     }
 }
