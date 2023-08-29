@@ -63,7 +63,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
         setProfileImage()
     }
     
-
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -172,8 +172,8 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
                                                             message: message,
                                                             vc: self)
                             } else {
-                                    self.logoutDelegate?.didLogout()
-                                    print("😶‍🌫️ account deleted")
+                                self.logoutDelegate?.didLogout()
+                                print("😶‍🌫️ account deleted")
                             }
                         }
                     }
@@ -396,7 +396,7 @@ extension UserScreenViewController {
         loadingIndicator.frame.size = CGSize(width: 100, height: 80)
         loadingIndicator.color = .white
         loadingIndicator.hidesWhenStopped = true
-     
+        
         buttonsStack.spacing =              5
         buttonsStack.alignment =            .fill
         buttonsStack.axis =                 .horizontal
@@ -453,7 +453,7 @@ extension UserScreenViewController {
     //MARK: - IMAGE PICKER
     private func pickImage() {
         imageLoadingIndicator.startAnimating()
-      
+        
         let photos = PHPhotoLibrary.authorizationStatus()
         switch photos {
         case .notDetermined:

@@ -14,7 +14,6 @@ final class TabBarViewController: UITabBarController {
     var captureVC = CaptureViewController()
     var mainVC = MainViewController()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         applySetting()

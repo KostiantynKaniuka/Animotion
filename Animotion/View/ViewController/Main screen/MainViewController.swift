@@ -56,7 +56,7 @@ final class MainViewController: UIViewController {
         
     }
     
- 
+    
     
     private func saveGraphToGallary() {
         importButton.tapPublisher
@@ -65,7 +65,7 @@ final class MainViewController: UIViewController {
                 let senseBack = UIImpactFeedbackGenerator(style: .heavy)
                 self.checkMarkImage.isHidden = false
                 self.checkMarkImage.setSelected(true, animated: true)
-        
+                
                 self.chartView.lineChartView.backgroundColor = .darkGray
                 self.chartView.lineChartView.layer.borderColor = UIColor.darkGray.cgColor
                 
@@ -164,8 +164,8 @@ final class MainViewController: UIViewController {
     }
     
     @IBAction func dreamButtonTapped(_ sender: UIButton) {
-          present(menu, animated: true, completion: nil)
-       }
+        present(menu, animated: true, completion: nil)
+    }
     
 }
 
@@ -221,12 +221,13 @@ extension MainViewController {
             make.size.equalTo(CGSize(width: 50, height: 50))
         }
         
+        
         importButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            if UIScreen.main.bounds.size.height >= 812 { // iPhone X and newer models
+            if UIScreen.main.bounds.size.height < 812 {
+                make.top.equalTo(chartView.view.snp.bottom).offset(20)
+            } else {
                 make.top.equalTo(chartView.view.snp.bottom).offset(50)
-            } else { // iPhone 8 and older models
-                make.top.equalTo(chartView.view.snp.bottom).offset(25)
             }
         }
     }

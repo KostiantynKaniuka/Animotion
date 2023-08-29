@@ -1,0 +1,28 @@
+
+desc"Create app on Appstore connect"
+lane :create_app do
+  create_app_online # produce
+end
+default_platform(:ios)
+
+platform :ios do
+  desc "Sync signing"
+  lane :signing do
+
+  end
+
+desc "Build binary"
+lane :build do
+signing
+end
+
+desc "Release"
+lane :release do
+build
+end
+
+desc "Builds, achieves and uploads ipa to TestFlight"
+lane :testflight_lane do
+  # Actions
+end
+end
