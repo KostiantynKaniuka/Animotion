@@ -37,11 +37,12 @@ final class CaptureViewController: UIViewController {
     private let dividerView = UIView()
     private let mentalDescriptionLabel = UILabel()
     private let buttonsStack = UIStackView()
+    private let privacyPolicyTextView =         UITextView()
     private let reasonTextField = CustomTextField()
     private let submitButton = SubmitButton()
     private let cancelButton = CancelCaptureButton()
     private var captureVM = CaptureMoodViewModel()
-  
+    
     weak var graphDelegate: GraphDataDelegate?
     weak var radarDelegate: RadarDataDelegate?
     weak var timerDelegate: TiggerTimerDelegate?
@@ -49,6 +50,7 @@ final class CaptureViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Capture mood here"
+        
         mentalStatePickerView.dataSource = self
         mentalStatePickerView.delegate = self
         moodPickerView.delegate = self
@@ -57,10 +59,25 @@ final class CaptureViewController: UIViewController {
         parseUserRadar()
         setUpLayout()
         applyUISettings()
+        insertTheLink()
         submitButtonTapped()
         cancelButtonTapped()
         textFieldPublisher()
         buttonState()
+    }
+    
+    
+    private func insertTheLink() {
+        let color = UIColor.darkGray
+        let linkColor = color
+        let attributedPrivacy = NSMutableAttributedString(string: "Privacy policy")
+        let privatelinkRange = NSRange(location: 0, length: 14)
+        let privatelinkColor = color
+        attributedPrivacy.addAttribute(.link, value: "https://docs.google.com/document/d/1bJsy3UPdnzq5McYI2BePdUM8hYxh9LRwhfrbxV9uOjY/edit?usp=sharing", range: privatelinkRange)
+        attributedPrivacy.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: privatelinkRange)
+        attributedPrivacy.addAttribute(.underlineColor, value: linkColor, range: privatelinkRange)
+        privacyPolicyTextView.linkTextAttributes = [.foregroundColor: privatelinkColor]
+        privacyPolicyTextView.attributedText = attributedPrivacy
     }
     
     private func parseUserRadar() {
@@ -133,18 +150,18 @@ extension CaptureViewController: UIPickerViewDataSource {
         if pickerView == mentalStatePickerView {
             result = CaptureMoodViewModel.menthalStatePickerData.count
         }
-       
+        
         return result
     }
-        
+    
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         var title: NSAttributedString = NSAttributedString(string: "")
         if pickerView == moodPickerView {
-           title = NSAttributedString(string: String(CaptureMoodViewModel.moodPickerData[row]), attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+            title = NSAttributedString(string: String(CaptureMoodViewModel.moodPickerData[row]), attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         }
         
         if pickerView == mentalStatePickerView {
-           title = NSAttributedString(string: CaptureMoodViewModel.menthalStatePickerData[row], attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+            title = NSAttributedString(string: CaptureMoodViewModel.menthalStatePickerData[row], attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
             captureVM.userMenthalString = title.string
         }
         return title
@@ -187,7 +204,7 @@ extension CaptureViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder() 
+        textField.resignFirstResponder()
         return true
     }
 }
@@ -204,7 +221,7 @@ extension CaptureViewController {
     private func setUpLayout() {
         view.add(subviews: backgroundImage,
                  scrollView)
-       
+        
         scrollView.addSubview(contentView)
         
         buttonsStack.addArrangedSubview(submitButton)
@@ -220,8 +237,9 @@ extension CaptureViewController {
                         descriptionLabel,
                         reasonLabel,
                         reasonTextField,
-                        buttonsStack)
-
+                        buttonsStack,
+                        privacyPolicyTextView)
+        
         scrollView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
@@ -249,15 +267,15 @@ extension CaptureViewController {
             make.size.equalTo(CGSize(width: 300, height: 300))
             make.left.top.equalToSuperview().offset(8)
             make.right.equalToSuperview().offset(-8)
-        
+            
         }
         
         moodDescriptionLabel.snp.makeConstraints { make in
-           make.left.equalToSuperview().offset(8)
+            make.left.equalToSuperview().offset(8)
             make.centerY.equalTo(moodPickerView)
             make.right.equalTo(moodPickerView.snp.left).offset(-8)
         }
-
+        
         mentalDescriptionLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(8)
             make.centerY.equalTo(mentalStatePickerView)
@@ -268,25 +286,25 @@ extension CaptureViewController {
             make.height.equalTo(1)
             make.centerY.right.left.equalToSuperview()
         }
-
+        
         moodPickerView.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 200, height: 100))
             make.top.equalToSuperview().inset(16)
             make.right.equalToSuperview().offset(-8)
         }
-
+        
         mentalStatePickerView.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 200, height: 100))
             make.bottom.equalToSuperview().offset(-16)
             make.right.equalToSuperview().offset(-8)
         }
-
+        
         reasonLabel.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 300, height: 40))
             make.top.equalTo(pickersSection.snp.bottom).offset(50)
             make.centerX.equalToSuperview()
         }
-
+        
         reasonTextField.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 300, height: 40))
             make.centerX.equalTo(reasonLabel)
@@ -297,20 +315,32 @@ extension CaptureViewController {
             make.centerX.equalTo(reasonTextField)
             make.top.equalTo(reasonTextField.snp.bottom).offset(16)
         }
-
+        
         submitButton.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 100, height: 40))
         }
-
+        
         cancelButton.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 100, height: 40))
         }
+        
+        privacyPolicyTextView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().inset(50)
+            make.size.equalTo(CGSize(width: 100, height: 30))
+        }
     }
-
+    
     private func applyUISettings() {
         backgroundImage.image =             UIImage(named: "backtest")
         moodPickerView.layer.cornerRadius = 10
         mentalStatePickerView.layer.cornerRadius = 10
+        
+        privacyPolicyTextView.text =                "Privacy policy"
+        privacyPolicyTextView.textColor =           .darkGray
+        privacyPolicyTextView.font =                .systemFont(ofSize: 12)
+        privacyPolicyTextView.backgroundColor = .clear
+        privacyPolicyTextView.isEditable = false
         
         moodDescriptionLabel.text = "Please rate your mood from 1 to 10 where: \n1 - Horrible, \n10 - Wonderful."
         moodDescriptionLabel.numberOfLines = 0
@@ -326,7 +356,7 @@ extension CaptureViewController {
         mentalDescriptionLabel.textColor = .lightGray
         
         reasonTextField.attributedPlaceholder = NSAttributedString(string: "Have a reason?",
-                                                                  attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
         dividerView.backgroundColor = .lightGray
         pickersSection.backgroundColor = .pickerSection

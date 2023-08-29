@@ -10,7 +10,7 @@ import AVKit
 import SnapKit
 
 final class VideoPlayer: AVPlayerViewController {
-    private let loadingIndicatir: UIActivityIndicatorView = {
+    private let loadingIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.style = .large
         indicator.frame.size = CGSize(width: 100, height: 80)
@@ -28,7 +28,7 @@ final class VideoPlayer: AVPlayerViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadingIndicatir.startAnimating()
+        loadingIndicator.startAnimating()
         play()
     }
     
@@ -70,8 +70,8 @@ final class VideoPlayer: AVPlayerViewController {
             playerView.frame = CGRect(x: 0, y: 0, width: contentView.bounds.width, height: contentView.bounds.height)
         }
         
-        view.addSubview(loadingIndicatir)
-        loadingIndicatir.snp.makeConstraints { make in
+        view.addSubview(loadingIndicator)
+        loadingIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
         
@@ -85,15 +85,15 @@ final class VideoPlayer: AVPlayerViewController {
                 if newStatus != oldStatus {
                     DispatchQueue.main.async {[weak self] in
                         if newStatus == .playing || newStatus == .paused {
-                            self?.loadingIndicatir.stopAnimating()
+                            self?.loadingIndicator.stopAnimating()
                         } else {
-                            self?.loadingIndicatir.startAnimating()
+                            self?.loadingIndicator.startAnimating()
                         }
                     }
                 }
             } else {
                 // Fallback on earlier versions
-                self.loadingIndicatir.stopAnimating()
+                self.loadingIndicator.stopAnimating()
             }
         }
     }

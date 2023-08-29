@@ -19,7 +19,6 @@ protocol LogoutDelegate: AnyObject {
 
 final class UserScreenViewController: UIViewController, ChartViewDelegate {
     private let backgroundImage =       UIImageView()
-    private let privacyPolicy =         UILabel()
     private let chartView =             RadarChartView()
     private let userNameField =         UITextView()
     private var userImage =             UIImageView()
@@ -397,11 +396,7 @@ extension UserScreenViewController {
         loadingIndicator.frame.size = CGSize(width: 100, height: 80)
         loadingIndicator.color = .white
         loadingIndicator.hidesWhenStopped = true
-        
-        privacyPolicy.text =                "Privacy policy"
-        privacyPolicy.textColor =           .darkGray
-        privacyPolicy.font =                .systemFont(ofSize: 12)
-        
+     
         buttonsStack.spacing =              5
         buttonsStack.alignment =            .fill
         buttonsStack.axis =                 .horizontal
