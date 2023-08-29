@@ -345,13 +345,10 @@ extension RegistrationViewController {
     }
     
     private func setUpAppearance() {
-        profileImage.image = UIImage(named: "back 1")
+        profileImage.image = UIImage(systemName: "person.circle")
         profileImage.frame.size = CGSize(width: 100, height: 100)
-        profileImage.layer.masksToBounds = false
-        profileImage.layer.borderWidth = 1
-        profileImage.layer.borderColor = UIColor.white.cgColor
-        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
-        profileImage.clipsToBounds = true
+        profileImage.tintColor = .white
+       
         
         backgroundImage.image = UIImage(named: "backtest")
         nameTextField.attributedPlaceholder =

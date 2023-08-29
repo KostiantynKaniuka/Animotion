@@ -140,7 +140,7 @@ final class MainViewController: UIViewController {
     
     private func startTimer() {
         timerVM.startDate = Date()
-        timerVM.endDate = Calendar.current.date(byAdding: .minute, value: 1, to: timerVM.startDate!)
+        timerVM.endDate = Calendar.current.date(byAdding: .minute, value: 20, to: timerVM.startDate!)
         runTimer()
     }
     
@@ -174,7 +174,7 @@ extension MainViewController: VideoLinkDelegate {
     func sendTheLink(_ link: String, title: String, location: String) {
         let videoPlayer = VideoPlayer()
         videoPlayer.videoTitle = title
-        videoPlayer.link = "https://www.pexels.com/pl-pl/download/video/16757506/"
+        videoPlayer.link = link
         videoPlayer.videoSubtitle = location
         sideMenu.dismiss(animated: true)
         videoPlayer.modalPresentationStyle = .fullScreen

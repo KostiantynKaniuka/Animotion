@@ -133,7 +133,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
                 return
             } // radar data bug 🤯
             
-            let set1 = RadarChartDataSet(entries: self.radarEntries, label: "Menthal State")
+            let set1 = RadarChartDataSet(entries: self.radarEntries, label: "Mental State")
             set1.setColor(self.userScreenVM.setChartColor(data: self.radarData))
             set1.fillColor = self.userScreenVM.setChartColor(data: self.radarData)
             set1.drawFilledEnabled = true
@@ -393,14 +393,10 @@ extension UserScreenViewController {
         imageLoadingIndicator.color = .white
         imageLoadingIndicator.hidesWhenStopped = true
         
-        
-        
         loadingIndicator.style = .large
         loadingIndicator.frame.size = CGSize(width: 100, height: 80)
         loadingIndicator.color = .white
         loadingIndicator.hidesWhenStopped = true
-        
-       
         
         privacyPolicy.text =                "Privacy policy"
         privacyPolicy.textColor =           .darkGray

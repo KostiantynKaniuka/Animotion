@@ -92,6 +92,7 @@ final class CaptureViewController: UIViewController {
                 guard let self = self else {return}
                 guard let user = Auth.auth().currentUser else {return}
                 let id = user.uid
+                let senseBack = UIImpactFeedbackGenerator(style: .heavy)
                 
                 self.captureVM.sendUserChoice(id: id) { graph, radar in
                     FireAPIManager.shared.updateUserChartsData(id: id, reason: self.captureVM.reasonText.value, graphData: graph, radarData: radar) {
@@ -100,6 +101,7 @@ final class CaptureViewController: UIViewController {
                         self.graphDelegate?.refetchGraphData()
                         self.radarDelegate?.refetchRadarData()
                     }
+                    senseBack.impactOccurred()
                 }
             }
             .store(in: &captureVM.bag)
