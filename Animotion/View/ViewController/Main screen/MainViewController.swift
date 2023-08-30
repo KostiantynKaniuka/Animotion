@@ -135,7 +135,7 @@ final class MainViewController: UIViewController {
     
     private func startTimer() {
         timerVM.startDate = Date()
-        timerVM.endDate = Calendar.current.date(byAdding: .minute, value: 1, to: timerVM.startDate!)
+        timerVM.endDate = Calendar.current.date(byAdding: .minute, value: 20, to: timerVM.startDate!)
         notificationManager.setupNotifications(date: timerVM.endDate?.addingTimeInterval(5))
         runTimer()
     }
