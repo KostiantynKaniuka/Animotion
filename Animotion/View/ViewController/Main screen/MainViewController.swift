@@ -29,23 +29,21 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     private let importButton = ImportGraphButton()
     private let checkMarkImage = AIFlatSwitch()
-    private let sideMenu = SideMenuViewController()
     private let timerVM = TimerViewModel()
     weak var radarDelegate: ImportRadarDelegate?
     let chartView = ChartView()
+    let sideMenu = SideMenuViewController()
     lazy var menu = SideMenuNavigationController(rootViewController: sideMenu)
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     private var bag = Set<AnyCancellable>()
+    private let notificationManager = NotificationManager()
     weak var submitDelegate: SubmitButtonDelegate? // delegate to togle submit button state(CaptureViewController)
     
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        UserDefaults.standard.removeObject(forKey: "savedStartDate")
-        //        UserDefaults.standard.removeObject(forKey: "savedEndDate")
-        //        // Call synchronize to ensure changes are immediately saved
-        //        UserDefaults.standard.synchronize()
+        notificationManager.setupDailyNotification()
         setUpAppearance()
         chartView.loaderDelegate = self
         sideMenu.linkDelegate = self
@@ -53,10 +51,7 @@ final class MainViewController: UIViewController {
         checkTimerState { [weak self] in
             self?.updateRemainingTime()
         }
-        
     }
-    
-    
     
     private func saveGraphToGallary() {
         importButton.tapPublisher
@@ -140,7 +135,8 @@ final class MainViewController: UIViewController {
     
     private func startTimer() {
         timerVM.startDate = Date()
-        timerVM.endDate = Calendar.current.date(byAdding: .minute, value: 20, to: timerVM.startDate!)
+        timerVM.endDate = Calendar.current.date(byAdding: .minute, value: 1, to: timerVM.startDate!)
+        notificationManager.setupNotifications(date: timerVM.endDate?.addingTimeInterval(5))
         runTimer()
     }
     

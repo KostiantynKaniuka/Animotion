@@ -42,6 +42,7 @@ final class CaptureViewController: UIViewController {
     private let submitButton = SubmitButton()
     private let cancelButton = CancelCaptureButton()
     private var captureVM = CaptureMoodViewModel()
+    private var isViewShiftedUp = false
     
     weak var graphDelegate: GraphDataDelegate?
     weak var radarDelegate: RadarDataDelegate?
@@ -64,6 +65,14 @@ final class CaptureViewController: UIViewController {
         cancelButtonTapped()
         textFieldPublisher()
         buttonState()
+        dealingWithKeyboard()
+        //Looks for single or multiple taps.
+            let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+
+           //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+           //tap.cancelsTouchesInView = false
+
+           view.addGestureRecognizer(tap)
     }
     
     
@@ -134,6 +143,12 @@ final class CaptureViewController: UIViewController {
             }
             .store(in: &captureVM.bag)
     }
+    
+    @objc override func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
+    
 }
 
 extension CaptureViewController: UIPickerViewDataSource {
@@ -213,6 +228,59 @@ extension CaptureViewController: SubmitButtonDelegate {
     func toggleState() {
         captureVM.buttonEnabled.value = true
     }
+}
+
+//MARK: - Keybord Apperiance
+
+extension CaptureViewController {
+    
+    private func shiftViewUp() {
+        if !isViewShiftedUp {
+            reasonTextField.snp.updateConstraints { make in
+                if UIScreen.main.bounds.size.height >= 812 { // iPhone X and newer models
+                    reasonLabel.isHidden = true
+                    make.top.equalTo(reasonLabel.snp.bottom).offset(-80)
+                } else { // iPhone 8 and older models
+                    make.top.equalTo(reasonLabel.snp.bottom).offset(-100)
+                }
+                isViewShiftedUp = true
+            }
+        }
+    }
+    
+    private func resetViewPosition() {
+        if isViewShiftedUp {
+            
+            reasonTextField.snp.updateConstraints { make in
+                
+                reasonLabel.isHidden = false
+                make.top.equalTo(reasonLabel.snp.bottom)
+                isViewShiftedUp = false
+            }
+        }
+    }
+    
+    private func dealingWithKeyboard() {
+        NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
+            .sink { [weak self] _ in
+                guard let self = self else {return}
+                
+                if self.isViewShiftedUp == false {
+                    self.shiftViewUp()
+                }
+            }
+            .store(in: &captureVM.bag)
+        
+        NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
+            .sink { [weak self] _ in
+                guard let self = self else {return}
+                
+                self.resetViewPosition()
+                self.view.layoutIfNeeded()
+            }
+            .store(in: &captureVM.bag)
+    }
+    
 }
 
 //MARK: - Layout

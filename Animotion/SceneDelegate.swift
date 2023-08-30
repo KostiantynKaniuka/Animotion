@@ -20,8 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.makeKeyAndVisible()
         self.window = window
         guard let _ = (scene as? UIWindowScene) else { return }
+       
+        }
     }
-}
+
 
 //MARK: - Login action
 extension SceneDelegate: LoginViewControllerDelegate {

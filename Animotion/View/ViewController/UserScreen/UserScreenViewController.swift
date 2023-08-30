@@ -17,6 +17,10 @@ protocol LogoutDelegate: AnyObject {
     func didLogout()
 }
 
+protocol SideMenuPhotoDelegate: AnyObject {
+    func sendPhoto()
+}
+
 final class UserScreenViewController: UIViewController, ChartViewDelegate {
     private let backgroundImage =       UIImageView()
     private let chartView =             RadarChartView()
@@ -38,6 +42,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     
     private var alertMessage: AlertMessage = .error
     weak var logoutDelegate: LogoutDelegate?
+    weak var sideMenuPhotoDelegate: SideMenuPhotoDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +59,14 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
         plussButtonTapped()
         deleteButtonTapped()
         logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
+        //Looks for single or multiple taps.
+            let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+
+           //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+           //tap.cancelsTouchesInView = false
+
+        chartView.addGestureRecognizer(tap)
+        view.addGestureRecognizer(tap)
     }
     
     override func viewWillLayoutSubviews() {
@@ -182,6 +195,11 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
             .store(in: &userScreenVM.bag)
     }
     
+    @objc override func dismissKeyboard() {
+        plusButton.isHidden = true
+        view.endEditing(true)
+    }
+    
     @objc private func logOutButtonTapped() {
         do {
             try Auth.auth().signOut()
@@ -222,6 +240,7 @@ extension UserScreenViewController: UIImagePickerControllerDelegate, UINavigatio
         let imageManager = ImageManager()
         imageManager.saveImageToApp(image: selectedImage)
         plusButton.isHidden = true
+        sideMenuPhotoDelegate?.sendPhoto()
         self.dismiss(animated: true)
     }
 }

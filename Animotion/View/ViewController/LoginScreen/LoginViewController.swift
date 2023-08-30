@@ -60,6 +60,8 @@ final class LoginViewController: UIViewController {
         bindTextField()
         dontHaveAccoutButtonTapped()
         forgotPasswordBurronTapped()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        view.addGestureRecognizer(tap)
         
     }
     
@@ -181,6 +183,11 @@ final class LoginViewController: UIViewController {
             }
             
         }
+    }
+    
+    @objc override func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
     }
     
     @objc private func siginWithApple() {

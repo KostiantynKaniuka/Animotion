@@ -26,6 +26,7 @@ final class TabBarViewController: UITabBarController {
         captureVC.graphDelegate = mainVC.chartView
         captureVC.radarDelegate = userVC
         mainVC.submitDelegate = captureVC
+        userVC.sideMenuPhotoDelegate = mainVC.sideMenu
     }
     
     func setTabBar() {

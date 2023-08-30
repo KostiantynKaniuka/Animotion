@@ -42,6 +42,8 @@
 		E7AEC3F12A2FA52300EC21DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7AEC3F02A2FA52300EC21DE /* GoogleService-Info.plist */; };
 		E7BD05F42A8BE12F00BB1D07 /* DateValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BD05F32A8BE12F00BB1D07 /* DateValueFormatter.swift */; };
 		E7BD05F62A8BE17900BB1D07 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BD05F52A8BE17900BB1D07 /* ChartView.swift */; };
+		E7C904412A9F6D4C00C28B81 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C904402A9F6D4C00C28B81 /* UIViewController.swift */; };
+		E7C904432A9F70F300C28B81 /* NotificationManaget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C904422A9F70F300C28B81 /* NotificationManaget.swift */; };
 		E7D457A62A8504BB006D59F1 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D457A52A8504BB006D59F1 /* TabBarViewController.swift */; };
 		E7D457A82A853141006D59F1 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D457A72A853141006D59F1 /* CaptureViewController.swift */; };
 		E7D6B8ED2A9514DD0004A57E /* ChartMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D6B8EC2A9514DD0004A57E /* ChartMarker.swift */; };
@@ -115,6 +117,8 @@
 		E7AEC3F02A2FA52300EC21DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E7BD05F32A8BE12F00BB1D07 /* DateValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateValueFormatter.swift; sourceTree = "<group>"; };
 		E7BD05F52A8BE17900BB1D07 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		E7C904402A9F6D4C00C28B81 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		E7C904422A9F70F300C28B81 /* NotificationManaget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManaget.swift; sourceTree = "<group>"; };
 		E7D457A52A8504BB006D59F1 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		E7D457A72A853141006D59F1 /* CaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		E7D6B8EC2A9514DD0004A57E /* ChartMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartMarker.swift; sourceTree = "<group>"; };
@@ -208,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				E7658DF82A98E70100DAC87F /* ImageManager.swift */,
+				E7C904422A9F70F300C28B81 /* NotificationManaget.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -381,6 +386,7 @@
 				E7F168362A28C941004B4E49 /* UIColor.swift */,
 				E796AB582A5C031F0052A1F1 /* TextField.swift */,
 				E796AB622A5C05EE0052A1F1 /* Layout.swift */,
+				E7C904402A9F6D4C00C28B81 /* UIViewController.swift */,
 			);
 			path = "Extencion ";
 			sourceTree = "<group>";
@@ -616,6 +622,7 @@
 				E7F28BD32A6AC18900693189 /* ResetPasswordViewController.swift in Sources */,
 				E7E307332A961EF300F6E698 /* TimerViewModel.swift in Sources */,
 				E7DAAFCF2A5C47DC0009D7B9 /* UserScreenViewController.swift in Sources */,
+				E7C904412A9F6D4C00C28B81 /* UIViewController.swift in Sources */,
 				E73A00052A2E26CF00AA421F /* DotsView.swift in Sources */,
 				E76AE0B42A1FFF1A00102F15 /* SceneDelegate.swift in Sources */,
 				E7658DF92A98E70100DAC87F /* ImageManager.swift in Sources */,
@@ -628,6 +635,7 @@
 				E796AB5E2A5C04380052A1F1 /* LoginViewController.swift in Sources */,
 				E7920F492A669A75002B988F /* RegistrationViewModel.swift in Sources */,
 				E796AB602A5C04550052A1F1 /* CustomTextField.swift in Sources */,
+				E7C904432A9F70F300C28B81 /* NotificationManaget.swift in Sources */,
 				E782AA2F2A5429D2008893CD /* SideMenu.swift in Sources */,
 				E75B6E7C2A200587001BCB6D /* MainViewController.swift in Sources */,
 				E7F1683D2A28CA58004B4E49 /* SideMenuCellTableViewCell.swift in Sources */,
@@ -818,6 +826,7 @@
 				DEVELOPMENT_TEAM = 882F2W2464;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Animotion/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Animotion;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Animotion will save the graph to the local photo directory.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
@@ -851,6 +860,7 @@
 				DEVELOPMENT_TEAM = 882F2W2464;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Animotion/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Animotion;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Animotion will save the graph to the local photo directory.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";

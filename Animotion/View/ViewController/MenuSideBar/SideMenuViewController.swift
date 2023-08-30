@@ -20,7 +20,6 @@ final class SideMenuViewController: UIViewController {
     private let topView = UIView()
     private let loadingIndicator = UIActivityIndicatorView()
     private let viewModel = SideMenuViewModel()
-
     private var ukraineSection = [UkraineSection]()
     private var safeSpaceSection = [SafeSpace]()
     private var dataSource = [Section]()
@@ -49,6 +48,7 @@ final class SideMenuViewController: UIViewController {
         menuTableView.dataSource = self
         viewModel.ukraineDelegate = self
         viewModel.safeSpaceDelegate = self
+        loadingIndicator.startAnimating()
         viewModel.getUkraineSideMenuData { [weak self] in
             self?.loadingIndicator.stopAnimating()
         }
@@ -58,7 +58,7 @@ final class SideMenuViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-     setupUi()
+        setupUi()
         setImage()
     }
     
@@ -78,8 +78,6 @@ final class SideMenuViewController: UIViewController {
         
     }
 }
-
-
 
 //MARK: - TableView Delegate
 extension SideMenuViewController: UITableViewDelegate {
@@ -184,6 +182,12 @@ extension SideMenuViewController: SafeSpaceDataDelegate {
     }
 }
 
+extension SideMenuViewController: SideMenuPhotoDelegate {
+    func sendPhoto() {
+        setImage()
+    }
+}
+
 //MARK: - UI
 extension SideMenuViewController {
     
@@ -194,7 +198,7 @@ extension SideMenuViewController {
         loadingIndicator.frame.size = CGSize(width: 100, height: 80)
         loadingIndicator.color = .white
         loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.startAnimating()
+       // loadingIndicator.startAnimating()
 
         menuTableView.backgroundColor = .menuBacgtoundColor
         menuTableView.separatorStyle = .none
