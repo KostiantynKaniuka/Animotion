@@ -362,7 +362,7 @@ final class ImportGraphButton: UIButton {
     }
     
     private func buttonSettings() {
-        let attributedText = NSMutableAttributedString(string: "Import Graph", attributes: [
+        let attributedText = NSMutableAttributedString(string: "Export graph", attributes: [
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12),
             NSAttributedString.Key.foregroundColor: UIColor.darkGray,
             NSAttributedString.Key.kern: 1

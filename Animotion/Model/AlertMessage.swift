@@ -12,6 +12,7 @@ enum AlertMessage {
     case verification
     case delete
     case reset
+    case submit
     
     var title: String {
         switch self {
@@ -23,6 +24,8 @@ enum AlertMessage {
             return "Delete account?"
         case .reset:
             return "Please check your email"
+        case .submit:
+            return "Your data sended"
         }
     }
     
@@ -36,6 +39,8 @@ enum AlertMessage {
             return "Are you sure that you want to delete the account? All data will be erased."
         case .reset:
             return "Please check your email and follow the instructions to reset your password."
+        case .submit:
+            return "Your mood chart will be updated soon. You can submit new values after 20 min"
         }
     }
 }

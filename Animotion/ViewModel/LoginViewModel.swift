@@ -30,7 +30,7 @@ final class LoginViewModel {
     func formateAuthError(_ error: NSError) -> String {
         switch error.code {
         case AuthErrorCode.wrongPassword.rawValue:
-            return "Wrong password"
+            return "Wrong email or password"
         case AuthErrorCode.invalidEmail.rawValue:
             return "Invalid email"
         case AuthErrorCode.accountExistsWithDifferentCredential.rawValue:

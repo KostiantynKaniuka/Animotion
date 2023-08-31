@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import UIKit
 
 final class CaptureMoodViewModel: RadarParsable {
     static let moodPickerData = [1,2,3,4,5,6,7,8,9,10]
@@ -60,4 +61,12 @@ final class CaptureMoodViewModel: RadarParsable {
                 completion(userGraph, self.menthaldata)
         }
     }
+    
+    func showAlert(title: String, message: String, vc: CaptureViewController, handler:((UIAlertAction) -> Void)? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: handler)
+        alertController.addAction(okAction)
+        vc.present(alertController, animated: true, completion: nil)
+    }
+
 }

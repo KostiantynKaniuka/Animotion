@@ -113,10 +113,10 @@ final class LoginViewController: UIViewController {
             }
             .store(in: &loginVM.subscriptions)
         
-        loginVM.signinValidationPublishers
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.isEnabled, on: logInButton)
-            .store(in: &loginVM.subscriptions)
+//        loginVM.signinValidationPublishers
+//            .receive(on: DispatchQueue.main)
+//            .assign(to: \.isEnabled, on: logInButton)
+//            .store(in: &loginVM.subscriptions)
     }
     
     private func dontHaveAccoutButtonTapped() {

@@ -255,7 +255,7 @@ class FireAPIManager {
                 return
             }
             
-            guard let reasonSnap = dataSnapshot, let reasonArray = reasonSnap.value as? [Any] else {
+            guard let reasonSnap = dataSnapshot, let rawReasonData = reasonSnap.value as? [Any] else {
                 print("Data could not be cast as [Any]")
                 print("Raw data:", dataSnapshot?.value ?? "nil")
                 completion(["1": "error"])
@@ -263,16 +263,17 @@ class FireAPIManager {
             }
             
             var reasonDictionary: [String: String] = [:]
-            for (index, reasonValue) in reasonArray.enumerated() {
+            for (index, reasonValue) in rawReasonData.enumerated() {
                 if let reason = reasonValue as? String {
                     reasonDictionary[String(index)] = reason
+                } else if let nullValue = reasonValue as? NSNull {
+                    // Handle missing values or null values here if needed
+                    reasonDictionary[String(index)] = "Reason is not mentioned"
                 }
             }
-            
             print("➡️ Reasons", reasonDictionary)
             completion(reasonDictionary)
         }
-        
     }
     
     

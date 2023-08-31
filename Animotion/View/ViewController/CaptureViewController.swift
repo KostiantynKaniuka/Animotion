@@ -43,6 +43,7 @@ final class CaptureViewController: UIViewController {
     private let cancelButton = CancelCaptureButton()
     private var captureVM = CaptureMoodViewModel()
     private var isViewShiftedUp = false
+    private var alertMessage: AlertMessage = .submit
     
     weak var graphDelegate: GraphDataDelegate?
     weak var radarDelegate: RadarDataDelegate?
@@ -126,8 +127,12 @@ final class CaptureViewController: UIViewController {
                         self.timerDelegate?.triggerTimer()
                         self.graphDelegate?.refetchGraphData()
                         self.radarDelegate?.refetchRadarData()
+                        self.reasonTextField.text = nil
+                        self.view.endEditing(true)
                     }
+                    
                     senseBack.impactOccurred()
+                    self.captureVM.showAlert(title: self.alertMessage.title, message: self.alertMessage.body, vc: self)
                 }
             }
             .store(in: &captureVM.bag)
@@ -140,6 +145,7 @@ final class CaptureViewController: UIViewController {
                 self.reasonTextField.text = nil
                 self.moodPickerView.selectRow(0, inComponent: 0, animated: true)
                 self.mentalStatePickerView.selectRow(0, inComponent: 0, animated: true)
+                self.view.endEditing(true)
             }
             .store(in: &captureVM.bag)
     }
@@ -391,7 +397,6 @@ extension CaptureViewController {
         cancelButton.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 100, height: 40))
         }
-        
         
         privacyPolicyTextView.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 100, height: 30))
