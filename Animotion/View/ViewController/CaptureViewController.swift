@@ -67,13 +67,8 @@ final class CaptureViewController: UIViewController {
         cancelButtonTapped()
         textFieldPublisher()
         dealingWithKeyboard()
-        //Looks for single or multiple taps.
-            let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
-
-           //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
-           //tap.cancelsTouchesInView = false
-
-           view.addGestureRecognizer(tap)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        view.addGestureRecognizer(tap)
     }
     
     
@@ -130,8 +125,8 @@ final class CaptureViewController: UIViewController {
                     }
                 } else {
                     self.alertMessage = .timer
-                    var remainigTime = remainingTimeDelegate?.timerValue
-                    self.captureVM.showAlert(title: alertMessage.title, message: "\(remainigTime ?? "") \(alertMessage.body)", vc: self)
+                    let remainigTime = remainingTimeDelegate?.timerValue
+                    self.captureVM.showAlert(title: alertMessage.title, message: "\(alertMessage.body) \(remainigTime ?? "")", vc: self)
                     self.reasonTextField.text = nil
                     self.view.endEditing(true)
                 }

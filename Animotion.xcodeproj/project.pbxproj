@@ -252,7 +252,6 @@
 			children = (
 				E7658DF72A98E6F200DAC87F /* utils */,
 				E7A4E0552A729B5C00577C44 /* Animotion.entitlements */,
-				E76AE0B12A1FFF1A00102F15 /* AppDelegate.swift */,
 				E7D87B8B2A3B0EEE00BECCBE /* Helpers */,
 				E7F482022A2FB595008B3888 /* source */,
 				E7F481FF2A2FB54E008B3888 /* Model */,
@@ -417,6 +416,7 @@
 		E7F482022A2FB595008B3888 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				E76AE0B12A1FFF1A00102F15 /* AppDelegate.swift */,
 				E76AE0B32A1FFF1A00102F15 /* SceneDelegate.swift */,
 				E76AE0BA2A1FFF1B00102F15 /* Assets.xcassets */,
 				E7AEC3F02A2FA52300EC21DE /* GoogleService-Info.plist */,
@@ -822,7 +822,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Animotion/Animotion.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 882F2W2464;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Animotion/Info.plist;
@@ -859,7 +859,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Animotion/Animotion.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 882F2W2464;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Animotion/Info.plist;

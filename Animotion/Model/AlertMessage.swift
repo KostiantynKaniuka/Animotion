@@ -45,7 +45,7 @@ enum AlertMessage {
         case .submit:
             return "Your mood chart will be updated soon. You can submit new values after 20 min"
         case .timer:
-            return "until capturing"
+            return "Please wait:"
         }
     }
 }

@@ -132,7 +132,7 @@ final class RegistrationViewController: UIViewController {
                     }
                     
                 } else {
-                    self.registrationVM.showAlert(title: "Error", message: "some entries are incorrect or empty", vc: self)
+                    self.registrationVM.showAlert(title: "Error", message: "Some entries in the text fields are incorrect or missing.", vc: self)
                 }
             }
             .store(in: &registrationVM.bag)

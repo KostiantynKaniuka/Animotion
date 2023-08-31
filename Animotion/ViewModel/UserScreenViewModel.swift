@@ -94,8 +94,6 @@ final class UserScreenViewModel: RadarParsable {
         vc.present(alertController, animated: true, completion: nil)
     }
     
-    
-    
     func formateAuthError(_ error: NSError) -> String {
         switch error.code {
         case AuthErrorCode.networkError.rawValue:
@@ -104,6 +102,4 @@ final class UserScreenViewModel: RadarParsable {
             return "unknown error: \(error.localizedDescription)"
         }
     }
-    
-    
 }

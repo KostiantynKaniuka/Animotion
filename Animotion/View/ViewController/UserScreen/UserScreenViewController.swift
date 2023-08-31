@@ -444,6 +444,9 @@ extension UserScreenViewController {
         userNameField.backgroundColor =     .clear
         userNameField.returnKeyType = .done
         backgroundImage.image =             UIImage(named: "backtest")
+        userNameField.autocorrectionType = .no
+        userNameField.spellCheckingType = .no
+        userNameField.smartQuotesType = .no
         
         plusButton.setImage(UIImage(systemName: "plus"), for: .normal)
         plusButton.contentHorizontalAlignment = .center
