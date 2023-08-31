@@ -45,6 +45,7 @@ final class CaptureViewController: UIViewController {
     private var isViewShiftedUp = false
     private var alertMessage: AlertMessage = .submit
     
+    weak var remainingTimeDelegate: TimerValueDelegate?
     weak var graphDelegate: GraphDataDelegate?
     weak var radarDelegate: RadarDataDelegate?
     weak var timerDelegate: TiggerTimerDelegate?
@@ -65,7 +66,6 @@ final class CaptureViewController: UIViewController {
         submitButtonTapped()
         cancelButtonTapped()
         textFieldPublisher()
-        buttonState()
         dealingWithKeyboard()
         //Looks for single or multiple taps.
             let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
@@ -97,14 +97,6 @@ final class CaptureViewController: UIViewController {
         }
     }
     
-    private func buttonState() {
-        captureVM.isButtonEnabled
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.isEnabled, on: submitButton)
-            .store(in: &captureVM.bag)
-        
-    }
-    
     private func textFieldPublisher() {
         reasonTextField.textPublisher
             .sink { [weak self] text in
@@ -117,24 +109,35 @@ final class CaptureViewController: UIViewController {
         submitButton.tapPublisher
             .sink { [weak self] in
                 guard let self = self else {return}
-                guard let user = Auth.auth().currentUser else {return}
-                let id = user.uid
-                let senseBack = UIImpactFeedbackGenerator(style: .heavy)
-                
-                self.captureVM.sendUserChoice(id: id) { graph, radar in
-                    FireAPIManager.shared.updateUserChartsData(id: id, reason: self.captureVM.reasonText.value, graphData: graph, radarData: radar) {
-                        self.captureVM.buttonEnabled.value = false
-                        self.timerDelegate?.triggerTimer()
-                        self.graphDelegate?.refetchGraphData()
-                        self.radarDelegate?.refetchRadarData()
-                        self.reasonTextField.text = nil
-                        self.view.endEditing(true)
-                    }
+                if self.captureVM.buttonEnabled.value == true {
+                    guard let user = Auth.auth().currentUser else {return}
+                    let id = user.uid
+                    let senseBack = UIImpactFeedbackGenerator(style: .heavy)
                     
-                    senseBack.impactOccurred()
-                    self.captureVM.showAlert(title: self.alertMessage.title, message: self.alertMessage.body, vc: self)
+                    self.captureVM.sendUserChoice(id: id) { graph, radar in
+                        FireAPIManager.shared.updateUserChartsData(id: id, reason: self.captureVM.reasonText.value, graphData: graph, radarData: radar) {
+                            self.captureVM.buttonEnabled.value = false
+                            self.timerDelegate?.triggerTimer()
+                            self.graphDelegate?.refetchGraphData()
+                            self.radarDelegate?.refetchRadarData()
+                            self.reasonTextField.text = nil
+                            self.view.endEditing(true)
+                        }
+                        
+                        senseBack.impactOccurred()
+                        self.alertMessage = .submit
+                        self.captureVM.showAlert(title: self.alertMessage.title, message: self.alertMessage.body, vc: self)
+                    }
+                } else {
+                    self.alertMessage = .timer
+                    var remainigTime = remainingTimeDelegate?.timerValue
+                    self.captureVM.showAlert(title: alertMessage.title, message: "\(remainigTime ?? "") \(alertMessage.body)", vc: self)
+                    self.reasonTextField.text = nil
+                    self.view.endEditing(true)
                 }
+                
             }
+        
             .store(in: &captureVM.bag)
     }
     
@@ -231,6 +234,7 @@ extension CaptureViewController: UITextFieldDelegate {
 }
 
 extension CaptureViewController: SubmitButtonDelegate {
+
     func toggleState() {
         captureVM.buttonEnabled.value = true
     }

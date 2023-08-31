@@ -44,12 +44,13 @@ final class RegistrationViewController: UIViewController {
         setUpAppearance()
         setUpConstraints()
         bindTextfields()
-        matchValidationColor()
+        matchLabelsValidationColor()
         createUserTapped()
         passwordTextField.delegate = self
         repeatPasswordTextField.delegate = self
         emailTextField.delegate = self
         nameTextField.delegate = self
+        setTextFieldValidColor()
         cancelRegistrationButton.tapPublisher
             .sink { [weak self] _ in
                 self?.dismiss(animated: true)
@@ -57,12 +58,12 @@ final class RegistrationViewController: UIViewController {
             .store(in: &registrationVM.bag)
         
         //Looks for single or multiple taps.
-            let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
-
-           //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
-           //tap.cancelsTouchesInView = false
-
-           view.addGestureRecognizer(tap)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        
+        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+        //tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
     }
     
     private func removeValidationLabelsFromStackView() {
@@ -76,57 +77,62 @@ final class RegistrationViewController: UIViewController {
         createAccButton.tapPublisher
             .sink { [weak self] _ in
                 guard let self = self else {return}
-                Auth.auth().createUser(withEmail: self.registrationVM.emailText.value,
-                                       password: self.registrationVM.passwordText.value) { authResult, error in
-                    
-                    if let error = error as NSError? {
-                        self.alertMessage = .error
-                        let message  = self.registrationVM.formateAuthError(error)
-                        self.registrationVM.showAlert(title: self.alertMessage.title,
-                                                      message: message, vc: self)
-                    }
-                    
-                    if authResult != nil {
-                        guard let userID = Auth.auth().currentUser?.uid else {return}
-                        //MARK: - CREATING USER IN DB
-                        let dateConverter = DateConvertor()
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
-                        let currentDate = dateFormatter.string(from: Date())
-                        let formatedDate = dateFormatter.date(from: currentDate)
-                        let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
-                        let radarData = [
-                            "Happy": 0,
-                            "Good": 0,
-                            "Satisfied": 0,
-                            "Anxious": 0,
-                            "Angry": 0,
-                            "Sad": 0
-                        ]
-                        let user = MyUser(id: userID, name: self.registrationVM.nameText.value, radarData: radarData)
-                        let userGraph = GraphData(index: 0, date: doubleDate, value: 5)
-                        FireAPIManager.shared.addingUserToFirebase(user: user)
-                        FireAPIManager.shared.addGraphData(id: user.id, graphData: userGraph, reason: "Starting point")
-                        print(user)
-                        print("➡️ user added")
+                if registrationVM.formIsValid.value == true {
+                    Auth.auth().createUser(withEmail: self.registrationVM.emailText.value,
+                                           password: self.registrationVM.passwordText.value) { authResult, error in
                         
-                        Auth.auth().currentUser?.sendEmailVerification { error in
-                            if let error = error as NSError? {
-                                self.alertMessage = .error
-                                let message  = self.registrationVM.formateAuthError(error)
-                                self.registrationVM.showAlert(title: self.alertMessage.title,
-                                                              message: message, vc: self)
-                                Auth.auth().currentUser?.delete()
+                        if let error = error as NSError? {
+                            self.alertMessage = .error
+                            let message  = self.registrationVM.formateAuthError(error)
+                            self.registrationVM.showAlert(title: self.alertMessage.title,
+                                                          message: message, vc: self)
+                        }
+                        
+                        if authResult != nil {
+                            guard let userID = Auth.auth().currentUser?.uid else {return}
+                            //MARK: - CREATING USER IN DB
+                            let dateConverter = DateConvertor()
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+                            let currentDate = dateFormatter.string(from: Date())
+                            let formatedDate = dateFormatter.date(from: currentDate)
+                            let doubleDate = dateConverter.convertDateToNum(date: formatedDate!)
+                            let radarData = [
+                                "Happy": 0,
+                                "Good": 0,
+                                "Satisfied": 0,
+                                "Anxious": 0,
+                                "Angry": 0,
+                                "Sad": 0
+                            ]
+                            let user = MyUser(id: userID, name: self.registrationVM.nameText.value, radarData: radarData)
+                            let userGraph = GraphData(index: 0, date: doubleDate, value: 5)
+                            FireAPIManager.shared.addingUserToFirebase(user: user)
+                            FireAPIManager.shared.addGraphData(id: user.id, graphData: userGraph, reason: "Starting point")
+                            print(user)
+                            print("➡️ user added")
+                            
+                            Auth.auth().currentUser?.sendEmailVerification { error in
+                                if let error = error as NSError? {
+                                    self.alertMessage = .error
+                                    let message  = self.registrationVM.formateAuthError(error)
+                                    self.registrationVM.showAlert(title: self.alertMessage.title,
+                                                                  message: message, vc: self)
+                                    Auth.auth().currentUser?.delete()
+                                }
                             }
                         }
                     }
-                }
-                self.alertMessage = .verification
-                self.registrationVM.showAlert(title: self.alertMessage.title,
-                                              message: self.alertMessage.body,
-                                              vc: self) { _ in
+                    self.alertMessage = .verification
+                    self.registrationVM.showAlert(title: self.alertMessage.title,
+                                                  message: self.alertMessage.body,
+                                                  vc: self) { _ in
+                        
+                        self.dismiss(animated: true)
+                    }
                     
-                    self.dismiss(animated: true)
+                } else {
+                    self.registrationVM.showAlert(title: "Error", message: "some entries are incorrect or empty", vc: self)
                 }
             }
             .store(in: &registrationVM.bag)
@@ -157,13 +163,42 @@ final class RegistrationViewController: UIViewController {
             }
             .store(in: &registrationVM.bag)
         
-        registrationVM.formIsValid
+        //        registrationVM.formIsValid
+        //            .receive(on: DispatchQueue.main)
+        //            .assign(to: \.isEnabled, on: createAccButton)
+        //            .store(in: &registrationVM.bag)
+    }
+    
+    private func setTextFieldValidColor(_ isValid: Bool, textField: UITextField) {
+        if !isValid && textField.isFirstResponder {
+            textField.layer.shadowColor = UIColor.systemRed.cgColor
+            textField.layer.borderColor = UIColor.systemRed.cgColor
+        } else {
+            textField.layer.shadowColor = UIColor.lightGray.cgColor
+            textField.layer.borderColor = UIColor.lightGray.cgColor
+        }
+    }
+    
+    private func setTextFieldValidColor() {
+        registrationVM.isUserNameValidPublisher
             .receive(on: DispatchQueue.main)
-            .assign(to: \.isEnabled, on: createAccButton)
+            .sink { [weak self] isValid in
+                guard let self = self else {return}
+                self.setTextFieldValidColor(isValid, textField: self.nameTextField)
+            }
+            .store(in: &registrationVM.bag)
+        
+        registrationVM.isUserEmailValidPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isValid in
+                guard let self = self else {return}
+                self.setTextFieldValidColor(isValid, textField: self.emailTextField)
+            }
             .store(in: &registrationVM.bag)
     }
     
-    private func matchValidationColor() {
+    
+    private func matchLabelsValidationColor() {
         registrationVM.isContainDigitValidPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isContain in
@@ -205,7 +240,6 @@ final class RegistrationViewController: UIViewController {
                 self?.nameTextField.textColor = isValid ? .black : .red
             }
             .store(in: &registrationVM.bag)
-        
         
         registrationVM.isPasswordEqualPublisher
             .receive(on: DispatchQueue.main)
@@ -272,12 +306,12 @@ extension RegistrationViewController: UITextFieldDelegate {
                 return true
             }
         } else {
-                if updatedText.count > 42 {
-                    return false
-                } else {
-                    return true
-                }
+            if updatedText.count > 42 {
+                return false
+            } else {
+                return true
             }
+        }
     }
 }
 
@@ -299,7 +333,7 @@ extension RegistrationViewController {
         view.addSubview(profileImage)
         view.addSubview(textFieldStack)
         view.addSubview(buttonsStackView)
-    
+        
         buttonsStackView.addArrangedSubviews([createAccButton,
                                               cancelRegistrationButton])
         
@@ -361,22 +395,22 @@ extension RegistrationViewController {
         profileImage.image = UIImage(systemName: "person.circle")
         profileImage.frame.size = CGSize(width: 100, height: 100)
         profileImage.tintColor = .white
-       
+        
         
         backgroundImage.image = UIImage(named: "backtest")
         nameTextField.attributedPlaceholder =
         NSAttributedString(string: "Enter your name",
-                         attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+                           attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
         emailTextField.attributedPlaceholder =
         NSAttributedString(string: "Email",
-                          attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+                           attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
         emailTextField.keyboardType = .emailAddress
         
         passwordTextField.attributedPlaceholder =
         NSAttributedString(string: "Password",
-                         attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+                           attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
         passwordTextField.textContentType = .oneTimeCode
         passwordTextField.isSecureTextEntry = true

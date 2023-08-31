@@ -22,6 +22,12 @@ protocol ImportRadarDelegate: AnyObject {
     func importRadar()
 }
 
+protocol TimerValueDelegate: AnyObject {
+    var timerValue: String {
+        get
+    }
+}
+
 final class MainViewController: UIViewController {
     @IBOutlet weak var dreamButton: UIButton!
     @IBOutlet weak var timerLabel: UILabel!
@@ -39,10 +45,10 @@ final class MainViewController: UIViewController {
     private let notificationManager = NotificationManager()
     weak var submitDelegate: SubmitButtonDelegate? // delegate to togle submit button state(CaptureViewController)
     
-    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.shared.applicationIconBadgeNumber = 0
         notificationManager.setupDailyNotification()
         setUpAppearance()
         chartView.loaderDelegate = self
@@ -241,5 +247,11 @@ extension MainViewController: TiggerTimerDelegate {
 extension MainViewController: ChartLoaderDelegate {
     func finishLoading() {
         loadingIndicator.stopAnimating()
+    }
+}
+
+extension MainViewController: TimerValueDelegate {
+    var timerValue: String {
+        return timerVM.formatTimeString(timerLabel.text ?? "") ?? ""
     }
 }

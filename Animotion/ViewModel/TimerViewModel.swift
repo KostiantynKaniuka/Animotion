@@ -64,4 +64,16 @@ final class TimerViewModel {
             completion(false)
         }
     }
+    
+    func formatTimeString(_ timeString: String) -> String? {
+        let components = timeString.split(separator: ":")
+        
+        if components.count == 2,
+           let minutes = Int(components[0]),
+           let seconds = Int(components[1]) {
+            return "\(minutes) min \(seconds) sec"
+        }
+        
+        return nil
+    }
 }

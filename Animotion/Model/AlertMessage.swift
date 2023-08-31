@@ -13,6 +13,7 @@ enum AlertMessage {
     case delete
     case reset
     case submit
+    case timer
     
     var title: String {
         switch self {
@@ -26,6 +27,8 @@ enum AlertMessage {
             return "Please check your email"
         case .submit:
             return "Your data sended"
+        case .timer:
+            return "Capturing is not ready"
         }
     }
     
@@ -41,6 +44,8 @@ enum AlertMessage {
             return "Please check your email and follow the instructions to reset your password."
         case .submit:
             return "Your mood chart will be updated soon. You can submit new values after 20 min"
+        case .timer:
+            return "until capturing"
         }
     }
 }

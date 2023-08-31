@@ -20,8 +20,6 @@ final class ImageManager {
         
         let fileManager = FileManager.default
         let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-        
-    
         let imageURL = documentsDirectory.appendingPathComponent("\(id)userImage.jpg")
         
         do {
