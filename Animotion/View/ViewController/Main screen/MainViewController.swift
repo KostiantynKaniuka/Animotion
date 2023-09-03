@@ -13,6 +13,8 @@ import SnapKit
 import FirebaseAuth
 import DGCharts
 import AIFlatSwitch
+import PhotosUI
+
 
 protocol TiggerTimerDelegate: AnyObject {
     func triggerTimer()
