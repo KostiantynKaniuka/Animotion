@@ -21,9 +21,10 @@ Animotion is an invaluable tool for anyone visiting a psychologist. It provides 
 <img src="https://github.com/KostiantynKaniuka/Animotion/assets/99279665/6f440c92-4f32-4e50-afa0-d4bc62c4e882" alt="drawing" width="230"/>
 <img src="https://github.com/KostiantynKaniuka/Animotion/assets/99279665/f6dc7be1-0d30-4e72-87f1-b2a45a6e23fb" alt="drawing" width="230"/>
 
-<a href="https://stackoverflow.com/"><img src="https://github.com/KostiantynKaniuka/Animotion/assets/99279665/4df1d193-f3f2-4f25-89b3-68c95cefbf17" alt="drawing" width="200"/>
+
+<a href="https://apps.apple.com/app/id6463749654"><img src="https://www.logo.wine/a/logo/App_Store_(iOS)/App_Store_(iOS)-Badge-Alternative-Logo.wine.svg" alt="drawing" width="200"/>
 
 
 
-# Support
-io.animotion@gmail.com
+  # Support
+  io.animotion@gmail.com
