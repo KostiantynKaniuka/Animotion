@@ -16,10 +16,13 @@ Your Mental Health Companion:
 
 Animotion is an invaluable tool for anyone visiting a psychologist. It provides a comprehensive record of your emotional state, helping both you and your therapist assess your progress and make informed decisions about your mental health journey.
 
-<img src="https://github.com/KostiantynKaniuka/Animotion/assets/99279665/3e426519-6f9f-4b0c-92cb-d01ed9b19eaa" alt="drawing" width="250"/>
-<img src="https://github.com/KostiantynKaniuka/Animotion/assets/99279665/1cf6fee1-2778-4945-9a4a-faeb064f526d" alt="drawing" width="250"/>
-<img src="https://github.com/KostiantynKaniuka/Animotion/assets/99279665/6f440c92-4f32-4e50-afa0-d4bc62c4e882" alt="drawing" width="250"/>
-<img src="https://github.com/KostiantynKaniuka/Animotion/assets/99279665/f6dc7be1-0d30-4e72-87f1-b2a45a6e23fb" alt="drawing" width="250"/>
+<img src="https://github.com/KostiantynKaniuka/Animotion/assets/99279665/3e426519-6f9f-4b0c-92cb-d01ed9b19eaa" alt="drawing" width="230"/>
+<img src="https://github.com/KostiantynKaniuka/Animotion/assets/99279665/1cf6fee1-2778-4945-9a4a-faeb064f526d" alt="drawing" width="230"/>
+<img src="https://github.com/KostiantynKaniuka/Animotion/assets/99279665/6f440c92-4f32-4e50-afa0-d4bc62c4e882" alt="drawing" width="230"/>
+<img src="https://github.com/KostiantynKaniuka/Animotion/assets/99279665/f6dc7be1-0d30-4e72-87f1-b2a45a6e23fb" alt="drawing" width="230"/>
+
+<a href="https://stackoverflow.com/"><img src="https://github.com/KostiantynKaniuka/Animotion/assets/99279665/4df1d193-f3f2-4f25-89b3-68c95cefbf17" alt="drawing" width="200"/>
+
 
 
 # Support
