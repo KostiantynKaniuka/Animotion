@@ -61,6 +61,17 @@ final class MainViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        menu.leftSide = true
+    }
+    
+    override func viewWillLayoutSubviews() {
+        setUpConstraints()
+    }
+    
+    
+    
     private func saveGraphToGallary() {
         importButton.tapPublisher
             .sink { [weak self] _ in
@@ -94,15 +105,6 @@ final class MainViewController: UIViewController {
             }
         
             .store(in: &bag)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        menu.leftSide = true
-    }
-    
-    override func viewWillLayoutSubviews() {
-        setUpConstraints()
     }
     
     //MARK: - Timer Logic
