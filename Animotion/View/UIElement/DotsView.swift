@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DotsView: UIPageControl {
+final class DotsView: UIPageControl {
     
     init() {
         super.init(frame: .zero)

@@ -18,7 +18,7 @@ final class CaptureMoodViewModel: RadarParsable {
                                          "Angry",
                                          "Sad"]
     var moodData: Int = 1
-    var PickerChoice: String = "Happy"
+    var pickerChoice: String = "Happy"
     var userMenthalString = ""
     var reasonText = CurrentValueSubject<String, Never>("")
     var bag = Set<AnyCancellable>()
@@ -50,7 +50,7 @@ final class CaptureMoodViewModel: RadarParsable {
         let moodData = self.moodData
         let dataIndex = 1
         // radar logic {
-        let userChoicekey = self.PickerChoice
+        let userChoicekey = self.pickerChoice
         self.menthaldata[userChoicekey]! += 1
         //}
         FireAPIManager.shared.getDataIndex(id: id) { [weak self] index in
@@ -68,5 +68,4 @@ final class CaptureMoodViewModel: RadarParsable {
         alertController.addAction(okAction)
         vc.present(alertController, animated: true, completion: nil)
     }
-
 }

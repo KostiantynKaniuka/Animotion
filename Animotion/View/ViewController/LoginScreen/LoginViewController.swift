@@ -37,7 +37,6 @@ final class LoginViewController: UIViewController {
     private let deviderStack = UIStackView()
     private let forgotPasswordButton = ForgotPassButton()
     private let dontHaveAccoutButton = DontHaveAccountButton()
-    //private let applebutton = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
     
     //MARK: - PROPERTIES
     private let loginVM = LoginViewModel()
@@ -112,11 +111,6 @@ final class LoginViewController: UIViewController {
                 self.loginVM.emailText.value = text
             }
             .store(in: &loginVM.subscriptions)
-        
-//        loginVM.signinValidationPublishers
-//            .receive(on: DispatchQueue.main)
-//            .assign(to: \.isEnabled, on: logInButton)
-//            .store(in: &loginVM.subscriptions)
     }
     
     private func dontHaveAccoutButtonTapped() {
@@ -172,10 +166,6 @@ final class LoginViewController: UIViewController {
                             self.loginDelegate?.didLogin()
                         }
                     }
-                   
-                    
-                    
-                   
                 }
                 else {
                     self.loginVM.showAlert(message: "Please verify your email", vc: self)
@@ -419,8 +409,6 @@ extension LoginViewController {
     func setupAppearance() {
         googleSignInButton.frame.size = CGSize(width: 300, height: 40)
         appleSignInButton.frame.size = CGSize(width: 300, height: 40)
-        //applebutton.frame.size = CGSize(width: 300, height: 400)
-        
         
         logoImage.image = UIImage(named: "Icon2")
         logoImage.layer.cornerRadius = 20

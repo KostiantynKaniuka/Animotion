@@ -22,18 +22,20 @@ protocol SideMenuPhotoDelegate: AnyObject {
 }
 
 final class UserScreenViewController: UIViewController, ChartViewDelegate {
-    private let backgroundImage =       UIImageView()
-    private let chartView =             RadarChartView()
-    private let userNameField =         UITextView()
-    private var userImage =             UIImageView()
-    private let logOutButton =          LogoutButton()
-    private let editButton =            EditAccountButton()
-    private let deleteAccountButton =   DeleteAccountButton()
-    private let buttonsStack =          UIStackView()
-    private let plusButton =            UIButton()
-    private let loadingIndicator =      UIActivityIndicatorView()
-    private let imageLoadingIndicator =   UIActivityIndicatorView()
-    private let userScreenVM =          UserScreenViewModel()
+    //MARK: - UI Outlets
+    private let backgroundImage = UIImageView()
+    private let chartView = RadarChartView()
+    private let userNameField = UITextView()
+    private var userImage = UIImageView()
+    private let logOutButton = LogoutButton()
+    private let editButton = EditAccountButton()
+    private let deleteAccountButton = DeleteAccountButton()
+    private let buttonsStack = UIStackView()
+    private let plusButton = UIButton()
+    private let loadingIndicator = UIActivityIndicatorView()
+    private let imageLoadingIndicator = UIActivityIndicatorView()
+    //MARK: - Properties
+    private let userScreenVM = UserScreenViewModel()
     private let imageManager = ImageManager()
     
     private let menthalState = ["Happy","Good","Anxious","Sad","Angry","Satisfied"]
@@ -43,6 +45,8 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
     private var alertMessage: AlertMessage = .error
     weak var logoutDelegate: LogoutDelegate?
     weak var sideMenuPhotoDelegate: SideMenuPhotoDelegate?
+    
+    //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,12 +63,7 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
         plussButtonTapped()
         deleteButtonTapped()
         logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
-        //Looks for single or multiple taps.
             let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
-
-           //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
-           //tap.cancelsTouchesInView = false
-
         chartView.addGestureRecognizer(tap)
         view.addGestureRecognizer(tap)
     }
@@ -76,12 +75,11 @@ final class UserScreenViewController: UIViewController, ChartViewDelegate {
         setProfileImage()
     }
     
-    
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
     }
+    
+    //MARK: - Methods
     
     private func applyUserInfo() {
         userScreenVM.parseUser { [weak self] in
@@ -230,9 +228,11 @@ extension UserScreenViewController: RadarDataDelegate {
     }
 }
 
-
 extension UserScreenViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
         guard let selectedImage = info[.editedImage] as? UIImage else { return }
         userImage.image = selectedImage
         userImage.layer.borderColor = UIColor.white.cgColor
@@ -264,7 +264,6 @@ extension UserScreenViewController: ImportRadarDelegate {
     func importRadar() {
         chartView.backgroundColor = .darkGray
         if let chartImage = self.chartView.getChartImage(transparent: true) {
-            
             UIImageWriteToSavedPhotosAlbum(chartImage, nil, nil, nil)
         }
         chartView.backgroundColor = .clear
@@ -383,77 +382,77 @@ extension UserScreenViewController {
     }
     
     private func setUpRadar() {
-        chartView.chartDescription.enabled = false
-        chartView.webLineWidth = 1
-        chartView.innerWebLineWidth = 1
-        chartView.webColor = .lightGray
-        chartView.innerWebColor = .lightGray
-        chartView.webAlpha = 1
+        chartView.chartDescription.enabled =    false
+        chartView.webLineWidth =                1
+        chartView.innerWebLineWidth =           1
+        chartView.webColor =                    .lightGray
+        chartView.innerWebColor =               .lightGray
+        chartView.webAlpha =                    1
         
-        let xAxis = chartView.xAxis
-        xAxis.labelFont = .systemFont(ofSize: 12, weight: .light)
-        xAxis.xOffset = 0
-        xAxis.yOffset = 0
-        xAxis.axisMinimum = 0
-        xAxis.valueFormatter = self
-        xAxis.labelTextColor = .white
+        let xAxis =                             chartView.xAxis
+        xAxis.labelFont =                       .systemFont(ofSize: 12, weight: .light)
+        xAxis.xOffset =                         0
+        xAxis.yOffset =                         0
+        xAxis.axisMinimum =                     0
+        xAxis.valueFormatter =                  self
+        xAxis.labelTextColor =                  .white
         
-        let yAxis = chartView.yAxis
-        yAxis.labelFont = .systemFont(ofSize: 12, weight: .light)
-        yAxis.labelCount = 6
-        yAxis.axisMinimum = 0
-        yAxis.drawLabelsEnabled = false
+        let yAxis =                             chartView.yAxis
+        yAxis.labelFont =                       .systemFont(ofSize: 12, weight: .light)
+        yAxis.labelCount =                      6
+        yAxis.axisMinimum =                     0
+        yAxis.drawLabelsEnabled =               false
     }
     
     private func setupAppearance() {
-        imageLoadingIndicator.style = .large
-        imageLoadingIndicator.frame.size = CGSize(width: 100, height: 80)
-        imageLoadingIndicator.color = .white
+        imageLoadingIndicator.style =           .large
+        imageLoadingIndicator.frame.size =      CGSize(width: 100, height: 80)
+        imageLoadingIndicator.color =           .white
         imageLoadingIndicator.hidesWhenStopped = true
         
-        loadingIndicator.style = .large
-        loadingIndicator.frame.size = CGSize(width: 100, height: 80)
-        loadingIndicator.color = .white
-        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.style =                .large
+        loadingIndicator.frame.size =           CGSize(width: 100, height: 80)
+        loadingIndicator.color =                .white
+        loadingIndicator.hidesWhenStopped =     true
         
-        buttonsStack.spacing =              5
-        buttonsStack.alignment =            .fill
-        buttonsStack.axis =                 .horizontal
-        buttonsStack.distribution =         .fill
+        buttonsStack.spacing =                   5
+        buttonsStack.alignment =                .fill
+        buttonsStack.axis =                     .horizontal
+        buttonsStack.distribution =             .fill
         
-        chartView.contentMode =             .scaleAspectFill
-        chartView.backgroundColor =         .clear
+        chartView.contentMode =                 .scaleAspectFill
+        chartView.backgroundColor =             .clear
         
         if UIScreen.main.bounds.size.height < 812 {
             userImage.frame.size =              CGSize(width: 70, height: 70)
         } else {
             userImage.frame.size =              CGSize(width: 100, height: 100)
         }
-        userImage.layer.borderWidth =       1
-        userImage.layer.masksToBounds =     false
-        userImage.clipsToBounds =           true
-        userImage.isUserInteractionEnabled = true
-        userImage.tintColor = .white
+        userImage.layer.borderWidth =               1
+        userImage.layer.masksToBounds =             false
+        userImage.clipsToBounds =                   true
+        userImage.isUserInteractionEnabled =        true
+        userImage.tintColor =                       .white
         
-        userNameField.text =                userScreenVM.username.value
-        userNameField.font =                .systemFont(ofSize: 17)
-        userNameField.textAlignment =       .center
-        userNameField.textColor =           .white
+        userNameField.text =                        userScreenVM.username.value
+        userNameField.font =                        .systemFont(ofSize: 17)
+        userNameField.textAlignment =               .center
+        userNameField.textColor =                   .white
         userNameField.textContainer
-            .maximumNumberOfLines =         1
-        userNameField.backgroundColor =     .clear
-        userNameField.returnKeyType = .done
-        backgroundImage.image =             UIImage(named: "backtest")
-        userNameField.autocorrectionType = .no
-        userNameField.spellCheckingType = .no
-        userNameField.smartQuotesType = .no
+            .maximumNumberOfLines =                  1
+        userNameField.backgroundColor =             .clear
+        userNameField.returnKeyType =               .done
+        backgroundImage.image =                     UIImage(named: "backtest")
+        userNameField.autocorrectionType =          .no
+        userNameField.spellCheckingType =           .no
+        userNameField.smartQuotesType =             .no
         
         plusButton.setImage(UIImage(systemName: "plus"), for: .normal)
-        plusButton.contentHorizontalAlignment = .center
-        plusButton.contentVerticalAlignment = .center
-        let scaleFactor: CGFloat = 2.0 // Adjust this value to increase the size
-        plusButton.transform = CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
-        plusButton.tintColor = .white
+        plusButton.contentHorizontalAlignment =     .center
+        plusButton.contentVerticalAlignment =       .center
+        let scaleFactor: CGFloat =                  2.0 // Adjust this value to increase the size
+        plusButton.transform =                      CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
+        plusButton.tintColor =                      .white
     }
 }
 
@@ -469,7 +468,7 @@ extension UserScreenViewController {
         }
         userImage.image = image
         userImage.layer.borderColor = UIColor.white.cgColor
-        userImage.layer.cornerRadius =      userImage.frame.size.width / 2
+        userImage.layer.cornerRadius = userImage.frame.size.width / 2
     }
     
     //MARK: - IMAGE PICKER

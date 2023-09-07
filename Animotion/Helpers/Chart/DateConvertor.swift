@@ -24,6 +24,7 @@ final class DateConvertor {
         }
         
         let fractionalHour = Double(hour) / 24.0
+        
         return Double(dayOfYear) + fractionalHour
     }
     
@@ -65,6 +66,7 @@ final class DateConvertor {
            dateComponents.day = day
            
            let calendar = Calendar.current
+           
            return calendar.date(from: dateComponents)!
        }
     

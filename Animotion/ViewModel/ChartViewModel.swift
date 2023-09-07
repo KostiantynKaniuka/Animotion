@@ -55,6 +55,5 @@ final class ChartViewModel {
                 print("➡️ data", self.chartData)
                 comletion()
             }
-        
     }
 }

@@ -19,6 +19,7 @@ final class VideoPlayer: AVPlayerViewController {
         
         return indicator
     }()
+    
     private var videoItem = AVMutableMetadataItem()
     private var subtitleItem = AVMutableMetadataItem()
     private var playeritem: AVPlayerItem?
@@ -77,6 +78,7 @@ final class VideoPlayer: AVPlayerViewController {
         
     }
     
+    // adding loading indicator to video processing
     override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "timeControlStatus", let change = change, let newValue = change[NSKeyValueChangeKey.newKey] as? Int, let oldValue = change[NSKeyValueChangeKey.oldKey] as? Int {
             if #available(iOS 10.0, *) {

@@ -24,7 +24,7 @@ protocol SubmitButtonDelegate: AnyObject {
 }
 
 final class CaptureViewController: UIViewController {
-    
+    //MARK: - UI Outlets
     private let scrollView = UIScrollView()
     private let backgroundImage = UIImageView()
     private let contentView = UIView()
@@ -41,6 +41,7 @@ final class CaptureViewController: UIViewController {
     private let reasonTextField = CustomTextField()
     private let submitButton = SubmitButton()
     private let cancelButton = CancelCaptureButton()
+    //MARK: - Properties
     private var captureVM = CaptureMoodViewModel()
     private var isViewShiftedUp = false
     private var alertMessage: AlertMessage = .submit
@@ -50,6 +51,7 @@ final class CaptureViewController: UIViewController {
     weak var radarDelegate: RadarDataDelegate?
     weak var timerDelegate: TiggerTimerDelegate?
     
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Capture mood here"
@@ -71,7 +73,7 @@ final class CaptureViewController: UIViewController {
         view.addGestureRecognizer(tap)
     }
     
-    
+    //MARK: - Methods
     private func insertTheLink() {
         let color = UIColor.darkGray
         let linkColor = color
@@ -110,7 +112,11 @@ final class CaptureViewController: UIViewController {
                     let senseBack = UIImpactFeedbackGenerator(style: .heavy)
                     
                     self.captureVM.sendUserChoice(id: id) { graph, radar in
-                        FireAPIManager.shared.updateUserChartsData(id: id, reason: self.captureVM.reasonText.value, graphData: graph, radarData: radar) {
+                        FireAPIManager.shared.updateUserChartsData(id: id,
+                                                                   reason: self.captureVM.reasonText.value,
+                                                                   graphData: graph,
+                                                                   radarData: radar) {
+                            
                             self.captureVM.buttonEnabled.value = false
                             self.timerDelegate?.triggerTimer()
                             self.graphDelegate?.refetchGraphData()
@@ -121,18 +127,20 @@ final class CaptureViewController: UIViewController {
                         
                         senseBack.impactOccurred()
                         self.alertMessage = .submit
-                        self.captureVM.showAlert(title: self.alertMessage.title, message: self.alertMessage.body, vc: self)
+                        self.captureVM.showAlert(title: self.alertMessage.title,
+                                                 message: self.alertMessage.body,
+                                                 vc: self)
                     }
                 } else {
                     self.alertMessage = .timer
                     let remainigTime = remainingTimeDelegate?.timerValue
-                    self.captureVM.showAlert(title: alertMessage.title, message: "\(alertMessage.body) \(remainigTime ?? "")", vc: self)
+                    self.captureVM.showAlert(title: alertMessage.title,
+                                             message: "\(alertMessage.body) \(remainigTime ?? "")",
+                                             vc: self)
                     self.reasonTextField.text = nil
                     self.view.endEditing(true)
                 }
-                
             }
-        
             .store(in: &captureVM.bag)
     }
     
@@ -176,11 +184,13 @@ extension CaptureViewController: UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         var title: NSAttributedString = NSAttributedString(string: "")
         if pickerView == moodPickerView {
-            title = NSAttributedString(string: String(CaptureMoodViewModel.moodPickerData[row]), attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+            title = NSAttributedString(string: String(CaptureMoodViewModel.moodPickerData[row]),
+                                       attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         }
         
         if pickerView == mentalStatePickerView {
-            title = NSAttributedString(string: CaptureMoodViewModel.menthalStatePickerData[row], attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+            title = NSAttributedString(string: CaptureMoodViewModel.menthalStatePickerData[row],
+                                       attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
             captureVM.userMenthalString = title.string
         }
         return title
@@ -196,10 +206,10 @@ extension CaptureViewController: UIPickerViewDelegate {
             captureVM.moodData = CaptureMoodViewModel.moodPickerData[row]
         }
         if pickerView == mentalStatePickerView {
-            captureVM.PickerChoice = CaptureMoodViewModel.menthalStatePickerData[row]
+            captureVM.pickerChoice = CaptureMoodViewModel.menthalStatePickerData[row]
         }
         print(captureVM.moodData)
-        print(captureVM.PickerChoice)
+        print(captureVM.pickerChoice)
     }
     
 }
@@ -215,6 +225,7 @@ extension CaptureViewController: UITextFieldDelegate {
         let text = textField.text ?? ""
         let updatedText = (text as NSString).replacingCharacters(in: range,
                                                                  with: string)
+        
         if updatedText.count > 30 {
             return false
         } else {
@@ -236,7 +247,6 @@ extension CaptureViewController: SubmitButtonDelegate {
 }
 
 //MARK: - Keybord Apperiance
-
 extension CaptureViewController {
     
     private func shiftViewUp() {
@@ -411,48 +421,48 @@ extension CaptureViewController {
     }
     
     private func applyUISettings() {
-        backgroundImage.image =             UIImage(named: "backtest")
-        moodPickerView.layer.cornerRadius = 10
-        mentalStatePickerView.layer.cornerRadius = 10
+        backgroundImage.image =                     UIImage(named: "backtest")
+        moodPickerView.layer.cornerRadius =         10
+        mentalStatePickerView.layer.cornerRadius =  10
         
-        privacyPolicyTextView.text =                "Privacy policy"
-        privacyPolicyTextView.textColor =           .darkGray
-        privacyPolicyTextView.font =                .systemFont(ofSize: 12)
-        privacyPolicyTextView.backgroundColor = .clear
-        privacyPolicyTextView.isEditable = false
-        privacyPolicyTextView.textAlignment = .center
+        privacyPolicyTextView.text =               "Privacy policy"
+        privacyPolicyTextView.textColor =          .darkGray
+        privacyPolicyTextView.font =               .systemFont(ofSize: 12)
+        privacyPolicyTextView.backgroundColor =    .clear
+        privacyPolicyTextView.isEditable =         false
+        privacyPolicyTextView.textAlignment =      .center
         
-        moodDescriptionLabel.text = "Please rate your mood from 1 to 10 where: \n1 - Horrible, \n10 - Wonderful."
-        moodDescriptionLabel.numberOfLines = 0
-        moodDescriptionLabel.textAlignment = .left
-        moodDescriptionLabel.font = UIFont(name: "Helvetica", size: 14)
-        moodDescriptionLabel.textColor = .lightGray
+        moodDescriptionLabel.text =                "Please rate your mood from 1 to 10 where: \n1 - Horrible, \n10 - Wonderful."
+        moodDescriptionLabel.numberOfLines =        0
+        moodDescriptionLabel.textAlignment =        .left
+        moodDescriptionLabel.font =                 UIFont(name: "Helvetica", size: 14)
+        moodDescriptionLabel.textColor =            .lightGray
         
-        mentalDescriptionLabel.text = "Think about how you feel at this moment: Choose the best word to describe it."
+        mentalDescriptionLabel.text =               "Think about how you feel at this moment: Choose the best word to describe it."
         
-        mentalDescriptionLabel.numberOfLines = 0
-        mentalDescriptionLabel.textAlignment = .left
-        mentalDescriptionLabel.font = UIFont(name: "Helvetica", size: 14)
-        mentalDescriptionLabel.textColor = .lightGray
+        mentalDescriptionLabel.numberOfLines =      0
+        mentalDescriptionLabel.textAlignment =      .left
+        mentalDescriptionLabel.font =               UIFont(name: "Helvetica", size: 14)
+        mentalDescriptionLabel.textColor =          .lightGray
         
-        reasonTextField.attributedPlaceholder = NSAttributedString(string: "Have a reason?",
+        reasonTextField.attributedPlaceholder =     NSAttributedString(string: "Have a reason?",
                                                                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
-        dividerView.backgroundColor = .lightGray
-        pickersSection.backgroundColor = .pickerSection
-        pickersSection.layer.cornerRadius = 10
-        moodPickerView.backgroundColor = .barBackground
-        mentalStatePickerView.backgroundColor = .barBackground
+        dividerView.backgroundColor =               .lightGray
+        pickersSection.backgroundColor =            .pickerSection
+        pickersSection.layer.cornerRadius =         10
+        moodPickerView.backgroundColor =            .barBackground
+        mentalStatePickerView.backgroundColor =     .barBackground
         
-        reasonLabel.text = "Any reason to current menthal condition?"
-        reasonLabel.numberOfLines = 0
-        reasonLabel.textAlignment = .left
-        reasonLabel.font = UIFont(name: "Helvetica", size: 16)
-        reasonLabel.textColor = .lightGray
-        reasonLabel.textColor = .white
+        reasonLabel.text =                          "Any reason to current menthal condition?"
+        reasonLabel.numberOfLines =                 0
+        reasonLabel.textAlignment =                 .left
+        reasonLabel.font =                          UIFont(name: "Helvetica", size: 16)
+        reasonLabel.textColor =                     .lightGray
+        reasonLabel.textColor =                     .white
         
-        buttonsStack.alignment = .center
-        buttonsStack.axis = .horizontal
-        buttonsStack.distribution = .fill
+        buttonsStack.alignment =                    .center
+        buttonsStack.axis =                         .horizontal
+        buttonsStack.distribution =                 .fill
     }
 }

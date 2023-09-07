@@ -11,7 +11,7 @@ protocol CarouselCollectionViewDelegate: AnyObject {
     func carouselDataLoaded(data: [CarouselData])
 }
 
-//MARK: - Added in future versions
+//MARK: - Will be added in future versions
 final class CarouselCollectionVievModel {
     var carouselData: [CarouselData] = []
     let edgedistance: CGFloat = 30

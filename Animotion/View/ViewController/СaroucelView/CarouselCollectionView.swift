@@ -8,7 +8,8 @@
 import UIKit
 import Kingfisher
 
-class CarouselCollectionView: UICollectionViewController {
+//MARK: - Will be added in future
+final class CarouselCollectionView: UICollectionViewController {
     private let viewModel = CarouselCollectionVievModel()
     private var centerCell: CarouselCollectionViewCell?
     private var layout = UICollectionViewFlowLayout()

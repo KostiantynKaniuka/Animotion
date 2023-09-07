@@ -9,7 +9,6 @@ import UIKit
 
 
 final class TabBarViewController: UITabBarController {
-    //var homeVC = MainViewController()
     var userVC = UserScreenViewController()
     var captureVC = CaptureViewController()
     var mainVC = MainViewController()

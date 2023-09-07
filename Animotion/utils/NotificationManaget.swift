@@ -55,8 +55,9 @@ final class NotificationManager {
         var dateComponents = DateComponents(calendar: calendar, timeZone: TimeZone.current)
         dateComponents.hour = 9
         dateComponents.minute = 0
-        
+        //Trigger
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        //Request
         let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])

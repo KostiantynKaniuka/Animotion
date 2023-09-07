@@ -14,6 +14,7 @@ protocol VideoLinkDelegate: AnyObject {
 }
 
 final class SideMenuViewController: UIViewController {
+    //MARK: - UI Outlets
     private let menuTableView = UITableView()
     private let profileImage = UIImageView()
     private let profileLabel = UILabel()

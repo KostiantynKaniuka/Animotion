@@ -31,6 +31,7 @@ protocol TimerValueDelegate: AnyObject {
 }
 
 final class MainViewController: UIViewController {
+    //MARK: - UI Outlets
     @IBOutlet weak var dreamButton: UIButton!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var backgroundImage: UIImageView!
@@ -41,6 +42,7 @@ final class MainViewController: UIViewController {
     weak var radarDelegate: ImportRadarDelegate?
     let chartView = ChartView()
     let sideMenu = SideMenuViewController()
+    //MARK: - Properties
     lazy var menu = SideMenuNavigationController(rootViewController: sideMenu)
     private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     private var bag = Set<AnyCancellable>()
@@ -69,8 +71,6 @@ final class MainViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         setUpConstraints()
     }
-    
-    
     
     private func saveGraphToGallary() {
         importButton.tapPublisher

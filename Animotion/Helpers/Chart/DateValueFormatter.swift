@@ -9,7 +9,9 @@ import Foundation
 import DGCharts
 
 public class DayAxisValueFormatter: NSObject, AxisValueFormatter {
+    
     weak var chart: LineChartView?
+    
     let months = ["Jan", "Feb", "Mar",
                   "Apr", "May", "Jun",
                   "Jul", "Aug", "Sep",

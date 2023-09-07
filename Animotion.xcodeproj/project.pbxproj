@@ -48,7 +48,6 @@
 		E7D457A82A853141006D59F1 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D457A72A853141006D59F1 /* CaptureViewController.swift */; };
 		E7D6B8ED2A9514DD0004A57E /* ChartMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D6B8EC2A9514DD0004A57E /* ChartMarker.swift */; };
 		E7DAAFCA2A5C11270009D7B9 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFC92A5C11270009D7B9 /* Button.swift */; };
-		E7DAAFCC2A5C39480009D7B9 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFCB2A5C39480009D7B9 /* Navigation.swift */; };
 		E7DAAFCF2A5C47DC0009D7B9 /* UserScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DAAFCE2A5C47DC0009D7B9 /* UserScreenViewController.swift */; };
 		E7E307332A961EF300F6E698 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E307322A961EF300F6E698 /* TimerViewModel.swift */; };
 		E7E4385E2A28EB3B002F63F6 /* Forum-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7E4385D2A28EB3B002F63F6 /* Forum-Regular.ttf */; };
@@ -123,7 +122,6 @@
 		E7D457A72A853141006D59F1 /* CaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		E7D6B8EC2A9514DD0004A57E /* ChartMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartMarker.swift; sourceTree = "<group>"; };
 		E7DAAFC92A5C11270009D7B9 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
-		E7DAAFCB2A5C39480009D7B9 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		E7DAAFCE2A5C47DC0009D7B9 /* UserScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScreenViewController.swift; sourceTree = "<group>"; };
 		E7E307322A961EF300F6E698 /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
 		E7E4385D2A28EB3B002F63F6 /* Forum-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Forum-Regular.ttf"; sourceTree = "<group>"; };
@@ -405,7 +403,6 @@
 			children = (
 				E7F482002A2FB571008B3888 /* CarouselData.swift */,
 				E782AA2E2A5429D2008893CD /* SideMenu.swift */,
-				E7DAAFCB2A5C39480009D7B9 /* Navigation.swift */,
 				E7E6FEA52A69539900431641 /* AlertMessage.swift */,
 				E77A63AD2A8A7797001BBE14 /* User.swift */,
 				E7F5907F2A93E2A400339575 /* MenthalState.swift */,
@@ -610,7 +607,6 @@
 				E7F168372A28C941004B4E49 /* UIColor.swift in Sources */,
 				E7F590802A93E2A400339575 /* MenthalState.swift in Sources */,
 				E70360672A8D24E300FEAD1A /* DateConvertor.swift in Sources */,
-				E7DAAFCC2A5C39480009D7B9 /* Navigation.swift in Sources */,
 				E7693B3A2A293382003C5D3F /* CarouselCollectionView.swift in Sources */,
 				E7D457A82A853141006D59F1 /* CaptureViewController.swift in Sources */,
 				E77A63AA2A8A64E8001BBE14 /* CaptureMoodViewModel.swift in Sources */,

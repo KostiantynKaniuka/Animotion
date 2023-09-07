@@ -56,13 +56,8 @@ final class RegistrationViewController: UIViewController {
                 self?.dismiss(animated: true)
             }
             .store(in: &registrationVM.bag)
-        
-        //Looks for single or multiple taps.
+  
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
-        
-        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
-        //tap.cancelsTouchesInView = false
-        
         view.addGestureRecognizer(tap)
     }
     
@@ -105,13 +100,18 @@ final class RegistrationViewController: UIViewController {
                                 "Angry": 0,
                                 "Sad": 0
                             ]
-                            let user = MyUser(id: userID, name: self.registrationVM.nameText.value, radarData: radarData)
+                            let user = MyUser(id: userID,
+                                              name: self.registrationVM.nameText.value,
+                                              radarData: radarData)
+                            
                             let userGraph = GraphData(index: 0, date: doubleDate, value: 5)
                             FireAPIManager.shared.addingUserToFirebase(user: user)
-                            FireAPIManager.shared.addGraphData(id: user.id, graphData: userGraph, reason: "Starting point")
+                            FireAPIManager.shared.addGraphData(id: user.id,
+                                                               graphData: userGraph,
+                                                               reason: "Starting point")
+                            
                             print(user)
                             print("➡️ user added")
-                            
                             Auth.auth().currentUser?.sendEmailVerification { error in
                                 if let error = error as NSError? {
                                     self.alertMessage = .error
@@ -132,7 +132,9 @@ final class RegistrationViewController: UIViewController {
                     }
                     
                 } else {
-                    self.registrationVM.showAlert(title: "Error", message: "Some entries in the text fields are incorrect or missing.", vc: self)
+                    self.registrationVM.showAlert(title: "Error",
+                                                  message: "Some entries in the text fields are incorrect or missing.",
+                                                  vc: self)
                 }
             }
             .store(in: &registrationVM.bag)
@@ -162,11 +164,6 @@ final class RegistrationViewController: UIViewController {
                 self?.registrationVM.emailText.value = text ?? ""
             }
             .store(in: &registrationVM.bag)
-        
-        //        registrationVM.formIsValid
-        //            .receive(on: DispatchQueue.main)
-        //            .assign(to: \.isEnabled, on: createAccButton)
-        //            .store(in: &registrationVM.bag)
     }
     
     private func setTextFieldValidColor(_ isValid: Bool, textField: UITextField) {
@@ -424,12 +421,13 @@ extension RegistrationViewController {
     }
     
     private func setupLabels() {
-        specialCharacterLabel.text = "·must contain at least one special character"
-        containDidgitLabel.text = "·must contain at least one digit"
-        containUpperRegisterLabel.text = "·must contain one letter from upper register"
-        containLowerRegisterLabel.text = "·must contain one letter from lower register"
-        minNumberOfCharactersLabel.text = "·must contain at least 8 characters"
-        fieldsDontMatchLabel.text = "Fields isn't match"
+        specialCharacterLabel.text =        "·must contain at least one special character"
+        containDidgitLabel.text =           "·must contain at least one digit"
+        containUpperRegisterLabel.text =    "·must contain one letter from upper register"
+        containLowerRegisterLabel.text =    "·must contain one letter from lower register"
+        minNumberOfCharactersLabel.text =   "·must contain at least 8 characters"
+        fieldsDontMatchLabel.text =         "Fields isn't match"
+        
         fieldsDontMatchLabel.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 300, height: 50))
         }
@@ -466,7 +464,8 @@ extension RegistrationViewController {
         
         textFieldStack.insertArrangedSubview(labelView, at: 2)
         
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            guard let self = self else {return}
             self.labelStack.alpha = 1.0
             self.labelStack.transform = .identity
         }

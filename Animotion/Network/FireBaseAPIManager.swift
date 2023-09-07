@@ -20,7 +20,6 @@ class FireAPIManager {
         return db
     }
     
-    
     //MARK: - ADD
     
     //MARK: - Adding user to db
@@ -146,102 +145,6 @@ class FireAPIManager {
         }
     }
     
-    
-    
-    
-    func getReasons(id: String, completion: @escaping (Result<[String: String], Error>) -> Void) {
-        guard let url = URL(string: "https://api.jsonbin.io/v3/b/64e9ef14b89b1e2299d64846") else {
-            print("❌ Invalid URL")
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("❌ Error:", error)
-                completion(.failure(error))
-                return
-            }
-            
-            guard let data = data else {
-                let noDataError = NSError(domain: "No data received", code: 0, userInfo: nil)
-                print("❌ No data received")
-                completion(.failure(noDataError))
-                return
-            }
-            
-            do {
-                let responseData = try JSONDecoder().decode(UserReasons.self, from: data)
-                //print(responseData)
-                completion(.success(responseData.record[id] ?? ["": ""]))
-            } catch {
-                print("❌ Error decoding:", error)
-                completion(.failure(error))
-            }
-        }.resume()
-    }
-    
-    
-    func addReason(id: String, newReason: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard let url = URL(string: "https://api.jsonbin.io/v3/b/64e9ef14b89b1e2299d64846") else {
-            print("❌ Invalid URL")
-            return
-        }
-        
-        // Fetch the existing data
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("❌ Error:", error)
-                completion(.failure(error))
-                return
-            }
-            
-            guard let data = data else {
-                let noDataError = NSError(domain: "No data received", code: 0, userInfo: nil)
-                print("❌ No data received")
-                completion(.failure(noDataError))
-                return
-            }
-            
-            do {
-                var responseData = try JSONDecoder().decode(UserReasons.self, from: data)
-                
-                // Update the data for the specific ID
-                if var existingReasons = responseData.record[id] {
-                    // You can add a new reason or modify existing ones
-                    existingReasons["2"] = newReason
-                    responseData.record[id] = existingReasons
-                    
-                    // Convert the updated data to JSON
-                    let updatedData = try JSONEncoder().encode(responseData)
-                    
-                    // Prepare the request
-                    var request = URLRequest(url: url)
-                    request.httpMethod = "PUT"
-                    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                    request.httpBody = updatedData
-                    
-                    // Send the updated data back to the server
-                    URLSession.shared.dataTask(with: request) { _, _, error in
-                        if let error = error {
-                            print("❌ Error sending updated data:", error)
-                            completion(.failure(error))
-                        } else {
-                            completion(.success(()))
-                        }
-                    }.resume()
-                } else {
-                    let idNotFoundError = NSError(domain: "User ID not found", code: 0, userInfo: nil)
-                    completion(.failure(idNotFoundError))
-                }
-            } catch {
-                print("❌ Error decoding:", error)
-                completion(.failure(error))
-            }
-        }.resume()
-    }
-    
-    
-    
     func getReasonsFromDb(id: String, completion: @escaping ([String: String]) -> Void) {
         let db = configureFB()
         let valueRef = db.child("graphData").child(id).child("reasons")
@@ -266,7 +169,7 @@ class FireAPIManager {
             for (index, reasonValue) in rawReasonData.enumerated() {
                 if let reason = reasonValue as? String {
                     reasonDictionary[String(index)] = reason
-                } else if let nullValue = reasonValue as? NSNull {
+                } else if reasonValue is NSNull {
                     // Handle missing values or null values here if needed
                     reasonDictionary[String(index)] = "Reason is not mentioned"
                 }
