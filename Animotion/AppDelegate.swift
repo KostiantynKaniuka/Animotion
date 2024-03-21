@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+        
         let center = UNUserNotificationCenter.current()
         center.delegate = self
         center.requestAuthorization(options: [.alert, .sound, .badge]) { granded, error in
@@ -42,4 +43,23 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         }
         completionHandler([.banner, .sound, .badge])
     }
+    
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+       
+        let deviceId = userInfo["userdevice"]
+        let date = userInfo["startingDate"]
+       // UNUserNotificationCenter.current()
+              // Use userDevice and startingDate as needed
+              
+        FireAPIManager.shared.updateUserName(id: "YgJTYM5FgzRjRgoefePpD3OHxck1", newName: "\( deviceId ?? "device id errir") \( date ?? "date error")" ) {
+                  //
+              }
+            
+     
+         
+         completionHandler()
+     }
+ 
 }

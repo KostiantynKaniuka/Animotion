@@ -44,6 +44,11 @@ final class NotificationManager {
         }
     }
     
+    struct NofificationInfo {
+        let startingTime: String
+        let deviceId: String
+    }
+    
     func setupDailyNotification(id: String = "Morning") {
         let content = UNMutableNotificationContent()
         let calendar = Calendar.current

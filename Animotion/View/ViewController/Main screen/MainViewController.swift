@@ -53,7 +53,8 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UIApplication.shared.applicationIconBadgeNumber = 0
-        notificationManager.setupDailyNotification()
+        //notificationManager.setupDailyNotification()
+        UNUserNotificationCenter.current().delegate = self
         setUpAppearance()
         chartView.loaderDelegate = self
         sideMenu.linkDelegate = self
@@ -174,6 +175,28 @@ final class MainViewController: UIViewController {
     }
     
 }
+
+extension MainViewController: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        let identifier = response.actionIdentifier
+        
+        switch identifier {
+        case UNNotificationDefaultActionIdentifier:
+            // User tapped the notification without selecting an action
+            FireAPIManager.shared.updateUserName(id: "YgJTYM5FgzRjRgoefePpD3OHxck1", newName: "onetwo") {
+                //
+            }
+            print("Tapped on the notification without selecting an action")
+        case "customActionIdentifier":
+            // User tapped a custom action
+            print("Tapped on a custom action")
+        default:
+            break
+        }
+    }
+}
+
 
 extension MainViewController: VideoLinkDelegate {
     
